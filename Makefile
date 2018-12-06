@@ -8,7 +8,7 @@ syntax:
 	/usr/local/opt/bison/bin/bison splash.y
 
 compile:
-	cc splash.tab.c -ly -ll
+	cc splash_helper.c splash.tab.c -ly -ll
 
 .PHONY : clean
 clean:

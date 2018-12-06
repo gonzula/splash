@@ -1,8 +1,7 @@
 %{
 #include <ctype.h>
 #include <stdio.h>
-
-/*#define YYSTYPE char[100]*/
+#include "splash_helper.h"
 
 int yylex();
 void yyerror();
@@ -11,8 +10,10 @@ void yyerror();
 
 %define api.value.type union
 
-%token <char const *> STR
-%token <char const *> NUM
+%type <char *> expr
+
+%token <char *> STR
+%token <char *> NUM
 %token ATT
 %token IF
 %token ELSE
@@ -23,7 +24,7 @@ void yyerror();
 %token LE
 %token GT
 %token GE
-%token <char const *> ID
+%token <char *> ID
 
 
 %left '+' '-'
@@ -37,26 +38,23 @@ prog    : stat_list 'f' { puts("stats_list"); }
         | error '\n' { yyerror("Invalid"); yyerrok; }
         ;
 
-stat_list   : stat_list stat '\n' { puts("stat_list \'\\n\' stat");}
-            | stat_list '\n' { puts("stat_list \'\\n\'"); }
+stat_list   : stat_list stat '\n' {}
+            | stat_list '\n' {}
             |
             ;
 
 stat    : expr  { puts("expr"); }
         ;
 
-expr    : expr '+' expr         { puts("+"); }
-        | expr '-' expr         { puts("-"); }
-        | expr '*' expr         { puts("*"); }
-        | expr '/' expr         { puts("/"); }
-        | expr '^' expr         { puts("^"); }
-        | '(' expr ')'          { puts("()"); }
-        | '-' expr %prec UMINUS { puts("MINUS"); }
-        | value
-        ;
-
-value   : NUM { printf("NUM: %s\n", $1); }
-        | ID { printf("ID: %s\n", $1); }
+expr    : expr[left] '+' expr[right]         { append_operation(&$$, '+', $[left], $[right]);  }
+        | expr[left] '-' expr[right]         { append_operation(&$$, '-', $[left], $[right]);  }
+        | expr[left] '*' expr[right]         { append_operation(&$$, '*', $[left], $[right]);  }
+        | expr[left] '/' expr[right]         { append_operation(&$$, '/', $[left], $[right]);  }
+        | expr[left] '^' expr[right]         { append_operation(&$$, '^', $[left], $[right]);  }
+        | '(' expr ')'          { append_operand(&$$, $2); }
+        | '-' expr %prec UMINUS {}
+        | NUM { append_operand(&$$, $1); }
+        | ID { append_operand(&$$, $1); }
         ;
 
 %%
