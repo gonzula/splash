@@ -51,7 +51,7 @@ expr    : expr[left] '+' expr[right]         { append_operation(&$$, '+', $[left
         | expr[left] '*' expr[right]         { append_operation(&$$, '*', $[left], $[right]);  }
         | expr[left] '/' expr[right]         { append_operation(&$$, '/', $[left], $[right]);  }
         | expr[left] '^' expr[right]         { append_operation(&$$, '^', $[left], $[right]);  }
-        | '(' expr ')'          {}
+        | '(' expr ')'          { $$ = $2; }
         | '-' expr %prec UMINUS {}
         | NUM { append_operand(&$$, number, $1); }
         | ID { append_operand(&$$, variable, $1); }
