@@ -28,9 +28,9 @@ void yyerror();
 
 
 %left '+' '-'
+%right UMINUS
 %left '*' '/'
 %right '^'
-%right UMINUS
 
 %%
 
