@@ -10,7 +10,7 @@ void yyerror();
 
 %define api.value.type union
 
-%type <char *> expr
+%type <Operand *> expr
 
 %token <char *> STR
 %token <char *> NUM
@@ -34,7 +34,7 @@ void yyerror();
 
 %%
 
-prog    : stat_list 'f' { puts("stats_list"); }
+prog    : stat_list { YYACCEPT; }
         | error '\n' { yyerror("Invalid"); yyerrok; }
         ;
 
@@ -43,7 +43,7 @@ stat_list   : stat_list stat '\n' {}
             |
             ;
 
-stat    : expr  { puts("expr"); }
+stat    : expr  { fprintf(stderr, "<reduced expr>\n"); }
         ;
 
 expr    : expr[left] '+' expr[right]         { append_operation(&$$, '+', $[left], $[right]);  }
@@ -51,12 +51,19 @@ expr    : expr[left] '+' expr[right]         { append_operation(&$$, '+', $[left
         | expr[left] '*' expr[right]         { append_operation(&$$, '*', $[left], $[right]);  }
         | expr[left] '/' expr[right]         { append_operation(&$$, '/', $[left], $[right]);  }
         | expr[left] '^' expr[right]         { append_operation(&$$, '^', $[left], $[right]);  }
-        | '(' expr ')'          { append_operand(&$$, $2); }
+        | '(' expr ')'          {}
         | '-' expr %prec UMINUS {}
-        | NUM { append_operand(&$$, $1); }
-        | ID { append_operand(&$$, $1); }
+        | NUM { append_operand(&$$, number, $1); }
+        | ID { append_operand(&$$, variable, $1); }
         ;
 
 %%
 
 #include "lex.yy.c"
+
+int
+main() {
+    output_header(stdout);
+    yyparse();
+    output_footer(stdout);
+}

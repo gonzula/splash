@@ -1,3 +1,15 @@
+typedef enum {
+    number,
+    variable
+} OpType;
 
-void append_operand(char **, const char *);
-void append_operation(char **, char, char *, char *);
+typedef struct {
+    OpType type;
+    char *value;
+} Operand;
+
+void append_operand(Operand **, OpType, const char *);
+void append_operation(Operand **, char, Operand *, Operand *);
+
+void output_header(FILE *output);
+void output_footer(FILE *output);
