@@ -14,6 +14,7 @@ typedef struct {
 
 void append_operand(Operand **, OpType, const char *);
 void append_operation(Operand **, char, Operand *, Operand *);
+void append_minus_op(Operand **, Operand *);
 
 void output_header(FILE *output);
 void output_footer(FILE *output);

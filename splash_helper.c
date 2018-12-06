@@ -292,3 +292,14 @@ append_operation(Operand **stack, char operator, Operand *op1, Operand *op2) {
 
     *stack = new_stack;
 }
+
+void
+append_minus_op(Operand **stack, Operand *op) {
+    Operand *temp = (Operand *)calloc(1, sizeof(Operand));
+    temp->type = number;
+    char minus_one[] = "-1";
+    temp->value = (char *)malloc(sizeof(char) * (strlen(minus_one) + 1));
+    strcpy(temp->value, minus_one);
+
+    append_operation(stack, '*', temp, op);
+}
