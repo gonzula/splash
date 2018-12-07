@@ -1,3 +1,4 @@
+.DS_Store
 a.out
 lex.yy.c
 splash.tab.c
