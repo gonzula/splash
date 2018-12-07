@@ -95,7 +95,6 @@ output_set_variable(FILE *output, char *name) {
                    </dict>\n";
 
     fprintf(output, patt, name);
-
 }
 
 void
@@ -275,13 +274,6 @@ append_operation(Operand **stack, char operator, Operand *op1, Operand *op2) {
     uuid_unparse_upper(bin, uuid);
     output_operation(stdout, operator, op2, uuid);
 
-    /*output_set_var(stdout, "AUX");*/
-
-    /*puts(op1);*/
-    /*printf("# %c %s\n", operator, op2);*/
-    /*puts("AUX = #");*/
-    /*char aux[] = "AUX";*/
-    /*strcpy(*stack, aux);*/
     Operand *new_stack = (Operand *)calloc(1, sizeof(Operand));
     new_stack->type = magicVariable;
 
