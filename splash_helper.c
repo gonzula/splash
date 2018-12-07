@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "splash_helper.h"
-#include "uuid.h"
+#include "utils.h"
 
 void
 output_header(FILE *output) {

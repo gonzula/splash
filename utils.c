@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "uuid.h"
+#include "utils.h"
 
 #define CHARS "0123456789ABCDEF"
 
