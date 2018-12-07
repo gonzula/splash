@@ -7,143 +7,136 @@
 
 void
 output_header(FILE *output) {
-    char header[] = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
-                     <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n\
-                     <plist version=\"1.0\">\n\
-                     <dict>\n\
-                     \t<key>WFWorkflowActions</key>\n\
-                     \t<array>\n\
-                     ";
-
-    fwrite(header, sizeof(char), strlen(header), output);
+    fprintf(output, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    fprintf(output, "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">");
+    fprintf(output, "<plist version=\"1.0\">");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowActions</key>");
+    fprintf(output, "<array>");
 }
 
 void
 output_footer(FILE *output) {
-    char footer[] = "\t</array>\n\
-                     <key>WFWorkflowClientRelease</key>\n\
-                     <string>2.1.2</string>\n\
-                     <key>WFWorkflowClientVersion</key>\n\
-                     <string>754</string>\n\
-                     <key>WFWorkflowIcon</key>\n\
-                     <dict>\n\
-                     <key>WFWorkflowIconGlyphNumber</key>\n\
-                     <integer>59511</integer>\n\
-                     <key>WFWorkflowIconImageData</key>\n\
-                     <data>\n\
-                     </data>\n\
-                     <key>WFWorkflowIconStartColor</key>\n\
-                     <integer>463140863</integer>\n\
-                     </dict>\n\
-                     <key>WFWorkflowImportQuestions</key>\n\
-                     <array/>\n\
-                     <key>WFWorkflowInputContentItemClasses</key>\n\
-                     <array>\n\
-                     <string>WFAppStoreAppContentItem</string>\n\
-                     <string>WFArticleContentItem</string>\n\
-                     <string>WFContactContentItem</string>\n\
-                     <string>WFDateContentItem</string>\n\
-                     <string>WFEmailAddressContentItem</string>\n\
-                     <string>WFGenericFileContentItem</string>\n\
-                     <string>WFImageContentItem</string>\n\
-                     <string>WFiTunesProductContentItem</string>\n\
-                     <string>WFLocationContentItem</string>\n\
-                     <string>WFDCMapsLinkContentItem</string>\n\
-                     <string>WFAVAssetContentItem</string>\n\
-                     <string>WFPDFContentItem</string>\n\
-                     <string>WFPhoneNumberContentItem</string>\n\
-                     <string>WFRichTextContentItem</string>\n\
-                     <string>WFSafariWebPageContentItem</string>\n\
-                     <string>WFStringContentItem</string>\n\
-                     <string>WFURLContentItem</string>\n\
-                     </array>\n\
-                     <key>WFWorkflowTypes</key>\n\
-                     <array>\n\
-                     <string>NCWidget</string>\n\
-                     <string>WatchKit</string>\n\
-                     </array>\n\
-                     </dict>\n\
-                     </plist>\n";
-
-    fwrite(footer, sizeof(char), strlen(footer), output);
+    fprintf(output, "</array>");
+    fprintf(output, "<key>WFWorkflowClientRelease</key>");
+    fprintf(output, "<string>2.1.2</string>");
+    fprintf(output, "<key>WFWorkflowClientVersion</key>");
+    fprintf(output, "<string>754</string>");
+    fprintf(output, "<key>WFWorkflowIcon</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowIconGlyphNumber</key>");
+    fprintf(output, "<integer>59511</integer>");
+    fprintf(output, "<key>WFWorkflowIconImageData</key>");
+    fprintf(output, "<data>");
+    fprintf(output, "</data>");
+    fprintf(output, "<key>WFWorkflowIconStartColor</key>");
+    fprintf(output, "<integer>463140863</integer>");
+    fprintf(output, "</dict>");
+    fprintf(output, "<key>WFWorkflowImportQuestions</key>");
+    fprintf(output, "<array/>");
+    fprintf(output, "<key>WFWorkflowInputContentItemClasses</key>");
+    fprintf(output, "<array>");
+    fprintf(output, "<string>WFAppStoreAppContentItem</string>");
+    fprintf(output, "<string>WFArticleContentItem</string>");
+    fprintf(output, "<string>WFContactContentItem</string>");
+    fprintf(output, "<string>WFDateContentItem</string>");
+    fprintf(output, "<string>WFEmailAddressContentItem</string>");
+    fprintf(output, "<string>WFGenericFileContentItem</string>");
+    fprintf(output, "<string>WFImageContentItem</string>");
+    fprintf(output, "<string>WFiTunesProductContentItem</string>");
+    fprintf(output, "<string>WFLocationContentItem</string>");
+    fprintf(output, "<string>WFDCMapsLinkContentItem</string>");
+    fprintf(output, "<string>WFAVAssetContentItem</string>");
+    fprintf(output, "<string>WFPDFContentItem</string>");
+    fprintf(output, "<string>WFPhoneNumberContentItem</string>");
+    fprintf(output, "<string>WFRichTextContentItem</string>");
+    fprintf(output, "<string>WFSafariWebPageContentItem</string>");
+    fprintf(output, "<string>WFStringContentItem</string>");
+    fprintf(output, "<string>WFURLContentItem</string>");
+    fprintf(output, "</array>");
+    fprintf(output, "<key>WFWorkflowTypes</key>");
+    fprintf(output, "<array>");
+    fprintf(output, "<string>NCWidget</string>");
+    fprintf(output, "<string>WatchKit</string>");
+    fprintf(output, "</array>");
+    fprintf(output, "</dict>");
+    fprintf(output, "</plist>");
+    fprintf(output, "\n");
 }
 
 void
 output_number(FILE *output, char100 number) {
-    char patt[] = "<dict>\n\
-                   <key>WFWorkflowActionIdentifier</key>\n\
-                   <string>is.workflow.actions.number</string>\n\
-                   <key>WFWorkflowActionParameters</key>\n\
-                   <dict>\n\
-                   <key>WFNumberActionNumber</key>\n\
-                   <real>%s</real>\n\
-                   </dict>\n\
-                   </dict>\n";
-
-    fprintf(output, patt, number.value);
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
+    fprintf(output, "<string>is.workflow.actions.number</string>");
+    fprintf(output, "<key>WFWorkflowActionParameters</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFNumberActionNumber</key>");
+    fprintf(output, "<real>%s</real>", number.value);
+    fprintf(output, "</dict>");
+    fprintf(output, "</dict>");
 }
 
 void
 output_set_variable(FILE *output, char100 name) {
-    char patt[] = "<dict>\n\
-                   <key>WFWorkflowActionIdentifier</key>\n\
-                   <string>is.workflow.actions.setvariable</string>\n\
-                   <key>WFWorkflowActionParameters</key>\n\
-                   <dict>\n\
-                   <key>WFVariableName</key>\n\
-                   <string>%s</string>\n\
-                   </dict>\n\
-                   </dict>\n";
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
+    fprintf(output, "<string>is.workflow.actions.setvariable</string>");
+    fprintf(output, "<key>WFWorkflowActionParameters</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFVariableName</key>");
+    fprintf(output, "<string>%s</string>", name.value);
+    fprintf(output, "</dict>");
+    fprintf(output, "</dict>");
 
-    fprintf(output, patt, name.value);
 }
 
 void
 output_get_variable(FILE *output, char100 name) {
-        fprintf(output, "<dict>\n");
-        fprintf(output, "   <key>WFWorkflowActionIdentifier</key>\n");
-        fprintf(output, "   <string>is.workflow.actions.getvariable</string>\n");
-        fprintf(output, "   <key>WFWorkflowActionParameters</key>\n");
-        fprintf(output, "   <dict>\n");
-        fprintf(output, "       <key>WFVariable</key>\n");
-        fprintf(output, "       <dict>\n");
-        fprintf(output, "           <key>Value</key>\n");
-        fprintf(output, "           <dict>\n");
-        fprintf(output, "               <key>Type</key>\n");
-        fprintf(output, "               <string>Variable</string>\n");
-        fprintf(output, "               <key>VariableName</key>\n");
-        fprintf(output, "               <string>%s</string>\n", name.value);
-        fprintf(output, "           </dict>\n");
-        fprintf(output, "           <key>WFSerializationType</key>\n");
-        fprintf(output, "           <string>WFTextTokenAttachment</string>\n");
-        fprintf(output, "       </dict>\n");
-        fprintf(output, "   </dict>\n");
-        fprintf(output, "</dict>\n");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
+    fprintf(output, "<string>is.workflow.actions.getvariable</string>");
+    fprintf(output, "<key>WFWorkflowActionParameters</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFVariable</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>Value</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>Type</key>");
+    fprintf(output, "<string>Variable</string>");
+    fprintf(output, "<key>VariableName</key>");
+    fprintf(output, "<string>%s</string>", name.value);
+    fprintf(output, "</dict>");
+    fprintf(output, "<key>WFSerializationType</key>");
+    fprintf(output, "<string>WFTextTokenAttachment</string>");
+    fprintf(output, "</dict>");
+    fprintf(output, "</dict>");
+    fprintf(output, "</dict>");
 }
 
 void
 output_get_magic_variable(FILE *output, Operand op) {
-    fprintf(output, "<dict>\n");
-    fprintf(output, "<key>WFWorkflowActionIdentifier</key>\n");
-    fprintf(output, "<string>is.workflow.actions.getvariable</string>\n");
-    fprintf(output, "<key>WFWorkflowActionParameters</key>\n");
-    fprintf(output, "<dict>\n");
-    fprintf(output, "   <key>WFVariable</key>\n");
-    fprintf(output, "   <dict>\n");
-    fprintf(output, "       <key>Value</key>\n");
-    fprintf(output, "       <dict>\n");
-    fprintf(output, "           <key>%s</key>\n", op.name.value);
-    fprintf(output, "           <string>Calculation Result</string>\n");
-    fprintf(output, "           <key>OutputUUID</key>\n");
-    fprintf(output, "           <string>%s</string>\n", op.uuid);
-    fprintf(output, "           <key>Type</key>\n");
-    fprintf(output, "           <string>ActionOutput</string>\n");
-    fprintf(output, "       </dict>\n");
-    fprintf(output, "       <key>WFSerializationType</key>\n");
-    fprintf(output, "       <string>WFTextTokenAttachment</string>\n");
-    fprintf(output, "   </dict>\n");
-    fprintf(output, "</dict>\n");
-    fprintf(output, "</dict>\n");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
+    fprintf(output, "<string>is.workflow.actions.getvariable</string>");
+    fprintf(output, "<key>WFWorkflowActionParameters</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFVariable</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>Value</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>%s</key>", op.name.value);
+    fprintf(output, "<string>Calculation Result</string>");
+    fprintf(output, "<key>OutputUUID</key>");
+    fprintf(output, "<string>%s</string>", op.uuid);
+    fprintf(output, "<key>Type</key>");
+    fprintf(output, "<string>ActionOutput</string>");
+    fprintf(output, "</dict>");
+    fprintf(output, "<key>WFSerializationType</key>");
+    fprintf(output, "<string>WFTextTokenAttachment</string>");
+    fprintf(output, "</dict>");
+    fprintf(output, "</dict>");
+    fprintf(output, "</dict>");
 }
 
 void
@@ -156,98 +149,98 @@ output_math_simple_operation_parameters(FILE *output, char operator, Operand ope
         case '/': strcpy(WFoperation, "÷"); break;
     }
 
-    fprintf(output, "   <key>WFMathOperand</key>\n");
+    fprintf(output, "<key>WFMathOperand</key>");
 
     switch (operand.type) {
         case number:
-            fprintf(output, "<real>%s</real>\n", operand.value.value);
+            fprintf(output, "<real>%s</real>", operand.value.value);
             break;
         case magicVariable:
-            fprintf(output, "<dict>\n");
-            fprintf(output, "<key>Value</key>\n");
-            fprintf(output, "<dict>\n");
-            fprintf(output, "    <key>OutputName</key>\n");
-            fprintf(output, "    <string>%s</string>\n", operand.name.value);
-            fprintf(output, "    <key>OutputUUID</key>\n");
-            fprintf(output, "    <string>%s</string>\n", operand.uuid);
-            fprintf(output, "    <key>Type</key>\n");
-            fprintf(output, "    <string>ActionOutput</string>\n");
-            fprintf(output, "    </dict>\n");
-            fprintf(output, "<key>WFSerializationType</key>\n");
-            fprintf(output, "<string>WFTextTokenAttachment</string>\n");
-            fprintf(output, "</dict>\n");
+            fprintf(output, "<dict>");
+            fprintf(output, "<key>Value</key>");
+            fprintf(output, "<dict>");
+            fprintf(output, "<key>OutputName</key>");
+            fprintf(output, "<string>%s</string>", operand.name.value);
+            fprintf(output, "<key>OutputUUID</key>");
+            fprintf(output, "<string>%s</string>", operand.uuid);
+            fprintf(output, "<key>Type</key>");
+            fprintf(output, "<string>ActionOutput</string>");
+            fprintf(output, "</dict>");
+            fprintf(output, "<key>WFSerializationType</key>");
+            fprintf(output, "<string>WFTextTokenAttachment</string>");
+            fprintf(output, "</dict>");
             break;
         case variable:
-            fprintf(output, "<dict>\n");
-            fprintf(output, "<key>Value</key>\n");
-            fprintf(output, "<dict>\n");
-            fprintf(output, "   <key>Type</key>\n");
-            fprintf(output, "   <string>Variable</string>\n");
-            fprintf(output, "   <key>VariableName</key>\n");
-            fprintf(output, "   <string>%s</string>\n", operand.name.value);
-            fprintf(output, "   </dict>\n");
-            fprintf(output, "<key>WFSerializationType</key>\n");
-            fprintf(output, "<string>WFTextTokenAttachment</string>\n");
-            fprintf(output, "</dict>\n");
+            fprintf(output, "<dict>");
+            fprintf(output, "<key>Value</key>");
+            fprintf(output, "<dict>");
+            fprintf(output, "<key>Type</key>");
+            fprintf(output, "<string>Variable</string>");
+            fprintf(output, "<key>VariableName</key>");
+            fprintf(output, "<string>%s</string>", operand.name.value);
+            fprintf(output, "</dict>");
+            fprintf(output, "<key>WFSerializationType</key>");
+            fprintf(output, "<string>WFTextTokenAttachment</string>");
+            fprintf(output, "</dict>");
             break;
     }
 
-    fprintf(output, "   <key>WFMathOperation</key>\n");
-    fprintf(output, "   <string>%s</string>\n", WFoperation);
+    fprintf(output, "<key>WFMathOperation</key>");
+    fprintf(output, "<string>%s</string>", WFoperation);
 }
 
 void
 output_math_scientific_operation_parameters(FILE *output, char operator, Operand operand) {
     if (operator == '^') {
-        fprintf(output, "<key>WFMathOperation</key>\n");
-        fprintf(output, "<string>…</string>\n");
-        fprintf(output, "<key>WFScientificMathOperand</key>\n");
+        fprintf(output, "<key>WFMathOperation</key>");
+        fprintf(output, "<string>…</string>");
+        fprintf(output, "<key>WFScientificMathOperand</key>");
 
         switch (operand.type) {
             case number:
-                fprintf(output, "<real>%s</real>\n", operand.value.value);
+                fprintf(output, "<real>%s</real>", operand.value.value);
                 break;
         case magicVariable:
-            fprintf(output, "<dict>\n");
-            fprintf(output, "<key>Value</key>\n");
-            fprintf(output, "<dict>\n");
-            fprintf(output, "    <key>OutputName</key>\n");
-            fprintf(output, "    <string>%s</string>\n", operand.name.value);
-            fprintf(output, "    <key>OutputUUID</key>\n");
-            fprintf(output, "    <string>%s</string>\n", operand.uuid);
-            fprintf(output, "    <key>Type</key>\n");
-            fprintf(output, "    <string>ActionOutput</string>\n");
-            fprintf(output, "</dict>\n");
-            fprintf(output, "<key>WFSerializationType</key>\n");
-            fprintf(output, "<string>WFTextTokenAttachment</string>\n");
-            fprintf(output, "</dict>\n");
+            fprintf(output, "<dict>");
+            fprintf(output, "<key>Value</key>");
+            fprintf(output, "<dict>");
+            fprintf(output, "<key>OutputName</key>");
+            fprintf(output, "<string>%s</string>", operand.name.value);
+            fprintf(output, "<key>OutputUUID</key>");
+            fprintf(output, "<string>%s</string>", operand.uuid);
+            fprintf(output, "<key>Type</key>");
+            fprintf(output, "<string>ActionOutput</string>");
+            fprintf(output, "</dict>");
+            fprintf(output, "<key>WFSerializationType</key>");
+            fprintf(output, "<string>WFTextTokenAttachment</string>");
+            fprintf(output, "</dict>");
             break;
             case variable:
-                fprintf(output, "<dict>\n");
-                fprintf(output, "   <key>Type</key>\n");
-                fprintf(output, "   <string>Variable</string>\n");
-                fprintf(output, "   <key>VariableName</key>\n");
-                fprintf(output, "   <string>%s</string>\n", operand.name.value);
-                fprintf(output, "   <key>WFSerializationType</key>\n");
-                fprintf(output, "   <string>WFTextTokenAttachment</string>\n");
-                fprintf(output, "</dict>\n");
+                fprintf(output, "<dict>");
+                fprintf(output, "<key>Type</key>");
+                fprintf(output, "<string>Variable</string>");
+                fprintf(output, "<key>VariableName</key>");
+                fprintf(output, "<string>%s</string>", operand.name.value);
+                fprintf(output, "<key>WFSerializationType</key>");
+                fprintf(output, "<string>WFTextTokenAttachment</string>");
+                fprintf(output, "</dict>");
                 break;
         }
 
-        fprintf(output, "<key>WFScientificMathOperation</key>\n");
-        fprintf(output, "<string>x^y</string>\n");
+        fprintf(output, "<key>WFScientificMathOperation</key>");
+        fprintf(output, "<string>x^y</string>");
     }
 }
 
 void
 output_operation(FILE *output, char operator, Operand operand, char *uuid) {
-    fprintf(output, "<dict>\n");
-    fprintf(output, "<key>WFWorkflowActionIdentifier</key>\n");
-    fprintf(output, "<string>is.workflow.actions.math</string>\n");
-    fprintf(output, "<key>WFWorkflowActionParameters</key>\n");
-    fprintf(output, "<dict>\n");
-    fprintf(output, "   <key>UUID</key>\n");
-    fprintf(output, "   <string>%s</string>\n", uuid);
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
+    fprintf(output, "<string>is.workflow.actions.math</string>");
+    fprintf(output, "<key>WFWorkflowActionParameters</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>UUID</key>");
+    fprintf(output, "<string>%s</string>", uuid);
 
     switch (operator) {
         case '+':
@@ -261,8 +254,8 @@ output_operation(FILE *output, char operator, Operand operand, char *uuid) {
             break;
     }
 
-    fprintf(output, "</dict>\n");
-    fprintf(output, "</dict>\n");
+    fprintf(output, "</dict>");
+    fprintf(output, "</dict>");
 }
 
 void
