@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <uuid/uuid.h>
+
 #include "splash_helper.h"
+#include "uuid.h"
 
 void
 output_header(FILE *output) {
@@ -68,7 +69,7 @@ output_footer(FILE *output) {
 }
 
 void
-output_number(FILE *output, char *number) {
+output_number(FILE *output, char100 number) {
     char patt[] = "<dict>\n\
                    <key>WFWorkflowActionIdentifier</key>\n\
                    <string>is.workflow.actions.number</string>\n\
@@ -79,11 +80,11 @@ output_number(FILE *output, char *number) {
                    </dict>\n\
                    </dict>\n";
 
-    fprintf(output, patt, number);
+    fprintf(output, patt, number.value);
 }
 
 void
-output_set_variable(FILE *output, const char *name) {
+output_set_variable(FILE *output, char100 name) {
     char patt[] = "<dict>\n\
                    <key>WFWorkflowActionIdentifier</key>\n\
                    <string>is.workflow.actions.setvariable</string>\n\
@@ -94,11 +95,11 @@ output_set_variable(FILE *output, const char *name) {
                    </dict>\n\
                    </dict>\n";
 
-    fprintf(output, patt, name);
+    fprintf(output, patt, name.value);
 }
 
 void
-output_get_variable(FILE *output, char *name) {
+output_get_variable(FILE *output, char100 name) {
         fprintf(output, "<dict>\n");
         fprintf(output, "   <key>WFWorkflowActionIdentifier</key>\n");
         fprintf(output, "   <string>is.workflow.actions.getvariable</string>\n");
@@ -111,7 +112,7 @@ output_get_variable(FILE *output, char *name) {
         fprintf(output, "               <key>Type</key>\n");
         fprintf(output, "               <string>Variable</string>\n");
         fprintf(output, "               <key>VariableName</key>\n");
-        fprintf(output, "               <string>%s</string>\n", name);
+        fprintf(output, "               <string>%s</string>\n", name.value);
         fprintf(output, "           </dict>\n");
         fprintf(output, "           <key>WFSerializationType</key>\n");
         fprintf(output, "           <string>WFTextTokenAttachment</string>\n");
@@ -121,7 +122,7 @@ output_get_variable(FILE *output, char *name) {
 }
 
 void
-output_get_magic_variable(FILE *output, Operand *op) {
+output_get_magic_variable(FILE *output, Operand op) {
     fprintf(output, "<dict>\n");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>\n");
     fprintf(output, "<string>is.workflow.actions.getvariable</string>\n");
@@ -131,10 +132,10 @@ output_get_magic_variable(FILE *output, Operand *op) {
     fprintf(output, "   <dict>\n");
     fprintf(output, "       <key>Value</key>\n");
     fprintf(output, "       <dict>\n");
-    fprintf(output, "           <key>%s</key>\n", op->name);
+    fprintf(output, "           <key>%s</key>\n", op.name.value);
     fprintf(output, "           <string>Calculation Result</string>\n");
     fprintf(output, "           <key>OutputUUID</key>\n");
-    fprintf(output, "           <string>%s</string>\n", op->uuid);
+    fprintf(output, "           <string>%s</string>\n", op.uuid);
     fprintf(output, "           <key>Type</key>\n");
     fprintf(output, "           <string>ActionOutput</string>\n");
     fprintf(output, "       </dict>\n");
@@ -146,7 +147,7 @@ output_get_magic_variable(FILE *output, Operand *op) {
 }
 
 void
-output_math_simple_operation_parameters(FILE *output, char operator, Operand *operand) {
+output_math_simple_operation_parameters(FILE *output, char operator, Operand operand) {
     char WFoperation[30];
     switch (operator) {
         case '+': strcpy(WFoperation, "+"); break;
@@ -157,18 +158,18 @@ output_math_simple_operation_parameters(FILE *output, char operator, Operand *op
 
     fprintf(output, "   <key>WFMathOperand</key>\n");
 
-    switch (operand->type) {
+    switch (operand.type) {
         case number:
-            fprintf(output, "<real>%s</real>\n", operand->value);
+            fprintf(output, "<real>%s</real>\n", operand.value.value);
             break;
         case magicVariable:
             fprintf(output, "<dict>\n");
             fprintf(output, "<key>Value</key>\n");
             fprintf(output, "<dict>\n");
             fprintf(output, "    <key>OutputName</key>\n");
-            fprintf(output, "    <string>%s</string>\n", operand->name);
+            fprintf(output, "    <string>%s</string>\n", operand.name.value);
             fprintf(output, "    <key>OutputUUID</key>\n");
-            fprintf(output, "    <string>%s</string>\n", operand->uuid);
+            fprintf(output, "    <string>%s</string>\n", operand.uuid);
             fprintf(output, "    <key>Type</key>\n");
             fprintf(output, "    <string>ActionOutput</string>\n");
             fprintf(output, "    </dict>\n");
@@ -183,7 +184,7 @@ output_math_simple_operation_parameters(FILE *output, char operator, Operand *op
             fprintf(output, "   <key>Type</key>\n");
             fprintf(output, "   <string>Variable</string>\n");
             fprintf(output, "   <key>VariableName</key>\n");
-            fprintf(output, "   <string>%s</string>\n", operand->name);
+            fprintf(output, "   <string>%s</string>\n", operand.name.value);
             fprintf(output, "   </dict>\n");
             fprintf(output, "<key>WFSerializationType</key>\n");
             fprintf(output, "<string>WFTextTokenAttachment</string>\n");
@@ -196,24 +197,24 @@ output_math_simple_operation_parameters(FILE *output, char operator, Operand *op
 }
 
 void
-output_math_scientific_operation_parameters(FILE *output, char operator, Operand *operand) {
+output_math_scientific_operation_parameters(FILE *output, char operator, Operand operand) {
     if (operator == '^') {
         fprintf(output, "<key>WFMathOperation</key>\n");
         fprintf(output, "<string>…</string>\n");
         fprintf(output, "<key>WFScientificMathOperand</key>\n");
 
-        switch (operand->type) {
+        switch (operand.type) {
             case number:
-                fprintf(output, "<real>%s</real>\n", operand->value);
+                fprintf(output, "<real>%s</real>\n", operand.value.value);
                 break;
         case magicVariable:
             fprintf(output, "<dict>\n");
             fprintf(output, "<key>Value</key>\n");
             fprintf(output, "<dict>\n");
             fprintf(output, "    <key>OutputName</key>\n");
-            fprintf(output, "    <string>%s</string>\n", operand->name);
+            fprintf(output, "    <string>%s</string>\n", operand.name.value);
             fprintf(output, "    <key>OutputUUID</key>\n");
-            fprintf(output, "    <string>%s</string>\n", operand->uuid);
+            fprintf(output, "    <string>%s</string>\n", operand.uuid);
             fprintf(output, "    <key>Type</key>\n");
             fprintf(output, "    <string>ActionOutput</string>\n");
             fprintf(output, "</dict>\n");
@@ -226,7 +227,7 @@ output_math_scientific_operation_parameters(FILE *output, char operator, Operand
                 fprintf(output, "   <key>Type</key>\n");
                 fprintf(output, "   <string>Variable</string>\n");
                 fprintf(output, "   <key>VariableName</key>\n");
-                fprintf(output, "   <string>%s</string>\n", operand->name);
+                fprintf(output, "   <string>%s</string>\n", operand.name.value);
                 fprintf(output, "   <key>WFSerializationType</key>\n");
                 fprintf(output, "   <string>WFTextTokenAttachment</string>\n");
                 fprintf(output, "</dict>\n");
@@ -239,7 +240,7 @@ output_math_scientific_operation_parameters(FILE *output, char operator, Operand
 }
 
 void
-output_operation(FILE *output, char operator, Operand *operand, char *uuid) {
+output_operation(FILE *output, char operator, Operand operand, char *uuid) {
     fprintf(output, "<dict>\n");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>\n");
     fprintf(output, "<string>is.workflow.actions.math</string>\n");
@@ -265,65 +266,58 @@ output_operation(FILE *output, char operator, Operand *operand, char *uuid) {
 }
 
 void
-append_operand(Operand **stack, OpType type, const char *operand) {
-    *stack = (Operand *)calloc(1, sizeof(Operand));
-    (*stack)->type = type;
-    char **temp = NULL;
+append_operand(Operand *stack, OpType type, char100 operand) {
+    Operand temp;
+    *stack = temp;
+    (*stack).type = type;
+
     switch (type) {
-        case number: temp = &((*stack)->value); break;
-        case variable: temp = &((*stack)->name); break;
+        case number:   strcpy((*stack).value.value, operand.value); break;
+        case variable: strcpy((*stack).name.value, operand.value); break;
         case magicVariable:
-                       temp = &((*stack)->name); break;
-                       uuid_t bin;
-                       uuid_generate(bin);
-                       uuid_unparse_upper(bin, (*stack)->uuid);
+                       strcpy((*stack).name.value, operand.value); break;
+                       uuid_gen((*stack).uuid);
                        break;
     }
-    *temp = (char *)malloc(sizeof(char) * (strlen(operand) + 1));
-    strcpy(*temp, operand);
 }
 
 void
-append_operation(Operand **stack, char operator, Operand *op1, Operand *op2) {
-    switch (op1->type) {
-        case number: output_number(stdout, op1->value); break;
-        case variable: output_get_variable(stdout, op1->name); break;
+append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
+    switch (op1.type) {
+        case number: output_number(stdout, op1.value); break;
+        case variable: output_get_variable(stdout, op1.name); break;
         case magicVariable: output_get_magic_variable(stdout, op1); break;
     }
 
-    uuid_t bin;
-    uuid_generate(bin);
     char uuid[37];
-    uuid_unparse_upper(bin, uuid);
+    uuid_gen(uuid);
     output_operation(stdout, operator, op2, uuid);
 
-    Operand *new_stack = (Operand *)calloc(1, sizeof(Operand));
-    new_stack->type = magicVariable;
+    Operand new_stack;
+    new_stack.type = magicVariable;
 
     char name[] = "Calculation Result";
-    new_stack->name = (char *)malloc(sizeof(char) * (strlen(name) + 1));
-    strcpy(new_stack->name, name);
-    strcpy(new_stack->uuid, uuid);
+    strcpy(new_stack.name.value, name);
+    strcpy(new_stack.uuid, uuid);
 
     *stack = new_stack;
 }
 
 void
-append_minus_op(Operand **stack, Operand *op) {
-    Operand *temp = (Operand *)calloc(1, sizeof(Operand));
-    temp->type = number;
+append_minus_op(Operand *stack, Operand op) {
+    Operand temp;
+    temp.type = number;
     char minus_one[] = "-1";
-    temp->value = (char *)malloc(sizeof(char) * (strlen(minus_one) + 1));
-    strcpy(temp->value, minus_one);
+    strcpy(temp.value.value, minus_one);
 
     append_operation(stack, '*', temp, op);
 }
 
 void
-set_variable(const char *id, Operand *op) {
-    switch (op->type) {
-        case number: output_number(stdout, op->value); break;
-        case variable: output_get_variable(stdout, op->name); break;
+set_variable(char100 id, Operand op) {
+    switch (op.type) {
+        case number: output_number(stdout, op.value); break;
+        case variable: output_get_variable(stdout, op.name); break;
         case magicVariable: break;  // if it's a magic variable, its the flow
     }
 
