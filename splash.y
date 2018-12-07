@@ -27,6 +27,7 @@ void yyerror();
 %token <char *> ID
 
 
+%right ATT
 %left '+' '-'
 %right UMINUS
 %left '*' '/'
@@ -44,6 +45,10 @@ stat_list   : stat_list stat '\n' {}
             ;
 
 stat    : expr  { fprintf(stderr, "<reduced expr>\n"); }
+        | attrib  { fprintf(stderr, "<reduced attrib>\n"); }
+        ;
+
+attrib  : ID ATT expr  { set_variable($1, $3); }
         ;
 
 expr    : expr[left] '+' expr[right]         { append_operation(&$$, '+', $[left], $[right]);  }

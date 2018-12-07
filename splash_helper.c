@@ -83,7 +83,7 @@ output_number(FILE *output, char *number) {
 }
 
 void
-output_set_variable(FILE *output, char *name) {
+output_set_variable(FILE *output, const char *name) {
     char patt[] = "<dict>\n\
                    <key>WFWorkflowActionIdentifier</key>\n\
                    <string>is.workflow.actions.setvariable</string>\n\
@@ -317,4 +317,15 @@ append_minus_op(Operand **stack, Operand *op) {
     strcpy(temp->value, minus_one);
 
     append_operation(stack, '*', temp, op);
+}
+
+void
+set_variable(const char *id, Operand *op) {
+    switch (op->type) {
+        case number: output_number(stdout, op->value); break;
+        case variable: output_get_variable(stdout, op->name); break;
+        case magicVariable: break;  // if it's a magic variable, its the flow
+    }
+
+    output_set_variable(stdout, id);
 }
