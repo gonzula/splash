@@ -66,33 +66,42 @@ output_footer(FILE *output) {
 
 void
 output_number(FILE *output, char100 number) {
+    char *escaped = xml_escape(number.value);
+
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
     fprintf(output, "<string>is.workflow.actions.number</string>");
     fprintf(output, "<key>WFWorkflowActionParameters</key>");
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFNumberActionNumber</key>");
-    fprintf(output, "<real>%s</real>", number.value);
+    fprintf(output, "<real>%s</real>", escaped);
     fprintf(output, "</dict>");
     fprintf(output, "</dict>");
+
+    free(escaped);
 }
 
 void
 output_set_variable(FILE *output, char100 name) {
+    char *escaped = xml_escape(name.value);
+
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
     fprintf(output, "<string>is.workflow.actions.setvariable</string>");
     fprintf(output, "<key>WFWorkflowActionParameters</key>");
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFVariableName</key>");
-    fprintf(output, "<string>%s</string>", name.value);
+    fprintf(output, "<string>%s</string>", escaped);
     fprintf(output, "</dict>");
     fprintf(output, "</dict>");
 
+    free(escaped);
 }
 
 void
 output_get_variable(FILE *output, char100 name) {
+    char *escaped = xml_escape(name.value);
+
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
     fprintf(output, "<string>is.workflow.actions.getvariable</string>");
@@ -105,17 +114,22 @@ output_get_variable(FILE *output, char100 name) {
     fprintf(output, "<key>Type</key>");
     fprintf(output, "<string>Variable</string>");
     fprintf(output, "<key>VariableName</key>");
-    fprintf(output, "<string>%s</string>", name.value);
+    fprintf(output, "<string>%s</string>", escaped);
     fprintf(output, "</dict>");
     fprintf(output, "<key>WFSerializationType</key>");
     fprintf(output, "<string>WFTextTokenAttachment</string>");
     fprintf(output, "</dict>");
     fprintf(output, "</dict>");
     fprintf(output, "</dict>");
+
+    free(escaped);
 }
 
 void
 output_get_magic_variable(FILE *output, Operand op) {
+    char *escaped1 = xml_escape(op.name.value);
+    char *escaped2 = xml_escape(op.uuid);
+
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
     fprintf(output, "<string>is.workflow.actions.getvariable</string>");
@@ -125,10 +139,10 @@ output_get_magic_variable(FILE *output, Operand op) {
     fprintf(output, "<dict>");
     fprintf(output, "<key>Value</key>");
     fprintf(output, "<dict>");
-    fprintf(output, "<key>%s</key>", op.name.value);
+    fprintf(output, "<key>%s</key>", escaped1);
     fprintf(output, "<string>Calculation Result</string>");
     fprintf(output, "<key>OutputUUID</key>");
-    fprintf(output, "<string>%s</string>", op.uuid);
+    fprintf(output, "<string>%s</string>", escaped2);
     fprintf(output, "<key>Type</key>");
     fprintf(output, "<string>ActionOutput</string>");
     fprintf(output, "</dict>");
@@ -137,6 +151,9 @@ output_get_magic_variable(FILE *output, Operand op) {
     fprintf(output, "</dict>");
     fprintf(output, "</dict>");
     fprintf(output, "</dict>");
+
+    free(escaped1);
+    free(escaped2);
 }
 
 void
