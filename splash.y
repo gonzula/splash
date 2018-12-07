@@ -11,7 +11,7 @@ void yyerror();
 
 %define api.value.type union
 
-%type <Operand *> expr
+%type <Operand> expr
 
 %token <char100> STR
 %token <char100> NUM
