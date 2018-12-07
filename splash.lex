@@ -3,21 +3,16 @@
 #include <string.h>
 #include <stdlib.h>
 
-char *
-mkcp(char *src) {
-    char *dst = (char *)malloc(sizeof(char) * (strlen(src) + 1));
-    strcpy(dst, src);
-    return dst;
-}
-
 %}
 
 %%
 
 [ ] { }
 
-\"([^\"\\]|\\.)*\"|\'([^\'\\]|\\.)*\' { yylval.STR = mkcp(yytext); return STR; }
-[0-9]+(\.[0-9]+)? { yylval.NUM = mkcp(yytext); return NUM; }
+#.*?\n              {}  /* comment */
+
+\"([^\"\\]|\\.)*\"|\'([^\'\\]|\\.)*\' { strcpy(yylval.STR.value, yytext); return STR; }
+[0-9]+(\.[0-9]+)? { strcpy(yylval.NUM.value, yytext); return NUM; }
 \:\=            { return ATT; }
 
 if             { return IF;   }
@@ -32,7 +27,7 @@ less_or_equal_than|<=  { return LE; }
 greater_than|>         { return GT; }
 greater_or_equal_than|>=  { return GE; }
 
-[a-zA-Z_][a-zA-Z_0-9]*  { yylval.ID = mkcp(yytext); return ID; }
+[a-zA-Z_][a-zA-Z_0-9]*  { strcpy(yylval.ID.value, yytext); return ID; }
 
 \n|.                     { return yytext[0]; }
 

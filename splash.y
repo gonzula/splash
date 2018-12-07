@@ -6,14 +6,15 @@
 int yylex();
 void yyerror();
 
+
 %}
 
 %define api.value.type union
 
 %type <Operand *> expr
 
-%token <char *> STR
-%token <char *> NUM
+%token <char100> STR
+%token <char100> NUM
 %token ATT
 %token IF
 %token ELSE
@@ -24,7 +25,7 @@ void yyerror();
 %token LE
 %token GT
 %token GE
-%token <char *> ID
+%token <char100> ID
 
 
 %right ATT
