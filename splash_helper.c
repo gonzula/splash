@@ -98,6 +98,29 @@ output_set_variable(FILE *output, char *name) {
 }
 
 void
+output_get_variable(FILE *output, char *name) {
+        fprintf(output, "<dict>\n");
+        fprintf(output, "   <key>WFWorkflowActionIdentifier</key>\n");
+        fprintf(output, "   <string>is.workflow.actions.getvariable</string>\n");
+        fprintf(output, "   <key>WFWorkflowActionParameters</key>\n");
+        fprintf(output, "   <dict>\n");
+        fprintf(output, "       <key>WFVariable</key>\n");
+        fprintf(output, "       <dict>\n");
+        fprintf(output, "           <key>Value</key>\n");
+        fprintf(output, "           <dict>\n");
+        fprintf(output, "               <key>Type</key>\n");
+        fprintf(output, "               <string>Variable</string>\n");
+        fprintf(output, "               <key>VariableName</key>\n");
+        fprintf(output, "               <string>%s</string>\n", name);
+        fprintf(output, "           </dict>\n");
+        fprintf(output, "           <key>WFSerializationType</key>\n");
+        fprintf(output, "           <string>WFTextTokenAttachment</string>\n");
+        fprintf(output, "       </dict>\n");
+        fprintf(output, "   </dict>\n");
+        fprintf(output, "</dict>\n");
+}
+
+void
 output_get_magic_variable(FILE *output, Operand *op) {
     fprintf(output, "<dict>\n");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>\n");
@@ -264,7 +287,7 @@ void
 append_operation(Operand **stack, char operator, Operand *op1, Operand *op2) {
     switch (op1->type) {
         case number: output_number(stdout, op1->value); break;
-        case variable: break;
+        case variable: output_get_variable(stdout, op1->name); break;
         case magicVariable: output_get_magic_variable(stdout, op1); break;
     }
 
