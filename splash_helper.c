@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <uuid/uuid.h>
+
 #include "splash_helper.h"
+#include "uuid.h"
 
 void
 output_header(FILE *output) {
@@ -275,9 +276,7 @@ append_operand(Operand *stack, OpType type, char100 operand) {
         case variable: strcpy((*stack).name.value, operand.value); break;
         case magicVariable:
                        strcpy((*stack).name.value, operand.value); break;
-                       uuid_t bin;
-                       uuid_generate(bin);
-                       uuid_unparse_upper(bin, (*stack).uuid);
+                       uuid_gen((*stack).uuid);
                        break;
     }
 }
@@ -290,11 +289,8 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
         case magicVariable: output_get_magic_variable(stdout, op1); break;
     }
 
-
-    uuid_t bin;
-    uuid_generate(bin);
     char uuid[37];
-    uuid_unparse_upper(bin, uuid);
+    uuid_gen(uuid);
     output_operation(stdout, operator, op2, uuid);
 
     Operand new_stack;
