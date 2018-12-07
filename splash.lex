@@ -6,7 +6,7 @@
 
 \"([^\"\\]|\\.)*\"|\'([^\'\\]|\\.)*\' { yylval.STR = yytext; return STR; }
 [0-9]+(\.[0-9]+)? { yylval.NUM = yytext; return NUM; }
-\=            { return ATT; }
+\:\=            { return ATT; }
 
 if             { return IF;   }
 otherwise|else { return ELSE; }
