@@ -51,11 +51,29 @@ operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) 
     (*stack) = new_stack;
 }
 
+int
+operator_is_commutative(char operator) {
+    switch (operator) {
+        case '+': return 1;
+        case '-': return 0;
+        case '*': return 1;
+        case '/': return 0;
+        case '^': return 0;
+        default:  return 0;
+    }
+}
+
 void
 append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     if (op1.type == number && op2.type == number) { // can optimize
         operation_optimization(stack, operator, op1, op2);
         return;
+    }
+    if (operator_is_commutative(operator) && strcmp(last_uuid, op2.uuid) == 0) {
+        fprintf(stderr, "Switching op's\n");
+        Operand tmp = op1;
+        op1 = op2;
+        op2 = tmp;
     }
     switch (op1.type) {
         case number:        output_number(stdout, op1); break;
