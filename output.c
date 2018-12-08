@@ -73,7 +73,7 @@ void
 output_operand(FILE *output, Operand op) {
     switch (op.type) {
         case number:        output_number(output, op); break;
-        case variable:      output_get_variable(output, op.name); break;
+        case variable:      output_get_variable(output, op); break;
         case magicVariable: output_get_magic_variable(output, op); break;
     }
 }
@@ -119,9 +119,12 @@ output_set_variable(FILE *output, char100 name) {
 }
 
 void
-output_get_variable(FILE *output, char100 name) {
-    clear_last_uuid();
-    char *escaped = xml_escape(name.value);
+output_get_variable(FILE *output, Operand op) {
+    if (strcmp(last_uuid, op.uuid) == 0) {
+        return;
+    }
+    strcpy(last_uuid, op.uuid);
+    char *escaped = xml_escape(op.name.value);
 
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");

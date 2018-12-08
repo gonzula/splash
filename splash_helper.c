@@ -59,7 +59,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     }
     switch (op1.type) {
         case number:        output_number(stdout, op1); break;
-        case variable:      output_get_variable(stdout, op1.name); break;
+        case variable:      output_get_variable(stdout, op1); break;
         case magicVariable: output_get_magic_variable(stdout, op1); break;
     }
 
