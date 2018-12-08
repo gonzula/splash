@@ -139,8 +139,8 @@ output_get_magic_variable(FILE *output, Operand op) {
     fprintf(output, "<dict>");
     fprintf(output, "<key>Value</key>");
     fprintf(output, "<dict>");
-    fprintf(output, "<key>%s</key>", escaped1);
-    fprintf(output, "<string>Calculation Result</string>");
+    fprintf(output, "<key>OutputName</key>");
+    fprintf(output, "<string>%s</string>", escaped1);
     fprintf(output, "<key>OutputUUID</key>");
     fprintf(output, "<string>%s</string>", escaped2);
     fprintf(output, "<key>Type</key>");
