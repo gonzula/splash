@@ -14,13 +14,12 @@ append_operand(Operand *stack, OpType type, char100 operand) {
     *stack = temp;
     (*stack).type = type;
 
+    uuid_gen((*stack).uuid);
+
     switch (type) {
-        case number:   strcpy((*stack).value.value, operand.value); break;
-        case variable: strcpy((*stack).name.value, operand.value); break;
-        case magicVariable:
-                       strcpy((*stack).name.value, operand.value); break;
-                       uuid_gen((*stack).uuid);
-                       break;
+        case number:        strcpy((*stack).value.value, operand.value); break;
+        case variable:      strcpy((*stack).name.value, operand.value); break;
+        case magicVariable: strcpy((*stack).name.value, operand.value); break; break;
     }
 }
 
@@ -29,6 +28,8 @@ operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) 
     fprintf(stderr, "optimizing %s %c %s\n", op1.value.value, operator, op2.value.value);
     Operand new_stack;
     new_stack.type = number;
+
+    uuid_gen(new_stack.uuid);
 
     double v1 = atof(op1.value.value);
     double v2 = atof(op2.value.value);
@@ -57,8 +58,8 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
         return;
     }
     switch (op1.type) {
-        case number: output_number(stdout, op1.value); break;
-        case variable: output_get_variable(stdout, op1.name); break;
+        case number:        output_number(stdout, op1); break;
+        case variable:      output_get_variable(stdout, op1.name); break;
         case magicVariable: output_get_magic_variable(stdout, op1); break;
     }
 
@@ -80,6 +81,7 @@ void
 append_minus_op(Operand *stack, Operand op) {
     Operand temp;
     temp.type = number;
+    uuid_gen(temp.uuid);
     char minus_one[] = "-1";
     strcpy(temp.value.value, minus_one);
 

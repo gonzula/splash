@@ -63,14 +63,17 @@ output_footer(FILE *output) {
 }
 
 void
-output_number(FILE *output, char100 number) {
-    char *escaped = xml_escape(number.value);
+output_number(FILE *output, Operand op) {
+    char *escaped = xml_escape(op.value.value);
 
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
     fprintf(output, "<string>is.workflow.actions.number</string>");
     fprintf(output, "<key>WFWorkflowActionParameters</key>");
     fprintf(output, "<dict>");
+    fprintf(output, "<key>UUID</key>");
+    fprintf(output, "<string>%s</string>", op.uuid);
+
     fprintf(output, "<key>WFNumberActionNumber</key>");
     fprintf(output, "<real>%s</real>", escaped);
     fprintf(output, "</dict>");
