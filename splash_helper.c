@@ -87,14 +87,3 @@ append_minus_op(Operand *stack, Operand op) {
 
     append_operation(stack, '*', temp, op);
 }
-
-void
-set_variable(char100 id, Operand op) {
-    switch (op.type) {
-        case number: output_number(stdout, op.value); break;
-        case variable: output_get_variable(stdout, op.name); break;
-        case magicVariable: break;  // if it's a magic variable, its the flow
-    }
-
-    output_set_variable(stdout, id);
-}

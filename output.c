@@ -63,6 +63,15 @@ output_footer(FILE *output) {
 }
 
 void
+output_operand(FILE *output, Operand op) {
+    switch (op.type) {
+        case number: output_number(output, op); break;
+        case variable: output_get_variable(output, op.name); break;
+        case magicVariable: output_get_magic_variable(output, op); break;
+    }
+}
+
+void
 output_number(FILE *output, Operand op) {
     char *escaped = xml_escape(op.value.value);
 

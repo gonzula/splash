@@ -6,6 +6,7 @@
 
 void output_header(FILE *output);
 void output_footer(FILE *output);
+void output_operand(FILE *output, Operand op);
 void output_number(FILE *output, Operand op);
 void output_set_variable(FILE *output, char100 name);
 void output_get_variable(FILE *output, char100 name);

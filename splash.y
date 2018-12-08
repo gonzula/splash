@@ -13,6 +13,7 @@ void yyerror();
 %define api.value.type union
 
 %type <Operand> expr
+%type <Operand> finished_expr
 
 %token <char100> STR
 %token <char100> NUM
@@ -46,12 +47,15 @@ stat_list   : stat_list stat '\n' {}
             |
             ;
 
-stat    : expr  { fprintf(stderr, "<reduced expr>\n"); }
+stat    : finished_expr  { fprintf(stderr, "<reduced expr>\n"); }
         | attrib  { fprintf(stderr, "<reduced attrib>\n"); }
         ;
 
-attrib  : ID ATT expr  { set_variable($1, $3); }
+attrib  : ID ATT finished_expr  { output_set_variable(stdout, $1); }
         ;
+
+finished_expr : expr  { $$ = $1; output_operand(stdout, $1); }
+              ;
 
 expr    : expr[left] '+' expr[right]         { append_operation(&$$, '+', $[left], $[right]);  }
         | expr[left] '-' expr[right]         { append_operation(&$$, '-', $[left], $[right]);  }
