@@ -226,12 +226,19 @@ output_math_scientific_operation_parameters(FILE *output, char operator, Operand
     if (operator == '^') {
         fprintf(output, "<key>WFMathOperation</key>");
         fprintf(output, "<string>…</string>");
-        fprintf(output, "<key>WFScientificMathOperand</key>");
 
-        output_math_operand(output, operand);
-
-        fprintf(output, "<key>WFScientificMathOperation</key>");
-        fprintf(output, "<string>x^y</string>");
+        if (operand.type == number && strcmp("2", operand.value.value) == 0) {
+            fprintf(output, "<key>WFScientificMathOperation</key>");
+            fprintf(output, "<string>x^2</string>");
+        } else if (operand.type == number && strcmp("3", operand.value.value) == 0) {
+            fprintf(output, "<key>WFScientificMathOperation</key>");
+            fprintf(output, "<string>x^3</string>");
+        } else {
+            fprintf(output, "<key>WFScientificMathOperand</key>");
+            output_math_operand(output, operand);
+            fprintf(output, "<key>WFScientificMathOperation</key>");
+            fprintf(output, "<string>x^y</string>");
+        }
     }
 }
 
