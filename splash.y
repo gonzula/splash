@@ -1,6 +1,7 @@
 %{
 #include <ctype.h>
 #include <stdio.h>
+#include "output.h"
 #include "splash_helper.h"
 
 int yylex();
