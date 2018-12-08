@@ -157,6 +157,52 @@ output_get_magic_variable(FILE *output, Operand op) {
 }
 
 void
+output_math_operand(FILE *output, Operand op) {
+    switch (op.type) {
+        case number: {
+                         char *escaped = xml_escape(op.value.value);
+                         fprintf(output, "<real>%s</real>", escaped);
+                         free(escaped);
+                         break;
+                     }
+        case magicVariable: {
+                                char *escaped = xml_escape(op.name.value);
+                                fprintf(output, "<dict>");
+                                fprintf(output, "<key>Value</key>");
+                                fprintf(output, "<dict>");
+                                fprintf(output, "<key>OutputName</key>");
+                                fprintf(output, "<string>%s</string>", escaped);
+                                fprintf(output, "<key>OutputUUID</key>");
+                                fprintf(output, "<string>%s</string>", op.uuid);
+                                fprintf(output, "<key>Type</key>");
+                                fprintf(output, "<string>ActionOutput</string>");
+                                fprintf(output, "</dict>");
+                                fprintf(output, "<key>WFSerializationType</key>");
+                                fprintf(output, "<string>WFTextTokenAttachment</string>");
+                                fprintf(output, "</dict>");
+                                free(escaped);
+                                break;
+                            }
+        case variable: {
+                           char *escaped = xml_escape(op.name.value);
+                           fprintf(output, "<dict>");
+                           fprintf(output, "<key>Value</key>");
+                           fprintf(output, "<dict>");
+                           fprintf(output, "<key>Type</key>");
+                           fprintf(output, "<string>Variable</string>");
+                           fprintf(output, "<key>VariableName</key>");
+                           fprintf(output, "<string>%s</string>", escaped);
+                           fprintf(output, "</dict>");
+                           fprintf(output, "<key>WFSerializationType</key>");
+                           fprintf(output, "<string>WFTextTokenAttachment</string>");
+                           fprintf(output, "</dict>");
+                           free(escaped);
+                           break;
+                       }
+    }
+}
+
+void
 output_math_simple_operation_parameters(FILE *output, char operator, Operand operand) {
     char WFoperation[30];
     switch (operator) {
@@ -168,39 +214,7 @@ output_math_simple_operation_parameters(FILE *output, char operator, Operand ope
 
     fprintf(output, "<key>WFMathOperand</key>");
 
-    switch (operand.type) {
-        case number:
-            fprintf(output, "<real>%s</real>", operand.value.value);
-            break;
-        case magicVariable:
-            fprintf(output, "<dict>");
-            fprintf(output, "<key>Value</key>");
-            fprintf(output, "<dict>");
-            fprintf(output, "<key>OutputName</key>");
-            fprintf(output, "<string>%s</string>", operand.name.value);
-            fprintf(output, "<key>OutputUUID</key>");
-            fprintf(output, "<string>%s</string>", operand.uuid);
-            fprintf(output, "<key>Type</key>");
-            fprintf(output, "<string>ActionOutput</string>");
-            fprintf(output, "</dict>");
-            fprintf(output, "<key>WFSerializationType</key>");
-            fprintf(output, "<string>WFTextTokenAttachment</string>");
-            fprintf(output, "</dict>");
-            break;
-        case variable:
-            fprintf(output, "<dict>");
-            fprintf(output, "<key>Value</key>");
-            fprintf(output, "<dict>");
-            fprintf(output, "<key>Type</key>");
-            fprintf(output, "<string>Variable</string>");
-            fprintf(output, "<key>VariableName</key>");
-            fprintf(output, "<string>%s</string>", operand.name.value);
-            fprintf(output, "</dict>");
-            fprintf(output, "<key>WFSerializationType</key>");
-            fprintf(output, "<string>WFTextTokenAttachment</string>");
-            fprintf(output, "</dict>");
-            break;
-    }
+    output_math_operand(output, operand);
 
     fprintf(output, "<key>WFMathOperation</key>");
     fprintf(output, "<string>%s</string>", WFoperation);
@@ -213,36 +227,7 @@ output_math_scientific_operation_parameters(FILE *output, char operator, Operand
         fprintf(output, "<string>…</string>");
         fprintf(output, "<key>WFScientificMathOperand</key>");
 
-        switch (operand.type) {
-            case number:
-                fprintf(output, "<real>%s</real>", operand.value.value);
-                break;
-        case magicVariable:
-            fprintf(output, "<dict>");
-            fprintf(output, "<key>Value</key>");
-            fprintf(output, "<dict>");
-            fprintf(output, "<key>OutputName</key>");
-            fprintf(output, "<string>%s</string>", operand.name.value);
-            fprintf(output, "<key>OutputUUID</key>");
-            fprintf(output, "<string>%s</string>", operand.uuid);
-            fprintf(output, "<key>Type</key>");
-            fprintf(output, "<string>ActionOutput</string>");
-            fprintf(output, "</dict>");
-            fprintf(output, "<key>WFSerializationType</key>");
-            fprintf(output, "<string>WFTextTokenAttachment</string>");
-            fprintf(output, "</dict>");
-            break;
-            case variable:
-                fprintf(output, "<dict>");
-                fprintf(output, "<key>Type</key>");
-                fprintf(output, "<string>Variable</string>");
-                fprintf(output, "<key>VariableName</key>");
-                fprintf(output, "<string>%s</string>", operand.name.value);
-                fprintf(output, "<key>WFSerializationType</key>");
-                fprintf(output, "<string>WFTextTokenAttachment</string>");
-                fprintf(output, "</dict>");
-                break;
-        }
+        output_math_operand(output, operand);
 
         fprintf(output, "<key>WFScientificMathOperation</key>");
         fprintf(output, "<string>x^y</string>");
