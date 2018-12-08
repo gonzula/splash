@@ -4,7 +4,13 @@
 #include "output.h"
 
 void
+clear_last_uuid() {
+    last_uuid[0] = 0;
+}
+
+void
 output_header(FILE *output) {
+    clear_last_uuid();
     fprintf(output, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     fprintf(output, "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">");
     fprintf(output, "<plist version=\"1.0\">");
@@ -15,6 +21,7 @@ output_header(FILE *output) {
 
 void
 output_footer(FILE *output) {
+    clear_last_uuid();
     fprintf(output, "</array>");
     fprintf(output, "<key>WFWorkflowClientRelease</key>");
     fprintf(output, "<string>2.1.2</string>");
@@ -65,14 +72,18 @@ output_footer(FILE *output) {
 void
 output_operand(FILE *output, Operand op) {
     switch (op.type) {
-        case number: output_number(output, op); break;
-        case variable: output_get_variable(output, op.name); break;
+        case number:        output_number(output, op); break;
+        case variable:      output_get_variable(output, op.name); break;
         case magicVariable: output_get_magic_variable(output, op); break;
     }
 }
 
 void
 output_number(FILE *output, Operand op) {
+    if (strcmp(last_uuid, op.uuid) == 0) {
+        return;
+    }
+    strcpy(last_uuid, op.uuid);
     char *escaped = xml_escape(op.value.value);
 
     fprintf(output, "<dict>");
@@ -94,7 +105,6 @@ output_number(FILE *output, Operand op) {
 void
 output_set_variable(FILE *output, char100 name) {
     char *escaped = xml_escape(name.value);
-
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
     fprintf(output, "<string>is.workflow.actions.setvariable</string>");
@@ -110,6 +120,7 @@ output_set_variable(FILE *output, char100 name) {
 
 void
 output_get_variable(FILE *output, char100 name) {
+    clear_last_uuid();
     char *escaped = xml_escape(name.value);
 
     fprintf(output, "<dict>");
@@ -137,6 +148,10 @@ output_get_variable(FILE *output, char100 name) {
 
 void
 output_get_magic_variable(FILE *output, Operand op) {
+    if (strcmp(last_uuid, op.uuid) == 0) {
+        return;
+    }
+    strcpy(last_uuid, op.uuid);
     char *escaped1 = xml_escape(op.name.value);
     char *escaped2 = xml_escape(op.uuid);
 
@@ -253,6 +268,10 @@ output_math_scientific_operation_parameters(FILE *output, char operator, Operand
 
 void
 output_operation(FILE *output, char operator, Operand operand, char *uuid) {
+    if (strcmp(last_uuid, uuid) == 0) {
+        return;
+    }
+    strcpy(last_uuid, uuid);
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
     fprintf(output, "<string>is.workflow.actions.math</string>");

@@ -4,6 +4,8 @@
 #include "utils.h"
 #include "splash_helper.h"
 
+char last_uuid[37];
+
 void output_header(FILE *output);
 void output_footer(FILE *output);
 void output_operand(FILE *output, Operand op);
