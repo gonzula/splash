@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "splash_helper.h"
 #include "utils.h"
@@ -277,7 +278,37 @@ append_operand(Operand *stack, OpType type, char100 operand) {
 }
 
 void
+operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) {
+    fprintf(stderr, "optimizing %s %c %s\n", op1.value.value, operator, op2.value.value);
+    Operand new_stack;
+    new_stack.type = number;
+
+    double v1 = atof(op1.value.value);
+    double v2 = atof(op2.value.value);
+    double result;
+
+    fprintf(stderr, "v1 = %lf\n", v1);
+    fprintf(stderr, "v2 = %lf\n", v2);
+
+    switch (operator) {
+        case '+': result = v1 + v2; break;
+        case '-': result = v1 - v2; break;
+        case '*': result = v1 * v2; break;
+        case '/': result = v1 / v2; break;
+        case '^': result = pow(v1, v2); break;
+    }
+    fprintf(stderr, "ret = %lf\n", result);
+
+    sprintf(new_stack.value.value, "%lf", result);
+    (*stack) = new_stack;
+}
+
+void
 append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
+    if (op1.type == number && op2.type == number) { // can optimize
+        operation_optimization(stack, operator, op1, op2);
+        return;
+    }
     switch (op1.type) {
         case number: output_number(stdout, op1.value); break;
         case variable: output_get_variable(stdout, op1.name); break;
