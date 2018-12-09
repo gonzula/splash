@@ -9,6 +9,11 @@
 
 
 void
+helper_init() {
+    if_count = 0;
+}
+
+void
 append_operand(Operand *stack, OpType type, char100 operand) {
     Operand temp;
     *stack = temp;
@@ -104,4 +109,27 @@ append_minus_op(Operand *stack, Operand op) {
     strcpy(temp.value.value, minus_one);
 
     append_operation(stack, '*', temp, op);
+}
+
+void
+append_comparison(Comparison *stack, CompOp operator, Operand op1, Operand op2) {
+    Comparison comp;
+    comp.operator = operator;
+    comp.op1 = op1;
+    comp.op2 = op2;
+
+    *stack = comp;
+}
+
+void
+append_conditional(Comparison) {
+    Operand number;
+    number.type = number;
+    strcpy(number.value.value, "0");
+    uuid_gen(number.uuid);
+    output_number(stdout, number);
+
+    char splash_if_n[100];
+    sprintf(splash_if_n, "$splash_if_%d", if_count);
+    output_set_variable(stdout, splash_if_n);
 }

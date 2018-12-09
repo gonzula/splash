@@ -18,4 +18,7 @@ void output_math_simple_operation_parameters(FILE *output, char operator, Operan
 void output_math_scientific_operation_parameters(FILE *output, char operator, Operand operand);
 void output_operation(FILE *output, char operator, Operand operand, char *uuid);
 
+void output_conditional(FILE *output, Comparison);
+
+
 #endif /* OUTPUT_H */

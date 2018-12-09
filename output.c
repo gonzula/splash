@@ -298,3 +298,31 @@ output_operation(FILE *output, char operator, Operand operand, char *uuid) {
     fprintf(output, "</dict>");
     fprintf(output, "</dict>");
 }
+
+void
+output_conditional(FILE *output, Comparison comp) {
+    output_operand(comp.op1);
+    char WFcondition[100];
+
+    swtich (comp.operator) {
+        case CompOpEQ: strcpy(WFcondition, "Equals"); break;
+        case CompOpLT: strcpy(WFcondition, "Is Less Than"); break;
+        case CompOpGT: strcpy(WFcondition, "Is Greater Than"); break;
+    }
+
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
+    fprintf(output, "<string>is.workflow.actions.conditional</string>");
+    fprintf(output, "<key>WFWorkflowActionParameters</key>");
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>GroupingIdentifier</key>");
+    fprintf(output, "<string>98AE95CD-DA6E-445C-96A2-6DE9F1F3F2F9</string>");
+    fprintf(output, "<key>WFCondition</key>");
+    fprintf(output, "<string>%s</string>", WFcondition);
+    fprintf(output, "<key>WFConditionalActionString</key>");
+    fprintf(output, "<string>0</string>");
+    fprintf(output, "<key>WFControlFlowMode</key>");
+    fprintf(output, "<integer>0</integer>");
+    fprintf(output, "</dict>");
+    fprintf(output, "</dict>");
+}
