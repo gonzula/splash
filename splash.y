@@ -49,7 +49,6 @@ stat_list   : stat_list stat '\n' {}
 
 stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
             | attrib  { fprintf(stderr, "<reduced attrib>\n"); }
-            | cond
             ;
 
 attrib      : ID ATT expr  { output_set_variable(stdout, $1); }
