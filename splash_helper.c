@@ -424,16 +424,15 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
 
     scope_add_action(current_scope, in_action);
 
-    char uuid[37];
-    uuid_gen(uuid);
-    output_operation(stdout, operator, op2, uuid);
+    Action *operation_action = action_create_math_operation(operator, op2);
+    output_operation(stdout, operator, op2, operation_action->uuid);
 
     Operand new_stack;
     new_stack.type = magicVariable;
 
     char name[] = "Calculation Result";
     strcpy(new_stack.name.value, name);
-    strcpy(new_stack.uuid, uuid);
+    strcpy(new_stack.uuid, operation_action->uuid);
 
     *stack = new_stack;
     release(in_action);
