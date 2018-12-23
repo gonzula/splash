@@ -300,7 +300,8 @@ action_create_math_operation(char operator, Operand op2) {
     Action *action = action_create(WF_math);
 
     String *uuid = str_create(action->uuid);
-    htable_set(action->parameters, "UUID", uuid);
+    Serializable *s = serializable_create(uuid, st_str);
+    htable_set(action->parameters, "UUID", s);
 
     switch (operator) {
         case '+':
@@ -315,6 +316,7 @@ action_create_math_operation(char operator, Operand op2) {
     }
 
     release(uuid);
+    release(s);
 
     return action;
 }
