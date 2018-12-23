@@ -81,6 +81,32 @@ action_create_number(Operand op1) {
     return action;
 }
 
+Action *
+action_create_get_variable(Operand op1) {
+    Action *action = action_create(WF_get_variable);
+
+    HashTable *variable = htable_init();
+    HashTable *value = htable_init();
+    String *var_type = str_create("Variable");
+    String *var_name = str_create(op1.name.value);
+    htable_set(value, "Type", var_type);
+    htable_set(value, "VariableName", var_name);
+
+    htable_set(action->parameters, "WFVariable", variable);
+
+    String *token_attachment = str_create("WFTextTokenAttachment");
+    htable_set(action->parameters, "WFVariable", variable);
+    htable_set(action->parameters, "WFSerializationType", token_attachment);
+
+    release(token_attachment);
+    release(variable);
+    release(value);
+    release(var_type);
+
+
+    return action;
+}
+
 void
 _scope_release(void *obj) {
     Scope *scope = (Scope *)obj;
