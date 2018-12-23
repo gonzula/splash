@@ -74,7 +74,9 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
 
 int
 main() {
+    init_parse();
     output_header(stdout);
     yyparse();
     output_footer(stdout);
+    end_parse();
 }

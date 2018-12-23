@@ -7,6 +7,84 @@
 #include "utils.h"
 #include "output.h"
 
+void _action_release(void *obj);
+void _scope_release(void *obj);
+
+Scope *
+scope_create(char *name) {
+    Scope *scope = (Scope *)alloc(sizeof(Scope), _scope_release);
+    scope->actions = list_init();
+    scope->parent_name = NULL;
+
+    htable_set(scopes, name, scope);
+
+    return scope;
+}
+
+void
+init_parse() {
+    scopes = htable_init();
+    current_scope = scope_create("main");
+}
+
+void
+end_parse() {
+    release(scopes);
+    release(current_scope);
+}
+
+Action *
+action_init() {
+    Action *action = (Action *)alloc(sizeof(Action), _action_release);
+    action->id = 0;
+    action->parameters = NULL;
+    action->uuid[0] = 0;
+    action->sub_scope = NULL;
+
+    return action;
+}
+
+Action *
+action_create(ActionID id) {
+    Action *action = (Action *)alloc(sizeof(Action), _action_release);
+    action->id = id;
+    action->parameters = NULL;
+    action->uuid[0] = 0;
+
+    action->sub_scope = NULL;
+    switch (id) {
+        case WF_conditional:
+            action->sub_scope = scope_create(action->uuid);
+            break;
+        case WF_get_variable:
+        case WF_math:
+        case WF_number:
+        case WF_set_variable: break;
+    }
+
+    return action;
+}
+
+void
+_scope_release(void *obj) {
+    Scope *scope = (Scope *)obj;
+
+    if (scope->parent_name) {
+        release(scope->parent_name);
+    }
+    release(scope->actions);
+}
+
+void
+_action_release(void *obj) {
+    Action *action = (Action *)obj;
+    if (action->sub_scope) {
+        release(action->sub_scope);
+    }
+    if (action->parameters) {
+        release(action->parameters);
+    }
+}
 
 void
 append_operand(Operand *stack, OpType type, char100 operand) {
