@@ -33,7 +33,7 @@ end_parse() {
     release(current_scope);
 }
 
-Scope *
+void
 scope_add_action(Scope *scope, Action *action) {
     list_append(scope->actions, action);
 }
