@@ -70,6 +70,17 @@ action_create(ActionID id) {
     return action;
 }
 
+Action *
+action_create_number(Operand op1) {
+    Action *action = action_create(WF_number);
+
+    String *value = str_create(op1.value.value);
+    htable_set(action->parameters, "WFNumberActionNumber", value);
+    release(value);
+
+    return action;
+}
+
 void
 _scope_release(void *obj) {
     Scope *scope = (Scope *)obj;
