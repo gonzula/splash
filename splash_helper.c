@@ -33,6 +33,9 @@ scope_create(char *name) {
     return scope;
 }
 
+Scope *
+scope_add_action(Scope *scope, Action *action) {
+    list_append(scope->actions, action);
 }
 
 Action *
