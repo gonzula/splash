@@ -10,6 +10,18 @@
 void _action_release(void *obj);
 void _scope_release(void *obj);
 
+void
+init_parse() {
+    scopes = htable_init();
+    current_scope = scope_create("main");
+}
+
+void
+end_parse() {
+    release(scopes);
+    release(current_scope);
+}
+
 Scope *
 scope_create(char *name) {
     Scope *scope = (Scope *)alloc(sizeof(Scope), _scope_release);
@@ -21,16 +33,6 @@ scope_create(char *name) {
     return scope;
 }
 
-void
-init_parse() {
-    scopes = htable_init();
-    current_scope = scope_create("main");
-}
-
-void
-end_parse() {
-    release(scopes);
-    release(current_scope);
 }
 
 Action *
