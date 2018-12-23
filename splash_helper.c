@@ -53,8 +53,8 @@ Action *
 action_create(ActionID id) {
     Action *action = (Action *)alloc(sizeof(Action), _action_release);
     action->id = id;
-    action->parameters = NULL;
-    action->uuid[0] = 0;
+    action->parameters = htable_init();
+    uuid_gen(action->uuid);
 
     action->sub_scope = NULL;
     switch (id) {
