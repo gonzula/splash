@@ -19,6 +19,7 @@ init_parse() {
 
 void
 end_parse() {
+    scope_output(current_scope);
     release(scopes);
     release(current_scope);
 }

@@ -1,5 +1,6 @@
 #include "scope.h"
 #include "structures/structures.h"
+#include <stdio.h>
 
 void _scope_release(void *obj);
 
@@ -12,6 +13,15 @@ scope_create(char *name) {
     htable_set(scopes, name, scope);
 
     return scope;
+}
+
+void
+scope_output(Scope *scope) {
+    LIST_LOOP(scope->actions) {
+        Action *action = (Action *)node->object;
+
+        fprintf(stderr, "action: %p\n", action);
+    }
 }
 
 void
