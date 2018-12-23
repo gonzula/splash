@@ -5,7 +5,7 @@
 #define TABLE_SIZE (1 << 10)
 #define streq(a, b) (strcmp(a,b)==0)
 
-Entry * entry_create(char *key, void *obj);
+Entry * entry_create(const char *key, void *obj);
 void entry_free(Entry *e);
 Hash string_hash(const char * string);
 
@@ -22,7 +22,7 @@ htable_init() {
 
 
 HashTable *
-htable_set(HashTable *t, char *key, void *obj) {
+htable_set(HashTable *t, const char *key, void *obj) {
     Entry *e = entry_create(key, obj);
     Hash hash = string_hash(key);
     TableBucket * bucket = *(t->table + (hash & (TABLE_SIZE - 1)));
@@ -130,7 +130,7 @@ _htable_release(void *t) {
 }
 
 Entry *
-entry_create(char *key, void *obj) {
+entry_create(const char *key, void *obj) {
     Entry * e = (Entry *)malloc(sizeof(Entry));
     e->key = malloc(sizeof(char) * (strlen(key) + 1));
     strcpy(e->key, key);

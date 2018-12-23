@@ -26,7 +26,7 @@ typedef struct
 
 
 HashTable *htable_init();
-HashTable *htable_set(HashTable *t, char *key, void *obj);
+HashTable *htable_set(HashTable *t, const char *key, void *obj);
 void *htable_retrieve(HashTable *t, const char *key, int remove);
 void htable_iterate(HashTable *t, void *context, void (*obj_iteration)(Entry *entry, int i, int count, int *stop, void *context));
 Hash string_hash(const char *string);
