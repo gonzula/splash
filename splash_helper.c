@@ -436,6 +436,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
 
     *stack = new_stack;
     release(in_action);
+    release(operation_action);
 }
 
 void
