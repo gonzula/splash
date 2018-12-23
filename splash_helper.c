@@ -107,6 +107,35 @@ action_create_get_variable(Operand op1) {
     return action;
 }
 
+Action *
+action_create_get_magic_variable(Operand op1) {
+    Action *action = action_create(WF_get_variable);
+
+    HashTable *variable = htable_init();
+    HashTable *value = htable_init();
+    String *var_type = str_create("ActionOutput");
+    String *var_name = str_create(op1.name.value);
+    htable_set(value, "Type", var_type);
+    htable_set(value, "OutputName", var_name);
+    String *uuid = str_create(op1.uuid);
+    htable_set(value, "OutputUUID", uuid);
+
+    htable_set(action->parameters, "WFVariable", variable);
+
+    String *token_attachment = str_create("WFTextTokenAttachment");
+    htable_set(action->parameters, "WFVariable", variable);
+    htable_set(action->parameters, "WFSerializationType", token_attachment);
+
+    release(uuid);
+    release(token_attachment);
+    release(variable);
+    release(value);
+    release(var_type);
+
+
+    return action;
+}
+
 void
 _scope_release(void *obj) {
     Scope *scope = (Scope *)obj;
