@@ -230,6 +230,15 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
         case magicVariable: output_get_magic_variable(stdout, op1); break;
     }
 
+    Action *in_action;
+    switch (op1.type) {
+        case number: in_action = action_create_number(op1); break;
+        case variable: in_action = action_create_get_variable(op1); break;
+        case magicVariable: in_action = action_create_get_magic_variable(op1); break;
+    }
+
+    scope_add_action(current_scope, in_action);
+
     char uuid[37];
     uuid_gen(uuid);
     output_operation(stdout, operator, op2, uuid);
