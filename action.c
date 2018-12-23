@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "scope.h"
 #include <string.h>
+#include <stdio.h>
 
 void _action_release(void *obj);
 
@@ -287,6 +288,11 @@ action_create_math_operation(char operator, Operand op2) {
     release(s);
 
     return action;
+}
+
+void
+action_output(Action *action) {
+    fprintf(stderr, "action: %p\n", action);
 }
 
 

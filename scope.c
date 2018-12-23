@@ -1,6 +1,6 @@
 #include "scope.h"
+#include "action.h"
 #include "structures/structures.h"
-#include <stdio.h>
 
 void _scope_release(void *obj);
 
@@ -20,7 +20,7 @@ scope_output(Scope *scope) {
     LIST_LOOP(scope->actions) {
         Action *action = (Action *)node->object;
 
-        fprintf(stderr, "action: %p\n", action);
+        action_output(action);
     }
 }
 
