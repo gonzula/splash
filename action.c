@@ -290,7 +290,6 @@ action_create_math_operation(char operator, Operand op2) {
     return action;
 }
 
-    fprintf(stderr, "action: %p\n", action);
 }
 
 void
