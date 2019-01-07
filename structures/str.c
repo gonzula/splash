@@ -26,13 +26,14 @@ str_init()
 
 
 String *
-str_create(const char * original)
+str_create(const char *original)
 {
     String *str = alloc(sizeof(String), str_free);
     str->len = strlen(original);
     str->bufferSize = ((str->len + 1)/BUFFER_SIZE + 1) * BUFFER_SIZE;
     str->string = malloc(sizeof(char) * str->bufferSize);
     memcpy(str->string, original, sizeof(char) * (str->len + 1));
+
     return str;
 }
 
@@ -221,7 +222,6 @@ str_append(String *str, const char * toAppend)
         str->bufferSize = ((str->len + appLen + 1)/ BUFFER_SIZE + 1) * BUFFER_SIZE;
         str->string = realloc(str->string, sizeof(char) * str->bufferSize);
     }
-//    strcat(str->string, toAppend); // menos eficiente
     memcpy(str->string+str->len, toAppend, (appLen + 1) * sizeof(char));
     str->len += appLen;
 }
