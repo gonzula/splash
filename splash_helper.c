@@ -37,7 +37,7 @@ append_operand(Operand *stack, OpType type, char100 operand) {
     switch (type) {
         case number:        strcpy((*stack).value.value, operand.value); break;
         case variable:      strcpy((*stack).name.value, operand.value); break;
-        case magicVariable: strcpy((*stack).name.value, operand.value); break; break;
+        case magicVariable: strcpy((*stack).name.value, operand.value); break;
     }
 }
 
