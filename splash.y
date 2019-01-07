@@ -54,7 +54,7 @@ stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
 attrib      : ID ATT expr  { place_set_variable($1); }
             ;
 
-expr        : expr_  { $$ = $1; output_operand(stdout, $1); }
+expr        : expr_  { $$ = $1; place_operand($1); }
             ;
 
 expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left], $[right]);  }
