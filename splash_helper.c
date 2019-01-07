@@ -106,7 +106,6 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     scope_add_action(current_scope, in_action);
 
     Action *operation_action = action_create_math_operation(operator, op2);
-    output_operation(stdout, operator, op2, operation_action->uuid);
     scope_add_action(current_scope, operation_action);
 
     Operand new_stack;
