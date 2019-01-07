@@ -293,6 +293,20 @@ action_create_math_operation(char operator, Operand op2) {
     return action;
 }
 
+Action *
+action_create_set_variable(char100 name) {
+    Action *action = action_create(WF_set_variable);
+
+    String *variable_name = str_create(name.value);
+    Serializable *s = serializable_create(variable_name, st_str);
+
+    htable_set(action->parameters, "WFVariableName", s);
+
+
+    release(s);
+    release(variable_name);
+
+    return action;
 }
 
 void
