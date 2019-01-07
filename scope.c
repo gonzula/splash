@@ -16,11 +16,11 @@ scope_create(char *name) {
 }
 
 void
-scope_output(Scope *scope) {
+scope_output(FILE *output, Scope *scope) {
     LIST_LOOP(scope->actions) {
         Action *action = (Action *)node->object;
 
-        action_output(action);
+        action_output(output, action);
     }
 }
 
