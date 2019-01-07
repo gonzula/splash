@@ -145,6 +145,7 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                          htable_set(action->parameters, key, s);
                          release(s);
                      }
+                     break;
         case magicVariable: {
                                 HashTable *h1 = htable_init();
                                 Serializable *s1 = serializable_create(h1, st_ht);
@@ -184,6 +185,7 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                                 release(token_attachment);
                                 release(s6);
                             }
+                            break;
         case variable: {
                            HashTable *h1 = htable_init();
                            Serializable *s1 = serializable_create(h1, st_ht);
@@ -216,6 +218,7 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                            release(token_attachment);
                            release(s5);
                        }
+                       break;
     }
 }
 
