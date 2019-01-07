@@ -75,7 +75,7 @@ action_create_get_variable(Operand op1) {
 
     String *token_attachment = str_create("WFTextTokenAttachment");
     Serializable *s5 = serializable_create(token_attachment, st_str);
-    htable_set(action->parameters, "WFSerializationType", s5);
+    htable_set(variable, "WFSerializationType", s5);
 
     release(token_attachment);
     release(variable);
@@ -118,7 +118,7 @@ action_create_get_magic_variable(Operand op1) {
 
     String *token_attachment = str_create("WFTextTokenAttachment");
     Serializable *s6 = serializable_create(token_attachment, st_str);
-    htable_set(action->parameters, "WFSerializationType", s6);
+    htable_set(variable, "WFSerializationType", s6);
 
     release(uuid);
     release(token_attachment);
