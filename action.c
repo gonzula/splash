@@ -294,6 +294,27 @@ action_create_math_operation(char operator, Operand op2) {
 
 void
 action_output(FILE *output, Action *action) {
+    fprintf(output, "<dict>");
+    fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
+
+    fprintf(output, "<string>");
+    fprintf(output, "is.workflow.actions.");
+
+    switch (action->id) {
+        case WF_conditional: fprintf(stderr, "NOT IMPLEMENTED\n"); break;
+        case WF_get_variable: fprintf(output, "getvariable"); break;
+        case WF_math: fprintf(output, "math"); break;
+        case WF_number: fprintf(output, "number"); break;
+        case WF_set_variable: fprintf(output, "setvariable"); break;
+    }
+
+    fprintf(output, "</string>");
+
+    fprintf(output, "<key>WFWorkflowActionParameters</key>");
+    output_htable(output, action->parameters);
+
+    fprintf(output, "</dict>");
+}
 
 void
 _action_release(void *obj) {
