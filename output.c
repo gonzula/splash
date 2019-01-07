@@ -153,6 +153,22 @@ void
 output_get_magic_variable(FILE *output, Operand op) {
     if (strcmp(last_uuid, op.uuid) == 0) {
         return;
+output_entry(Entry *entry, int i, int count, int *stop, void *context) {
+    FILE *output = (FILE *)context;
+
+    char *key = entry->key;
+    Serializable *value = entry->obj;
+
+    fprintf(output, "<key>%s</key>", key);
+
+    switch (value->type) {
+    case st_ht:    output_htable(output, value->ht); break;
+    case st_list:  fprintf(stderr, "NOT IMPLEMENTED\n"); break;
+    case st_str:   fprintf(output, "<string>%s</string>", value->str->string); break;
+    case st_int:   fprintf(output, "<integer>%d</integer>", value->i); break;
+    case st_float: fprintf(output, "<real>%f</real>", value->f); break;
+    case st_bool:  fprintf(stderr, "NOT IMPLEMENTED\n"); break;
+    case st_null:  fprintf(stderr, "NOT IMPLEMENTED\n"); break;
     }
     strcpy(last_uuid, op.uuid);
     char *escaped1 = xml_escape(op.name.value);
@@ -279,6 +295,7 @@ output_operation(FILE *output, char operator, Operand operand, char *uuid) {
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
     fprintf(output, "<string>is.workflow.actions.math</string>");
     fprintf(output, "<key>WFWorkflowActionParameters</key>");
+output_htable(FILE *output, HashTable *htable) {
     fprintf(output, "<dict>");
     fprintf(output, "<key>UUID</key>");
     fprintf(output, "<string>%s</string>", uuid);
@@ -294,6 +311,7 @@ output_operation(FILE *output, char operator, Operand operand, char *uuid) {
             output_math_scientific_operation_parameters(output, operator, operand);
             break;
     }
+    htable_iterate(htable, output, output_entry);
 
     fprintf(output, "</dict>");
     fprintf(output, "</dict>");
