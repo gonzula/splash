@@ -51,7 +51,7 @@ stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
             | attrib  { fprintf(stderr, "<reduced attrib>\n"); }
             ;
 
-attrib      : ID ATT expr  { output_set_variable(stdout, $1); }
+attrib      : ID ATT expr  { place_set_variable($1); }
             ;
 
 expr        : expr_  { $$ = $1; output_operand(stdout, $1); }
