@@ -56,5 +56,6 @@ void append_operation(Operand *, char, Operand, Operand);
 void append_minus_op(Operand *, Operand);
 void set_variable(char100, Operand);
 void place_set_variable(char100 var_name);
+void place_operand(Operand op);
 
 #endif  /* SPLASH_HELPER_H */
