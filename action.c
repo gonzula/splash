@@ -2,6 +2,7 @@
 #include "structures/structures.h"
 #include "utils.h"
 #include "scope.h"
+#include "output.h"
 #include <string.h>
 #include <stdio.h>
 
