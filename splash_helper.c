@@ -87,12 +87,14 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
         operation_optimization(stack, operator, op1, op2);
         return;
     }
+    /*
     if (operator_is_commutative(operator) && strcmp(last_uuid, op2.uuid) == 0) {
         fprintf(stderr, "Switching op's\n");
         Operand tmp = op1;
         op1 = op2;
         op2 = tmp;
     }
+    */
 
     Action *in_action;
     switch (op1.type) {
