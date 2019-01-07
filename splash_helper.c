@@ -131,3 +131,11 @@ append_minus_op(Operand *stack, Operand op) {
 
     append_operation(stack, '*', temp, op);
 }
+
+void
+place_set_variable(char100 var_name) {
+    Action *action = action_create_set_variable(var_name);
+
+    scope_add_action(current_scope, action);
+    release(action);
+}
