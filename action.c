@@ -290,11 +290,11 @@ action_create_math_operation(char operator, Operand op2) {
     return action;
 }
 
-void
-action_output(Action *action) {
     fprintf(stderr, "action: %p\n", action);
 }
 
+void
+action_output(FILE *output, Action *action) {
 
 void
 _action_release(void *obj) {
