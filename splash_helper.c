@@ -13,6 +13,7 @@ void _action_release(void *obj);
 
 void
 init_parse() {
+    output_header(stdout);
     scopes = htable_init();
     current_scope = scope_create("main");
 }
@@ -20,6 +21,7 @@ init_parse() {
 void
 end_parse() {
     scope_output(current_scope);
+    output_footer(stdout);
     release(scopes);
     release(current_scope);
 }
