@@ -23,6 +23,7 @@ typedef struct {
 typedef struct {
     List *actions;
     String *parent_name;
+    char last_uuid[37];
 } Scope;
 
 typedef enum {

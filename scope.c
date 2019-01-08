@@ -12,6 +12,8 @@ scope_create(char *name) {
 
     htable_set(scopes, name, scope);
 
+    scope_clear_last_uuid(scope);
+
     return scope;
 }
 
@@ -25,8 +27,14 @@ scope_output(FILE *output, Scope *scope) {
 }
 
 void
+scope_clear_last_uuid(Scope *scope) {
+    *(scope->last_uuid) = 0;
+}
+
+void
 scope_add_action(Scope *scope, Action *action) {
     list_append(scope->actions, action);
+    strcpy(scope->last_uuid, action->uuid);
 }
 
 void
