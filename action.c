@@ -41,13 +41,13 @@ action_create(ActionID id) {
 }
 
 Action *
-action_create_number(Operand op1) {
+action_create_number(Operand op) {
     Action *action = action_create(WF_number);
 
 
     Serializable *s = serializable_init();
     s->type = st_float;
-    s->f = atof(op1.value.value);
+    s->f = atof(op.value.value);
     htable_set(action->parameters, "WFNumberActionNumber", s);
     release(s);
 
@@ -55,7 +55,7 @@ action_create_number(Operand op1) {
 }
 
 Action *
-action_create_get_variable(Operand op1) {
+action_create_get_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
 
     HashTable *variable = htable_init();
@@ -70,7 +70,7 @@ action_create_get_variable(Operand op1) {
     Serializable *s3 = serializable_create(var_type, st_str);
     htable_set(value, "Type", s3);
 
-    String *var_name = str_create(op1.name.value);
+    String *var_name = str_create(op.name.value);
     Serializable *s4 = serializable_create(var_name, st_str);
     htable_set(value, "VariableName", s4);
 
@@ -93,7 +93,7 @@ action_create_get_variable(Operand op1) {
 }
 
 Action *
-action_create_get_magic_variable(Operand op1) {
+action_create_get_magic_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
 
     HashTable *variable = htable_init();
@@ -108,11 +108,11 @@ action_create_get_magic_variable(Operand op1) {
     Serializable *s3 = serializable_create(var_type, st_str);
     htable_set(value, "Type", s3);
 
-    String *var_name = str_create(op1.name.value);
+    String *var_name = str_create(op.name.value);
     Serializable *s4 = serializable_create(var_name, st_str);
     htable_set(value, "OutputName", s4);
 
-    String *uuid = str_create(op1.uuid);
+    String *uuid = str_create(op.uuid);
     Serializable *s5 = serializable_create(uuid, st_str);
     htable_set(value, "OutputUUID", s5);
 
