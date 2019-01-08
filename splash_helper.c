@@ -149,6 +149,8 @@ place_operand(Operand op) {
         case magicVariable: action = action_create_get_magic_variable(op); break;
     }
 
-    scope_add_action(current_scope, action);
+    if (strcmp(current_scope->last_uuid, op.uuid)) {
+        scope_add_action(current_scope, action);
+    }
     release(action);
 }
