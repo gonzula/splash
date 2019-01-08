@@ -43,7 +43,7 @@ action_create(ActionID id) {
 Action *
 action_create_number(Operand op) {
     Action *action = action_create(WF_number);
-
+    strcpy(action->uuid, op.uuid);
 
     Serializable *s = serializable_init();
     s->type = st_float;
@@ -57,6 +57,7 @@ action_create_number(Operand op) {
 Action *
 action_create_get_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
+    strcpy(action->uuid, op.uuid);
 
     HashTable *variable = htable_init();
     Serializable *s1 = serializable_create(variable, st_ht);
@@ -95,6 +96,7 @@ action_create_get_variable(Operand op) {
 Action *
 action_create_get_magic_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
+    strcpy(action->uuid, op.uuid);
 
     HashTable *variable = htable_init();
     Serializable *s1 = serializable_create(variable, st_ht);
