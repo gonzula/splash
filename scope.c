@@ -2,6 +2,8 @@
 #include "action.h"
 #include "structures/structures.h"
 
+#include <string.h>
+
 void _scope_release(void *obj);
 
 Scope *
