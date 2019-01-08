@@ -21,10 +21,17 @@ scope_create(char *name) {
 
 void
 scope_output(FILE *output, Scope *scope) {
+    char last_uuid_output[37];
+    *last_uuid_output = 0;
     LIST_LOOP(scope->actions) {
         Action *action = (Action *)node->object;
+        if (strcmp(last_uuid_output, action->uuid) == 0) {
+            fprintf(stderr, "Skipping action\n");
+            continue;
+        }
 
         action_output(output, action);
+        strcpy(last_uuid_output, action->uuid);
     }
 }
 

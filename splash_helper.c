@@ -102,9 +102,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
         case magicVariable: in_action = action_create_get_magic_variable(op1); break;
     }
 
-    if (strcmp(current_scope->last_uuid, op1.uuid)) {
-        scope_add_action(current_scope, in_action);
-    }
+    scope_add_action(current_scope, in_action);
 
     Action *operation_action = action_create_math_operation(operator, op2);
     scope_add_action(current_scope, operation_action);
@@ -149,8 +147,6 @@ place_operand(Operand op) {
         case magicVariable: action = action_create_get_magic_variable(op); break;
     }
 
-    if (strcmp(current_scope->last_uuid, op.uuid)) {
-        scope_add_action(current_scope, action);
-    }
+    scope_add_action(current_scope, action);
     release(action);
 }
