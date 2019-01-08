@@ -51,10 +51,10 @@ stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
             | attrib  { fprintf(stderr, "<reduced attrib>\n"); }
             ;
 
-attrib      : ID ATT expr  { output_set_variable(stdout, $1); }
+attrib      : ID ATT expr  { place_set_variable($1); }
             ;
 
-expr        : expr_  { $$ = $1; output_operand(stdout, $1); }
+expr        : expr_  { $$ = $1; place_operand($1); }
             ;
 
 expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left], $[right]);  }
@@ -74,7 +74,7 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
 
 int
 main() {
-    output_header(stdout);
+    init_parse();
     yyparse();
-    output_footer(stdout);
+    end_parse();
 }

@@ -1,6 +1,8 @@
 #ifndef SPLASH_HELPER_H
 #define SPLASH_HELPER_H
 
+#include "structures/structures.h"
+
 typedef union {
     char value[100];
 } char100;
@@ -18,10 +20,42 @@ typedef struct {
     char uuid[37];
 } Operand;
 
+typedef struct {
+    List *actions;
+    String *parent_name;
+} Scope;
+
+typedef enum {
+    WF_conditional,
+    WF_get_variable,
+    WF_math,
+    WF_number,
+    WF_set_variable
+} ActionID;
+
+typedef struct {
+    ActionID id;
+    HashTable *parameters;
+    char uuid[37];  /* In case of groups, should be the same for all the actions in the group */
+    Scope *sub_scope; /* for groups, like if and loop */
+} Action;
+
+Scope *current_scope;
+HashTable *scopes;
+
+void init_parse();  /* Must be called before starting parse */
+void end_parse();  /* Must be called after ending parse */
+
+Action *action_init();
+Action *action_create(ActionID id);
+
+void action_add_subaction(Action *this, Action *other);
 
 void append_operand(Operand *, OpType, char100);
 void append_operation(Operand *, char, Operand, Operand);
 void append_minus_op(Operand *, Operand);
 void set_variable(char100, Operand);
+void place_set_variable(char100 var_name);
+void place_operand(Operand op);
 
 #endif  /* SPLASH_HELPER_H */
