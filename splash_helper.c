@@ -6,11 +6,25 @@
 #include "splash_helper.h"
 #include "utils.h"
 #include "output.h"
+#include "scope.h"
+#include "action.h"
 
+void _action_release(void *obj);
 
 void
-helper_init() {
+init_parse() {
+    output_header(stdout);
+    scopes = htable_init();
+    current_scope = scope_create("main");
     if_count = 0;
+}
+
+void
+end_parse() {
+    scope_output(stdout, current_scope);
+    output_footer(stdout);
+    release(scopes);
+    release(current_scope);
 }
 
 void
@@ -24,7 +38,7 @@ append_operand(Operand *stack, OpType type, char100 operand) {
     switch (type) {
         case number:        strcpy((*stack).value.value, operand.value); break;
         case variable:      strcpy((*stack).name.value, operand.value); break;
-        case magicVariable: strcpy((*stack).name.value, operand.value); break; break;
+        case magicVariable: strcpy((*stack).name.value, operand.value); break;
     }
 }
 
@@ -74,30 +88,36 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
         operation_optimization(stack, operator, op1, op2);
         return;
     }
-    if (operator_is_commutative(operator) && strcmp(last_uuid, op2.uuid) == 0) {
+
+    if (operator_is_commutative(operator) && strcmp(current_scope->last_uuid, op2.uuid) == 0) {
         fprintf(stderr, "Switching op's\n");
         Operand tmp = op1;
         op1 = op2;
         op2 = tmp;
     }
+
+    Action *in_action;
     switch (op1.type) {
-        case number:        output_number(stdout, op1); break;
-        case variable:      output_get_variable(stdout, op1); break;
-        case magicVariable: output_get_magic_variable(stdout, op1); break;
+        case number: in_action = action_create_number(op1); break;
+        case variable: in_action = action_create_get_variable(op1); break;
+        case magicVariable: in_action = action_create_get_magic_variable(op1); break;
     }
 
-    char uuid[37];
-    uuid_gen(uuid);
-    output_operation(stdout, operator, op2, uuid);
+    scope_add_action(current_scope, in_action);
+
+    Action *operation_action = action_create_math_operation(operator, op2);
+    scope_add_action(current_scope, operation_action);
 
     Operand new_stack;
     new_stack.type = magicVariable;
 
     char name[] = "Calculation Result";
     strcpy(new_stack.name.value, name);
-    strcpy(new_stack.uuid, uuid);
+    strcpy(new_stack.uuid, operation_action->uuid);
 
     *stack = new_stack;
+    release(in_action);
+    release(operation_action);
 }
 
 void
@@ -132,4 +152,25 @@ append_conditional(Comparison) {
     char splash_if_n[100];
     sprintf(splash_if_n, "$splash_if_%d", if_count);
     output_set_variable(stdout, splash_if_n);
+}
+
+void
+place_set_variable(char100 var_name) {
+    Action *action = action_create_set_variable(var_name);
+
+    scope_add_action(current_scope, action);
+    release(action);
+}
+
+void
+place_operand(Operand op) {
+    Action *action;
+    switch (op.type) {
+        case number: action = action_create_number(op); break;
+        case variable: action = action_create_get_variable(op); break;
+        case magicVariable: action = action_create_get_magic_variable(op); break;
+    }
+
+    scope_add_action(current_scope, action);
+    release(action);
 }
