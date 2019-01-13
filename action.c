@@ -83,6 +83,7 @@ action_create_get_variable(Operand op) {
     release(variable);
     release(value);
     release(var_type);
+    release(var_name);
 
     release(s1);
     release(s2);
@@ -128,6 +129,7 @@ action_create_get_magic_variable(Operand op) {
     release(variable);
     release(value);
     release(var_type);
+    release(var_name);
 
     release(s1);
     release(s2);
