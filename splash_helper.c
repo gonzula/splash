@@ -143,15 +143,6 @@ append_comparison(Comparison *stack, CompOp operator, Operand op1, Operand op2) 
 
 void
 append_conditional(Comparison) {
-    Operand number;
-    number.type = number;
-    strcpy(number.value.value, "0");
-    uuid_gen(number.uuid);
-    output_number(stdout, number);
-
-    char splash_if_n[100];
-    sprintf(splash_if_n, "$splash_if_%d", if_count);
-    output_set_variable(stdout, splash_if_n);
 }
 
 void
