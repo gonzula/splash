@@ -14,7 +14,7 @@ void yyerror();
 
 %type <Operand> expr_
 %type <Operand> expr
-%type <Comparison> comp
+/*%type <Comparison> comp*/
 
 %token <char100> STR
 %token <char100> NUM
@@ -55,6 +55,7 @@ stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
 attrib      : ID ATT expr  { place_set_variable($1); }
             ;
 
+/*
 cond        : IF comp { append_conditional($2); }
             '{' stat_list '}' opt_else
             ;
@@ -68,6 +69,7 @@ comp        : expr_ EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
             | expr_ GT expr_  { append_comparison(&$$, CompOpGT, $1, $3); }
             | '(' comp ')'  { $$ = $2; }
             ;
+*/
 
 expr        : expr_  { $$ = $1; place_operand($1); }
             ;
