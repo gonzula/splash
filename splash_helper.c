@@ -142,7 +142,7 @@ append_comparison(Comparison *stack, CompOp operator, Operand op1, Operand op2) 
 }
 
 void
-append_conditional(Comparison) {
+append_conditional(Comparison comp) {
 }
 
 void
