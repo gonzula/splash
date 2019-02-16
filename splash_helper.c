@@ -132,16 +132,6 @@ append_minus_op(Operand *stack, Operand op) {
 }
 
 void
-append_comparison(Comparison *stack, CompOp operator, Operand op1, Operand op2) {
-    Comparison comp;
-    comp.operator = operator;
-    comp.op1 = op1;
-    comp.op2 = op2;
-
-    *stack = comp;
-}
-
-void
 append_conditional(Comparison comp) {
     /*Operand number;*/
     /*number.type = number;*/
@@ -152,6 +142,16 @@ append_conditional(Comparison comp) {
     /*char splash_if_n[100];*/
     /*sprintf(splash_if_n, "$splash_if_%d", if_count);*/
     /*output_set_variable(stdout, splash_if_n);*/
+}
+
+void
+append_comparison(Comparison *stack, CompOp operator, Operand op1, Operand op2) {
+    Comparison comp;
+    comp.operator = operator;
+    comp.op1 = op1;
+    comp.op2 = op2;
+
+    *stack = comp;
 }
 
 void

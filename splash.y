@@ -7,14 +7,13 @@
 int yylex();
 void yyerror();
 
-
 %}
 
 %define api.value.type union
 
 %type <Operand> expr_
 %type <Operand> expr
-/*%type <Comparison> comp*/
+%type <Comparison> comp
 
 %token <char100> STR
 %token <char100> NUM
@@ -50,26 +49,27 @@ stat_list   : stat_list stat '\n' {}
 
 stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
             | attrib  { fprintf(stderr, "<reduced attrib>\n"); }
+            | cond  { fprintf(stderr, "<reduced cond>\n"); }
             ;
 
 attrib      : ID ATT expr  { place_set_variable($1); }
             ;
 
-/*
 cond        : IF comp { append_conditional($2); }
-            '{' stat_list '}' opt_else
+            '{'
+                stat_list
+            '}' opt_else
             ;
 
 opt_else    : ELSE '{' stat_list '}'
             |
             ;
 
-comp        : expr_ EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
-            | expr_ LT expr_  { append_comparison(&$$, CompOpLT, $1, $3); }
-            | expr_ GT expr_  { append_comparison(&$$, CompOpGT, $1, $3); }
+comp        : expr EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
+            | expr LT expr_  { append_comparison(&$$, CompOpLT, $1, $3); }
+            | expr GT expr_  { append_comparison(&$$, CompOpGT, $1, $3); }
             | '(' comp ')'  { $$ = $2; }
             ;
-*/
 
 expr        : expr_  { $$ = $1; place_operand($1); }
             ;
