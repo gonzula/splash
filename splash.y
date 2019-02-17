@@ -58,7 +58,8 @@ attrib      : ID ATT expr  { place_set_variable($1); }
 cond        : IF comp { append_conditional($2); }
             '{'
                 stat_list
-            '}' opt_else
+            '}' { close_conditional(); }
+            opt_else
             ;
 
 opt_else    : ELSE '{' stat_list '}'
