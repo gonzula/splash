@@ -345,9 +345,11 @@ action_create_comp(Comparison comp) {
     return action;
 }
 
-Action *
+List *
 action_create_close_cond(Action *action) {
+    List *actions = list_init();
     Action *close_action = action_create(WF_conditional);
+    list_append(actions, close_action);
     strcpy(close_action->uuid, action->uuid);
 
     String *uuid = str_create(close_action->uuid);
@@ -361,17 +363,18 @@ action_create_close_cond(Action *action) {
 
     release(s);
     release(s1);
-    return close_action;
+
+    return actions;
 }
 
-Action *
+List *
 action_create_close_scope(Action *action) {
     switch (action->id) {
         case WF_conditional: return action_create_close_cond(action);
         case WF_get_variable:
         case WF_math:
         case WF_number:
-        case WF_set_variable: return NULL;
+        case WF_set_variable: return list_init();
     }
 }
 
@@ -400,11 +403,13 @@ action_output(Action *action, FILE *output) {
 
     if (action->sub_scope) {
         scope_output(action->sub_scope, output);
-        Action *close_action;
-        if ((close_action = action_create_close_scope(action))) {
-            action_output(close_action, output);
-            release(close_action);
+
+        List *close_actions = action_create_close_scope(action);
+        LIST_LOOP(close_actions) {
+            Action *sub_action = (Action *)node->object;
+            action_output(sub_action, output);
         }
+        release(close_actions);
     }
 }
 
