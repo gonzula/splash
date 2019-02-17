@@ -323,7 +323,7 @@ action_output(FILE *output, Action *action) {
     fprintf(output, "is.workflow.actions.");
 
     switch (action->id) {
-        case WF_conditional: fprintf(stderr, "NOT IMPLEMENTED\n"); break;
+        case WF_conditional: fprintf(output, "conditional"); break;
         case WF_get_variable: fprintf(output, "getvariable"); break;
         case WF_math: fprintf(output, "math"); break;
         case WF_number: fprintf(output, "number"); break;
