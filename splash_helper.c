@@ -133,6 +133,8 @@ append_minus_op(Operand *stack, Operand op) {
 
 void
 append_conditional(Comparison comp) {
+    place_operand(comp.op1);
+
     Action *action = action_create_comp(comp);
     scope_add_action(current_scope, action);
 

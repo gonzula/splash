@@ -68,9 +68,9 @@ opt_else    : ELSE '{' stat_list '}'
             |
             ;
 
-comp        : expr EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
-            | expr LT expr_  { append_comparison(&$$, CompOpLT, $1, $3); }
-            | expr GT expr_  { append_comparison(&$$, CompOpGT, $1, $3); }
+comp        : expr_ EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
+            | expr_ LT expr_  { append_comparison(&$$, CompOpLT, $1, $3); }
+            | expr_ GT expr_  { append_comparison(&$$, CompOpGT, $1, $3); }
             | '(' comp ')'  { $$ = $2; }
             ;
 
