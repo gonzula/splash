@@ -163,9 +163,6 @@ close_scope() {
     String *uuid = current_scope->name;
     current_scope = htable_retrieve(scopes, current_scope->parent_name->string, 0);
 
-    Action *action = action_create_close_cond(uuid);
-    scope_add_action(current_scope, action);
-    release(action);
 }
 
 void

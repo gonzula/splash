@@ -27,15 +27,6 @@ action_create(ActionID id) {
     uuid_gen(action->uuid);
 
     action->sub_scope = NULL;
-    switch (id) {
-        case WF_conditional:
-            action->sub_scope = scope_create(action->uuid);
-            break;
-        case WF_get_variable:
-        case WF_math:
-        case WF_number:
-        case WF_set_variable: break;
-    }
 
     return action;
 }
@@ -323,6 +314,7 @@ action_complete_comp_operand(Action *action, Operand op) {
 Action *
 action_create_comp(Comparison comp) {
     Action *action = action_create(WF_conditional);
+    action->sub_scope = scope_create(action->uuid);
 
     String *uuid = str_create(action->uuid);
     Serializable *s = serializable_create(uuid, st_str);
@@ -354,31 +346,32 @@ action_create_comp(Comparison comp) {
 }
 
 Action *
-action_create_close_cond(String *uuid) {
-    Action *action = action_create(WF_conditional);
-    strcpy(action->uuid, uuid->string);
+action_create_close_cond(Action *action) {
+    Action *close_action = action_create(WF_conditional);
+    strcpy(close_action->uuid, action->uuid);
 
+    String *uuid = str_create(close_action->uuid);
     Serializable *s = serializable_create(uuid, st_str);
-    htable_set(action->parameters, "GroupingIdentifier", s);
+    htable_set(close_action->parameters, "GroupingIdentifier", s);
 
     Serializable *s1 = serializable_init();
     s1->type = st_int;
     s1->i = 2;
-    htable_set(action->parameters, "WFControlFlowMode", s1);
+    htable_set(close_action->parameters, "WFControlFlowMode", s1);
 
     release(s);
     release(s1);
-    return action;
+    return close_action;
 }
 
-int
-action_shoud_skip(Action *action) {
+Action *
+action_create_close_scope(Action *action) {
     switch (action->id) {
-        case WF_conditional: return 0;
+        case WF_conditional: return action_create_close_cond(action);
         case WF_get_variable:
         case WF_math:
         case WF_number:
-        case WF_set_variable: return 1;
+        case WF_set_variable: return NULL;
     }
 }
 
@@ -407,6 +400,11 @@ action_output(FILE *output, Action *action) {
 
     if (action->sub_scope) {
         scope_output(output, action->sub_scope);
+        Action *close_action;
+        if ((close_action = action_create_close_scope(action))) {
+            action_output(output, close_action);
+            release(close_action);
+        }
     }
 }
 

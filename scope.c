@@ -26,7 +26,7 @@ scope_output(FILE *output, Scope *scope) {
     *last_uuid_output = 0;
     LIST_LOOP(scope->actions) {
         Action *action = (Action *)node->object;
-        if (action_shoud_skip(action) && strcmp(last_uuid_output, action->uuid) == 0) {
+        if (strcmp(last_uuid_output, action->uuid) == 0) {
             fprintf(stderr, "Skipping action\n");
             continue;
         }
