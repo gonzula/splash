@@ -314,6 +314,63 @@ action_create_set_variable(char100 name) {
     return action;
 }
 
+
+void
+action_complete_comp_operand(Action *action, Operand op) {
+    action_complete_math_operand(action, "WFNumberValue", op);
+}
+
+Action *
+action_create_comp(Comparison comp) {
+    Action *action = action_create(WF_conditional);
+
+    String *uuid = str_create(action->uuid);
+    Serializable *s = serializable_create(uuid, st_str);
+    htable_set(action->parameters, "GroupingIdentifier", s);
+
+    String *operator;
+    switch (comp.operator) {
+        case CompOpEQ: operator = str_create("Equals"); break;
+        case CompOpLT: operator = str_create("Is Less Than"); break;
+        case CompOpGT: operator = str_create("Is Greater Than"); break;
+    }
+    Serializable *s1 = serializable_create(operator, st_str);
+    htable_set(action->parameters, "WFCondition", s1);
+
+    Serializable *s2 = serializable_init();
+    s2->type = st_int;
+    s2->i = 0;
+    htable_set(action->parameters, "WFControlFlowMode", s2);
+
+    action_complete_comp_operand(action, comp.op2);
+
+    release(s);
+    release(s1);
+    release(s2);
+    release(uuid);
+    release(operator);
+
+    return action;
+}
+
+Action *
+action_create_close_cond(String *uuid) {
+    Action *action = action_create(WF_conditional);
+    strcpy(action->uuid, uuid->string);
+
+    Serializable *s = serializable_create(uuid, st_str);
+    htable_set(action->parameters, "GroupingIdentifier", s);
+
+    Serializable *s1 = serializable_init();
+    s1->type = st_int;
+    s1->i = 2;
+    htable_set(action->parameters, "WFControlFlowMode", s1);
+
+    release(s);
+    release(s1);
+    return action;
+}
+
 void
 action_output(FILE *output, Action *action) {
     fprintf(output, "<dict>");
