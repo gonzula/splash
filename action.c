@@ -336,6 +336,10 @@ action_output(FILE *output, Action *action) {
     output_htable(output, action->parameters);
 
     fprintf(output, "</dict>");
+
+    if (action->sub_scope) {
+        scope_output(output, action->sub_scope);
+    }
 }
 
 void
