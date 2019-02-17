@@ -35,6 +35,7 @@ typedef struct {
 } Comparison;
 
 typedef struct {
+    String *name;
     List *actions;
     String *parent_name;
     char last_uuid[37];
@@ -76,6 +77,7 @@ void place_operand(Operand op);
 
 void append_comparison(Comparison *, CompOp, Operand, Operand);
 void append_conditional(Comparison);
+void close_conditional();
 
 
 #endif  /* SPLASH_HELPER_H */
