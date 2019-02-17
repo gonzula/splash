@@ -9,6 +9,7 @@ void _scope_release(void *obj);
 Scope *
 scope_create(char *name) {
     Scope *scope = (Scope *)alloc(sizeof(Scope), _scope_release);
+    scope->name = str_create(name);
     scope->actions = list_init();
     scope->parent_name = NULL;
 
@@ -52,6 +53,8 @@ _scope_release(void *obj) {
 
     if (scope->parent_name) {
         release(scope->parent_name);
+    if (scope->name) {
+        release(scope->name);
     }
     release(scope->actions);
 }
