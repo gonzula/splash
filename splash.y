@@ -60,7 +60,7 @@ attrib      : ID ATT expr  { place_set_variable($1); }
 cond        : IF comp { append_conditional($2); }
             '{'
                 stat_list
-            '}' { close_conditional(); }
+            '}' { close_scope(); }
             opt_else
             ;
 

@@ -159,7 +159,7 @@ append_conditional(Comparison comp) {
 }
 
 void
-close_conditional() {
+close_scope() {
     String *uuid = current_scope->name;
     current_scope = htable_retrieve(scopes, current_scope->parent_name->string, 0);
 

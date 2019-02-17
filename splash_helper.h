@@ -77,7 +77,7 @@ void place_operand(Operand op);
 
 void append_comparison(Comparison *, CompOp, Operand, Operand);
 void append_conditional(Comparison);
-void close_conditional();
+void close_scope();
 
 
 #endif  /* SPLASH_HELPER_H */
