@@ -133,6 +133,13 @@ append_minus_op(Operand *stack, Operand op) {
 
 void
 append_conditional(Comparison comp) {
+    Action *action = action_create_comp(comp);
+    scope_add_action(current_scope, action);
+
+    action->sub_scope->parent_name = current_scope->name;
+    current_scope = action->sub_scope;
+
+    release(action);
     /*Operand number;*/
     /*number.type = number;*/
     /*strcpy(number.value.value, "0");*/
@@ -142,6 +149,16 @@ append_conditional(Comparison comp) {
     /*char splash_if_n[100];*/
     /*sprintf(splash_if_n, "$splash_if_%d", if_count);*/
     /*output_set_variable(stdout, splash_if_n);*/
+}
+
+void
+close_conditional() {
+    String *uuid = current_scope->name;
+    current_scope = htable_retrieve(scopes, current_scope->parent_name->string, 0);
+
+    Action *action = action_create_close_cond(uuid);
+    scope_add_action(current_scope, action);
+    release(action);
 }
 
 void
