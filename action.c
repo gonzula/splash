@@ -376,7 +376,7 @@ action_create_close_scope(Action *action) {
 }
 
 void
-action_output(FILE *output, Action *action) {
+action_output(Action *action, FILE *output) {
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
 
@@ -399,10 +399,10 @@ action_output(FILE *output, Action *action) {
     fprintf(output, "</dict>");
 
     if (action->sub_scope) {
-        scope_output(output, action->sub_scope);
+        scope_output(action->sub_scope, output);
         Action *close_action;
         if ((close_action = action_create_close_scope(action))) {
-            action_output(output, close_action);
+            action_output(close_action, output);
             release(close_action);
         }
     }

@@ -21,7 +21,7 @@ scope_create(char *name) {
 }
 
 void
-scope_output(FILE *output, Scope *scope) {
+scope_output(Scope *scope, FILE *output) {
     char last_uuid_output[37];
     *last_uuid_output = 0;
     LIST_LOOP(scope->actions) {
@@ -31,7 +31,7 @@ scope_output(FILE *output, Scope *scope) {
             continue;
         }
 
-        action_output(output, action);
+        action_output(action, output);
         strcpy(last_uuid_output, action->uuid);
     }
 }

@@ -21,7 +21,7 @@ init_parse() {
 
 void
 end_parse() {
-    scope_output(stdout, current_scope);
+    scope_output(current_scope, stdout);
     output_footer(stdout);
     release(scopes);
     release(current_scope);

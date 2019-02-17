@@ -13,6 +13,6 @@ Action *action_create_math_operation(char operator, Operand op2);
 Action *action_create_set_variable(char100 var_name);
 Action *action_create_comp(Comparison comp);
 
-void action_output(FILE *output, Action *action);
+void action_output(Action *action, FILE *output);
 
 #endif  /* ACTION_H */
