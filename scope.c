@@ -51,8 +51,6 @@ void
 _scope_release(void *obj) {
     Scope *scope = (Scope *)obj;
 
-    if (scope->parent_name) {
-        release(scope->parent_name);
     if (scope->name) {
         release(scope->name);
     }
