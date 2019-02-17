@@ -371,6 +371,17 @@ action_create_close_cond(String *uuid) {
     return action;
 }
 
+int
+action_shoud_skip(Action *action) {
+    switch (action->id) {
+        case WF_conditional: return 0;
+        case WF_get_variable:
+        case WF_math:
+        case WF_number:
+        case WF_set_variable: return 1;
+    }
+}
+
 void
 action_output(FILE *output, Action *action) {
     fprintf(output, "<dict>");

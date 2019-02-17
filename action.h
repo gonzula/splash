@@ -14,6 +14,8 @@ Action *action_create_set_variable(char100 var_name);
 Action *action_create_comp(Comparison comp);
 Action *action_create_close_cond(String *uuid);
 
+int action_shoud_skip(Action *action);
+
 void action_output(FILE *output, Action *action);
 
 #endif  /* ACTION_H */
