@@ -54,6 +54,7 @@ typedef struct {
     HashTable *parameters;
     char uuid[37];  /* In case of groups, should be the same for all the actions in the group */
     Scope *sub_scope; /* for groups, like if and loop */
+    int cond_control_count;
 } Action;
 
 Scope *current_scope;
