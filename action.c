@@ -370,16 +370,7 @@ action_create_cond_control(int value, int control_count) {
 
 List *
 action_create_close_cond(Action *action) {
-    List *actions = list_init();
-
-    Operand op;
-    op.type = number;
-    strcpy(op.value.value, "1");
-    uuid_gen(op.uuid);
-    list_append(actions, action_create_number(op));
-    char100 varName;
-    strcpy(varName.value, "$splash_if_0");
-    list_append(actions, action_create_set_variable(varName));
+    List *actions = action_create_cond_control(1, action->cond_control_count);
 
     Action *close_action = action_create(WF_conditional);
     list_append(actions, close_action);
