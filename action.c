@@ -348,6 +348,16 @@ action_create_comp(Comparison comp) {
 List *
 action_create_close_cond(Action *action) {
     List *actions = list_init();
+
+    Operand op;
+    op.type = number;
+    strcpy(op.value.value, "1");
+    uuid_gen(op.uuid);
+    list_append(actions, action_create_number(op));
+    char100 varName;
+    strcpy(varName.value, "$splash_if_0");
+    list_append(actions, action_create_set_variable(varName));
+
     Action *close_action = action_create(WF_conditional);
     list_append(actions, close_action);
     strcpy(close_action->uuid, action->uuid);
