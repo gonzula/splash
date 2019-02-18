@@ -49,7 +49,7 @@ scope_add_action(Scope *scope, Action *action) {
 
 void
 scope_add_actions(Scope *scope, List *actions) {
-    LIST_LOOP(close_actions) {
+    LIST_LOOP(actions) {
         Action *action = (Action *)node->object;
         scope_add_action(scope, action);
     }
