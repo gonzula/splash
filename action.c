@@ -346,6 +346,29 @@ action_create_comp(Comparison comp) {
 }
 
 List *
+action_create_cond_control(int value, int control_count) {
+    List * actions = list_init();
+
+    Operand op;
+    op.type = number;
+    sprintf(op.value.value, "%d", value);
+    uuid_gen(op.uuid);
+
+    Action *number_action = action_create_number(op);
+    list_append(actions, number_action);
+    release(number_action);
+
+    char100 var_name;
+    sprintf(var_name.value, "$splash_if_%d", if_count);
+
+    Action *set_var_action = action_create_set_variable(var_name);
+    list_append(actions, set_var_action);
+    release(set_var_action);
+
+    return actions;
+}
+
+List *
 action_create_close_cond(Action *action) {
     List *actions = list_init();
 
