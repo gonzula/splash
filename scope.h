@@ -6,6 +6,7 @@
 
 Scope *scope_create(char *name);
 void scope_add_action(Scope *scope, Action *action);
+void scope_add_actions(Scope *scope, List *actions);
 void scope_output(Scope *scope, FILE *output);
 void scope_clear_last_uuid(Scope *scope);
 

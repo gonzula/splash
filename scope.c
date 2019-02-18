@@ -48,6 +48,14 @@ scope_add_action(Scope *scope, Action *action) {
 }
 
 void
+scope_add_actions(Scope *scope, List *actions) {
+    LIST_LOOP(close_actions) {
+        Action *action = (Action *)node->object;
+        scope_add_action(scope, action);
+    }
+}
+
+void
 _scope_release(void *obj) {
     Scope *scope = (Scope *)obj;
 
