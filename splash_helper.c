@@ -132,21 +132,7 @@ append_minus_op(Operand *stack, Operand op) {
 }
 
 void
-place_conditional_control() {
-    Operand op;
-    op.type = number;
-    strcpy(op.value.value, "0");
-    uuid_gen(op.uuid);
-    place_operand(op);
-
-    char100 splash_if_n;
-    sprintf(splash_if_n.value, "$splash_if_%d", if_count);
-    place_set_variable(splash_if_n);
-}
-
-void
 append_conditional(Comparison comp) {
-    place_conditional_control();
     place_operand(comp.op1);
 
     Action *action = action_create_comp(comp);
