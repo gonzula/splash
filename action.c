@@ -307,8 +307,20 @@ action_create_set_variable(char100 name) {
 
 
 void
-action_complete_comp_operand(Action *action, Operand op) {
-    action_complete_math_operand(action, "WFNumberValue", op);
+action_complete_comp_operand(Action *action, CompOp operator, Operand operand) {
+
+    switch (operator) {
+        case CompOpEQ: {
+                           String *str = str_create(operand.value.value);
+                           Serializable *s = serializable_create(str, st_str);
+                           htable_set(action->parameters,  "WFConditionalActionString", s);
+                           release(s);
+                           release(str);
+                       }
+                       break;
+        case CompOpLT:
+        case CompOpGT: action_complete_math_operand(action, "WFNumberValue", operand); break;
+    }
 }
 
 Action *
@@ -334,7 +346,7 @@ action_create_comp(Comparison comp) {
     s2->i = 0;
     htable_set(action->parameters, "WFControlFlowMode", s2);
 
-    action_complete_comp_operand(action, comp.op2);
+    action_complete_comp_operand(action, comp.operator, comp.op2);
 
     release(s);
     release(s1);
