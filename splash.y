@@ -57,7 +57,7 @@ stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
 attrib      : ID ATT expr  { place_set_variable($1); }
             ;
 
-cond        : IF comp { append_conditional($2); }
+cond        : IF comp { increment_if_count(); append_cond_control(); append_conditional($2); }
             '{'
                 stat_list
             '}' { close_scope(); }

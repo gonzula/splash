@@ -137,11 +137,14 @@ append_minus_op(Operand *stack, Operand op) {
 }
 
 void
-append_conditional(Comparison comp) {
-    if_count++;
+append_cond_control() {
     List *actions = action_create_cond_control(0, if_count);
     scope_add_actions(current_scope, actions);
     release(actions);
+}
+
+void
+append_conditional(Comparison comp) {
     place_operand(comp.op1);
 
     Action *action = action_create_comp(comp);

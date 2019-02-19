@@ -79,6 +79,7 @@ void place_set_variable(char100 var_name);
 void place_operand(Operand op);
 
 void append_comparison(Comparison *, CompOp, Operand, Operand);
+void append_cond_control();
 void append_conditional(Comparison);
 void append_else();
 void close_scope();
