@@ -167,6 +167,7 @@ append_else() {
     comp.op1 = op1;
     comp.op2 = op2;
 
+    place_operand(comp.op1);
     Action *action = action_create_comp(comp);
     scope_add_action(current_scope, action);
 
