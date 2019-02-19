@@ -61,7 +61,15 @@ cond        : IF comp { append_conditional($2); }
             '{'
                 stat_list
             '}' { close_scope(); }
-            opt_else
+            opt_else_if
+            ;
+
+opt_else_if : ELSE IF comp { append_else(); append_conditional($3); }
+            '{'
+                stat_list
+            '}' { close_scope(); close_scope(); }
+            opt_else_if
+            | opt_else
             ;
 
 opt_else    : ELSE { append_else(); }
