@@ -162,7 +162,7 @@ append_else() {
 
     Operand op2;
     op2.type = number;
-    strcpy(op2.value.value, "2");
+    strcpy(op2.value.value, "0");
 
     comp.op1 = op1;
     comp.op2 = op2;
