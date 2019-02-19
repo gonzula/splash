@@ -1,5 +1,6 @@
 #include "scope.h"
 #include "action.h"
+#include "utils.h"
 #include "structures/structures.h"
 
 #include <string.h>
@@ -7,13 +8,15 @@
 void _scope_release(void *obj);
 
 Scope *
-scope_create(char *name) {
+scope_create() {
     Scope *scope = (Scope *)alloc(sizeof(Scope), _scope_release);
-    scope->name = str_create(name);
+    char uuid[37];
+    uuid_gen(uuid);
+    scope->name = str_create(uuid);
     scope->actions = list_init();
     scope->parent_name = NULL;
 
-    htable_set(scopes, name, scope);
+    htable_set(scopes, uuid, scope);
 
     scope_clear_last_uuid(scope);
 
