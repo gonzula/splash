@@ -78,6 +78,7 @@ void place_operand(Operand op);
 
 void append_comparison(Comparison *, CompOp, Operand, Operand);
 void append_conditional(Comparison);
+void append_else();
 void close_scope();
 
 

@@ -150,6 +150,34 @@ append_conditional(Comparison comp) {
 }
 
 void
+append_else() {
+    Comparison comp;
+    comp.operator = CompOpEQ;
+
+    Operand op1;
+    op1.type = variable;
+
+    uuid_gen(op1.uuid);
+    sprintf(op1.name.value, "$splash_if_%d", if_count);
+
+    Operand op2;
+    op2.type = number;
+    strcpy(op2.value.value, "2");
+
+    comp.op1 = op1;
+    comp.op2 = op2;
+
+    Action *action = action_create_comp(comp);
+    scope_add_action(current_scope, action);
+
+    action->sub_scope->parent_name = current_scope->name;
+    current_scope = action->sub_scope;
+    action->cond_control_count = if_count;
+
+    release(action);
+}
+
+void
 close_scope() {
     String *uuid = current_scope->name;
     current_scope = htable_retrieve(scopes, current_scope->parent_name->string, 0);
