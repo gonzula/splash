@@ -28,6 +28,11 @@ end_parse() {
 }
 
 void
+increment_if_count() {
+    if_count++;
+}
+
+void
 append_operand(Operand *stack, OpType type, char100 operand) {
     Operand temp;
     *stack = temp;

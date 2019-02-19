@@ -64,6 +64,8 @@ int if_count;
 void init_parse();  /* Must be called before starting parse */
 void end_parse();  /* Must be called after ending parse */
 
+void increment_if_count();
+
 Action *action_init();
 Action *action_create(ActionID id);
 
