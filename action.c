@@ -215,6 +215,27 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                            release(s5);
                        }
                        break;
+        case ask_number: {
+                           HashTable *h1 = htable_init();
+                           Serializable *s1 = serializable_create(h1, st_ht);
+                           htable_set(action->parameters, key, s1);
+
+                           HashTable *h2 = htable_init();
+                           Serializable *s2 = serializable_create(h2, st_ht);
+                           htable_set(h1, "Value", s2);
+
+                           String *ask = str_create("Ask");
+                           Serializable *s3 = serializable_create(ask, st_str);
+                           htable_set(h2, "Type", s3);
+
+                           release(h1);
+                           release(s1);
+                           release(h2);
+                           release(s2);
+                           release(ask);
+                           release(s3);
+                         }
+                         break;
     }
 }
 
