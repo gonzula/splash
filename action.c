@@ -383,7 +383,7 @@ action_create_cond_control(int value, int control_count) {
 List *
 action_create_close_cond(Action *action) {
     List *actions;
-    if (action->cond_close_control) {
+    if (action->cond_should_close_control) {
         actions = action_create_cond_control(1, action->cond_control_count);
     } else {
         actions = list_init();

@@ -55,7 +55,7 @@ typedef struct {
     char uuid[37];  /* In case of groups, should be the same for all the actions in the group */
     Scope *sub_scope; /* for groups, like if and loop */
     int cond_control_count;
-    int cond_close_control;
+    int cond_should_close_control;
 } Action;
 
 Scope *current_scope;
