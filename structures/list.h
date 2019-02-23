@@ -3,15 +3,13 @@
 
 #define LIST_LOOP(_list) for (Node *node = _list->firstNode; node; node = node->next)
 
-typedef struct _node
-{
+typedef struct _node {
     void * object;
     struct _node *prev;
     struct _node *next;
 } Node;
 
-typedef struct
-{
+typedef struct {
     Node * firstNode;
     Node * lastNode;
     int count;
