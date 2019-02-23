@@ -1,5 +1,6 @@
 #include "scope.h"
 #include "action.h"
+#include "utils.h"
 #include "structures/structures.h"
 
 #include <string.h>
@@ -7,12 +8,15 @@
 void _scope_release(void *obj);
 
 Scope *
-scope_create(char *name) {
+scope_create() {
     Scope *scope = (Scope *)alloc(sizeof(Scope), _scope_release);
+    char uuid[37];
+    uuid_gen(uuid);
+    scope->name = str_create(uuid);
     scope->actions = list_init();
     scope->parent_name = NULL;
 
-    htable_set(scopes, name, scope);
+    htable_set(scopes, uuid, scope);
 
     scope_clear_last_uuid(scope);
 
@@ -20,7 +24,7 @@ scope_create(char *name) {
 }
 
 void
-scope_output(FILE *output, Scope *scope) {
+scope_output(Scope *scope, FILE *output) {
     char last_uuid_output[37];
     *last_uuid_output = 0;
     LIST_LOOP(scope->actions) {
@@ -30,7 +34,7 @@ scope_output(FILE *output, Scope *scope) {
             continue;
         }
 
-        action_output(output, action);
+        action_output(action, output);
         strcpy(last_uuid_output, action->uuid);
     }
 }
@@ -47,11 +51,19 @@ scope_add_action(Scope *scope, Action *action) {
 }
 
 void
+scope_add_actions(Scope *scope, List *actions) {
+    LIST_LOOP(actions) {
+        Action *action = (Action *)node->object;
+        scope_add_action(scope, action);
+    }
+}
+
+void
 _scope_release(void *obj) {
     Scope *scope = (Scope *)obj;
 
-    if (scope->parent_name) {
-        release(scope->parent_name);
+    if (scope->name) {
+        release(scope->name);
     }
     release(scope->actions);
 }

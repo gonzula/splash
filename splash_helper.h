@@ -20,7 +20,22 @@ typedef struct {
     char uuid[37];
 } Operand;
 
+typedef enum {
+    CompOpEQ,
+    CompOpLT,
+    /* CompOpLE,  not implemented */
+    CompOpGT
+    /* CompOpGE not implemented */
+} CompOp;
+
 typedef struct {
+    Operand op1;
+    Operand op2;
+    CompOp operator;
+} Comparison;
+
+typedef struct {
+    String *name;
     List *actions;
     String *parent_name;
     char last_uuid[37];
@@ -39,13 +54,18 @@ typedef struct {
     HashTable *parameters;
     char uuid[37];  /* In case of groups, should be the same for all the actions in the group */
     Scope *sub_scope; /* for groups, like if and loop */
+    int cond_control_count;
+    int cond_should_close_control;
 } Action;
 
 Scope *current_scope;
 HashTable *scopes;
+int if_count;
 
 void init_parse();  /* Must be called before starting parse */
 void end_parse();  /* Must be called after ending parse */
+
+void increment_if_count();
 
 Action *action_init();
 Action *action_create(ActionID id);
@@ -58,5 +78,12 @@ void append_minus_op(Operand *, Operand);
 void set_variable(char100, Operand);
 void place_set_variable(char100 var_name);
 void place_operand(Operand op);
+
+void append_comparison(Comparison *, CompOp, Operand, Operand);
+void append_cond_control();
+void append_conditional(Comparison);
+void append_else();
+void close_scope();
+
 
 #endif  /* SPLASH_HELPER_H */

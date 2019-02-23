@@ -27,15 +27,6 @@ action_create(ActionID id) {
     uuid_gen(action->uuid);
 
     action->sub_scope = NULL;
-    switch (id) {
-        case WF_conditional:
-            action->sub_scope = scope_create(action->uuid);
-            break;
-        case WF_get_variable:
-        case WF_math:
-        case WF_number:
-        case WF_set_variable: break;
-    }
 
     return action;
 }
@@ -83,6 +74,7 @@ action_create_get_variable(Operand op) {
     release(variable);
     release(value);
     release(var_type);
+    release(var_name);
 
     release(s1);
     release(s2);
@@ -128,6 +120,7 @@ action_create_get_magic_variable(Operand op) {
     release(variable);
     release(value);
     release(var_type);
+    release(var_name);
 
     release(s1);
     release(s2);
@@ -312,8 +305,124 @@ action_create_set_variable(char100 name) {
     return action;
 }
 
+
 void
-action_output(FILE *output, Action *action) {
+action_complete_comp_operand(Action *action, CompOp operator, Operand operand) {
+
+    switch (operator) {
+        case CompOpEQ: {
+                           String *str = str_create(operand.value.value);
+                           Serializable *s = serializable_create(str, st_str);
+                           htable_set(action->parameters,  "WFConditionalActionString", s);
+                           release(s);
+                           release(str);
+                       }
+                       break;
+        case CompOpLT:
+        case CompOpGT: action_complete_math_operand(action, "WFNumberValue", operand); break;
+    }
+}
+
+Action *
+action_create_comp(Comparison comp) {
+    Action *action = action_create(WF_conditional);
+    action->sub_scope = scope_create(action->uuid);
+
+    String *uuid = str_create(action->uuid);
+    Serializable *s = serializable_create(uuid, st_str);
+    htable_set(action->parameters, "GroupingIdentifier", s);
+
+    String *operator;
+    switch (comp.operator) {
+        case CompOpEQ: operator = str_create("Equals"); break;
+        case CompOpLT: operator = str_create("Is Less Than"); break;
+        case CompOpGT: operator = str_create("Is Greater Than"); break;
+    }
+    Serializable *s1 = serializable_create(operator, st_str);
+    htable_set(action->parameters, "WFCondition", s1);
+
+    Serializable *s2 = serializable_init();
+    s2->type = st_int;
+    s2->i = 0;
+    htable_set(action->parameters, "WFControlFlowMode", s2);
+
+    action_complete_comp_operand(action, comp.operator, comp.op2);
+
+    release(s);
+    release(s1);
+    release(s2);
+    release(uuid);
+    release(operator);
+
+    return action;
+}
+
+List *
+action_create_cond_control(int value, int control_count) {
+    List * actions = list_init();
+
+    Operand op;
+    op.type = number;
+    sprintf(op.value.value, "%d", value);
+    uuid_gen(op.uuid);
+
+    Action *number_action = action_create_number(op);
+    list_append(actions, number_action);
+    release(number_action);
+
+    char100 var_name;
+    sprintf(var_name.value, "$splash_if_%d", control_count);
+
+    Action *set_var_action = action_create_set_variable(var_name);
+    list_append(actions, set_var_action);
+    release(set_var_action);
+
+    return actions;
+}
+
+List *
+action_create_close_cond(Action *action) {
+    List *actions;
+    if (action->cond_should_close_control) {
+        actions = action_create_cond_control(1, action->cond_control_count);
+    } else {
+        actions = list_init();
+    }
+
+    Action *close_action = action_create(WF_conditional);
+    list_append(actions, close_action);
+    strcpy(close_action->uuid, action->uuid);
+
+    String *uuid = str_create(close_action->uuid);
+    Serializable *s = serializable_create(uuid, st_str);
+    htable_set(close_action->parameters, "GroupingIdentifier", s);
+
+    Serializable *s1 = serializable_init();
+    s1->type = st_int;
+    s1->i = 2;
+    htable_set(close_action->parameters, "WFControlFlowMode", s1);
+
+    release(s);
+    release(s1);
+    release(uuid);
+    release(close_action);
+
+    return actions;
+}
+
+List *
+action_create_close_scope(Action *action) {
+    switch (action->id) {
+        case WF_conditional: return action_create_close_cond(action);
+        case WF_get_variable:
+        case WF_math:
+        case WF_number:
+        case WF_set_variable: return list_init();
+    }
+}
+
+void
+action_output(Action *action, FILE *output) {
     fprintf(output, "<dict>");
     fprintf(output, "<key>WFWorkflowActionIdentifier</key>");
 
@@ -321,7 +430,7 @@ action_output(FILE *output, Action *action) {
     fprintf(output, "is.workflow.actions.");
 
     switch (action->id) {
-        case WF_conditional: fprintf(stderr, "NOT IMPLEMENTED\n"); break;
+        case WF_conditional: fprintf(output, "conditional"); break;
         case WF_get_variable: fprintf(output, "getvariable"); break;
         case WF_math: fprintf(output, "math"); break;
         case WF_number: fprintf(output, "number"); break;
@@ -334,6 +443,17 @@ action_output(FILE *output, Action *action) {
     output_htable(output, action->parameters);
 
     fprintf(output, "</dict>");
+
+    if (action->sub_scope) {
+        scope_output(action->sub_scope, output);
+
+        List *close_actions = action_create_close_scope(action);
+        LIST_LOOP(close_actions) {
+            Action *sub_action = (Action *)node->object;
+            action_output(sub_action, output);
+        }
+        release(close_actions);
+    }
 }
 
 void

@@ -31,7 +31,4 @@ greater_or_equal_than|>=  { return GE; }
 
 \n|.                     { return yytext[0]; }
 
-
-
 %%
-

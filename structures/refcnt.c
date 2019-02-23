@@ -1,8 +1,7 @@
 #include <stdlib.h>
 #include "refcnt.h"
 
-typedef struct
-{
+typedef struct {
     unsigned int retainCnt;
     refcnt_obj_free freeFunc;
     void *data;
@@ -10,8 +9,7 @@ typedef struct
 
 
 void *
-alloc(size_t size, refcnt_obj_free freeFunc)
-{
+alloc(size_t size, refcnt_obj_free freeFunc) {
     _refcnt_objwrapper *ow;
     void *ptr;
 
@@ -26,9 +24,8 @@ alloc(size_t size, refcnt_obj_free freeFunc)
 }
 
 void
-retain(void *ptr)
-{
-    if (!ptr)return;
+retain(void *ptr) {
+    if (!ptr) return;
     _refcnt_objwrapper * ow;
     void *cptr;
     cptr  = ptr;
@@ -38,9 +35,8 @@ retain(void *ptr)
 }
 
 void
-release(void *ptr)
-{
-    if (!ptr)return;
+release(void *ptr) {
+    if (!ptr) return;
     _refcnt_objwrapper * ow;
     char *cptr;
     cptr  = (char *)ptr;
@@ -55,8 +51,8 @@ release(void *ptr)
     }
 }
 
-int refcnt_getcnt(void *ptr)
-{
+int
+refcnt_getcnt(void *ptr) {
     _refcnt_objwrapper * ow;
     char *cptr;
     cptr  = (char *)ptr;

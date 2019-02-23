@@ -7,13 +7,13 @@
 int yylex();
 void yyerror();
 
-
 %}
 
 %define api.value.type union
 
 %type <Operand> expr_
 %type <Operand> expr
+%type <Comparison> comp
 
 %token <char100> STR
 %token <char100> NUM
@@ -29,7 +29,9 @@ void yyerror();
 %token GE
 %token <char100> ID
 
-
+%left LT
+%left LE
+%left EQ
 %right ATT
 %left '+' '-'
 %right UMINUS
@@ -49,9 +51,38 @@ stat_list   : stat_list stat '\n' {}
 
 stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
             | attrib  { fprintf(stderr, "<reduced attrib>\n"); }
+            | cond  { fprintf(stderr, "<reduced cond>\n"); }
             ;
 
 attrib      : ID ATT expr  { place_set_variable($1); }
+            ;
+
+cond        : IF comp { increment_if_count(); append_cond_control(); append_conditional($2); }
+            '{'
+                stat_list
+            '}' { close_scope(); }
+            opt_else_if
+            ;
+
+opt_else_if : ELSE IF comp { append_else(); append_conditional($3); }
+            '{'
+                stat_list
+            '}' { close_scope(); close_scope(); }
+            opt_else_if
+            | opt_else
+            ;
+
+opt_else    : ELSE { append_else(); }
+            '{'
+            stat_list
+            '}' { close_scope(); }
+            |
+            ;
+
+comp        : expr_ EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
+            | expr_ LT expr_  { append_comparison(&$$, CompOpLT, $1, $3); }
+            | expr_ GT expr_  { append_comparison(&$$, CompOpGT, $1, $3); }
+            | '(' comp ')'  { $$ = $2; }
             ;
 
 expr        : expr_  { $$ = $1; place_operand($1); }

@@ -16,14 +16,20 @@ init_parse() {
     output_header(stdout);
     scopes = htable_init();
     current_scope = scope_create("main");
+    if_count = 0;
 }
 
 void
 end_parse() {
-    scope_output(stdout, current_scope);
+    scope_output(current_scope, stdout);
     output_footer(stdout);
     release(scopes);
     release(current_scope);
+}
+
+void
+increment_if_count() {
+    if_count++;
 }
 
 void
@@ -128,6 +134,75 @@ append_minus_op(Operand *stack, Operand op) {
     strcpy(temp.value.value, minus_one);
 
     append_operation(stack, '*', temp, op);
+}
+
+void
+append_cond_control() {
+    List *actions = action_create_cond_control(0, if_count);
+    scope_add_actions(current_scope, actions);
+    release(actions);
+}
+
+void
+append_conditional(Comparison comp) {
+    place_operand(comp.op1);
+
+    Action *action = action_create_comp(comp);
+    scope_add_action(current_scope, action);
+    action->cond_should_close_control = 1;
+
+    action->sub_scope->parent_name = current_scope->name;
+    current_scope = action->sub_scope;
+    action->cond_control_count = if_count;
+
+    release(action);
+}
+
+void
+append_else() {
+    Comparison comp;
+    comp.operator = CompOpEQ;
+
+    Operand op1;
+    op1.type = variable;
+
+    uuid_gen(op1.uuid);
+    sprintf(op1.name.value, "$splash_if_%d", if_count);
+
+    Operand op2;
+    op2.type = number;
+    strcpy(op2.value.value, "0");
+
+    comp.op1 = op1;
+    comp.op2 = op2;
+
+    place_operand(comp.op1);
+    Action *action = action_create_comp(comp);
+    scope_add_action(current_scope, action);
+    action->cond_should_close_control = 0;
+
+    action->sub_scope->parent_name = current_scope->name;
+    current_scope = action->sub_scope;
+    action->cond_control_count = if_count;
+
+    release(action);
+}
+
+void
+close_scope() {
+    String *uuid = current_scope->name;
+    current_scope = htable_retrieve(scopes, current_scope->parent_name->string, 0);
+    scope_clear_last_uuid(current_scope);
+}
+
+void
+append_comparison(Comparison *stack, CompOp operator, Operand op1, Operand op2) {
+    Comparison comp;
+    comp.operator = operator;
+    comp.op1 = op1;
+    comp.op2 = op2;
+
+    *stack = comp;
 }
 
 void

@@ -11,7 +11,10 @@ Action *action_create_get_variable(Operand op);
 Action *action_create_get_magic_variable(Operand op);
 Action *action_create_math_operation(char operator, Operand op2);
 Action *action_create_set_variable(char100 var_name);
+Action *action_create_comp(Comparison comp);
 
-void action_output(FILE *output, Action *action);
+List * action_create_cond_control(int value, int control_count);
+
+void action_output(Action *action, FILE *output);
 
 #endif  /* ACTION_H */
