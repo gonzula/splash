@@ -14,7 +14,7 @@ void _action_release(void *obj);
 FILE *
 init_parse(int argc, char *argv[]) {
     if (argc != 3) {
-        fprintf(stderr, "usage: %s (input splash file) (output shortcut)\n", argv[0]);
+        DEBUGPRINT("usage: %s (input splash file) (output shortcut)\n", argv[0]);
         return NULL;
     }
 
@@ -60,7 +60,7 @@ append_operand(Operand *stack, OpType type, char100 operand) {
 
 void
 operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) {
-    fprintf(stderr, "optimizing %s %c %s\n", op1.value.value, operator, op2.value.value);
+    DEBUGPRINT("optimizing %s %c %s\n", op1.value.value, operator, op2.value.value);
     Operand new_stack;
     new_stack.type = number;
 
@@ -70,8 +70,8 @@ operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) 
     double v2 = atof(op2.value.value);
     double result;
 
-    fprintf(stderr, "v1 = %lf\n", v1);
-    fprintf(stderr, "v2 = %lf\n", v2);
+    DEBUGPRINT("v1 = %lf\n", v1);
+    DEBUGPRINT("v2 = %lf\n", v2);
 
     switch (operator) {
         case '+': result = v1 + v2; break;
@@ -80,7 +80,7 @@ operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) 
         case '/': result = v1 / v2; break;
         case '^': result = pow(v1, v2); break;
     }
-    fprintf(stderr, "ret = %lf\n", result);
+    DEBUGPRINT("ret = %lf\n", result);
 
     sprintf(new_stack.value.value, "%lf", result);
     (*stack) = new_stack;
@@ -106,7 +106,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     }
 
     if (operator_is_commutative(operator) && strcmp(current_scope->last_uuid, op2.uuid) == 0) {
-        fprintf(stderr, "Switching op's\n");
+        DEBUGPRINT("Switching op's\n");
         Operand tmp = op1;
         op1 = op2;
         op2 = tmp;

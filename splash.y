@@ -48,9 +48,9 @@ stat_list   : stat_list stat '\n' {}
             |
             ;
 
-stat        : expr  { fprintf(stderr, "<reduced expr_>\n"); }
-            | attrib  { fprintf(stderr, "<reduced attrib>\n"); }
-            | cond  { fprintf(stderr, "<reduced cond>\n"); }
+stat        : expr  { DEBUGPRINT("<reduced expr_>\n"); }
+            | attrib  { DEBUGPRINT("<reduced attrib>\n"); }
+            | cond  { DEBUGPRINT("<reduced cond>\n"); }
             ;
 
 attrib      : ID ATT expr  { place_set_variable($1); }

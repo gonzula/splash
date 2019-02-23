@@ -73,12 +73,12 @@ output_entry(Entry *entry, int i, int count, int *stop, void *context) {
 
     switch (value->type) {
     case st_ht:    output_htable(output, value->ht); break;
-    case st_list:  fprintf(stderr, "NOT IMPLEMENTED\n"); break;
+    case st_list:  DEBUGPRINT("NOT IMPLEMENTED\n"); break;
     case st_str:   fprintf(output, "<string>%s</string>", value->str->string); break;
     case st_int:   fprintf(output, "<integer>%d</integer>", value->i); break;
     case st_float: fprintf(output, "<real>%f</real>", value->f); break;
-    case st_bool:  fprintf(stderr, "NOT IMPLEMENTED\n"); break;
-    case st_null:  fprintf(stderr, "NOT IMPLEMENTED\n"); break;
+    case st_bool:  DEBUGPRINT("NOT IMPLEMENTED\n"); break;
+    case st_null:  DEBUGPRINT("NOT IMPLEMENTED\n"); break;
     }
 }
 
