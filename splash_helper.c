@@ -233,6 +233,7 @@ void
 place_operand(Operand op) {
     Action *action;
     switch (op.type) {
+        case ask_number:
         case number: action = action_create_number(op); break;
         case variable: action = action_create_get_variable(op); break;
         case magicVariable: action = action_create_get_magic_variable(op); break;
