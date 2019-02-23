@@ -36,11 +36,39 @@ action_create_number(Operand op) {
     Action *action = action_create(WF_number);
     strcpy(action->uuid, op.uuid);
 
-    Serializable *s = serializable_init();
-    s->type = st_float;
-    s->f = atof(op.value.value);
-    htable_set(action->parameters, "WFNumberActionNumber", s);
-    release(s);
+    if (op.type == ask_number) {
+        HashTable *h1 = htable_init();
+        Serializable *s1 = serializable_create(h1, st_ht);
+
+        HashTable *h2 = htable_init();
+        Serializable *s2 = serializable_create(h2, st_ht);
+        htable_set(h1, "Value", s2);
+
+        String *ask = str_create("Ask");
+        Serializable *s3 = serializable_create(ask, st_str);
+        htable_set(h2, "Type", s3);
+
+        String *attachment = str_create("WFTextTokenAttachment");
+        Serializable *s4 = serializable_create(attachment, st_str);
+        htable_set(h1, "WFSerializationType", s4);
+
+        htable_set(action->parameters, "WFNumberActionNumber", s1);
+
+        release(attachment);
+        release(s4);
+        release(ask);
+        release(s3);
+        release(s1);
+        release(h1);
+        release(s2);
+        release(h2);
+    } else if (op.type == number) {
+        Serializable *s = serializable_init();
+        s->type = st_float;
+        s->f = atof(op.value.value);
+        htable_set(action->parameters, "WFNumberActionNumber", s);
+        release(s);
+    }
 
     return action;
 }
