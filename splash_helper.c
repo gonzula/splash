@@ -61,7 +61,7 @@ append_operand(Operand *stack, OpType type, char100 operand) {
 
 void
 append_func_call(Operand *stack, char100 name) {
-    if (strcmp(name.value, "AskNumber") == ) {
+    if (strcmp(name.value, "AskNumber") == 0) {
         Operand temp;
         *stack = temp;
         (*stack).type = ask_number;
