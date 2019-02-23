@@ -33,7 +33,7 @@ void yyerror();
 %right ATT
 %left '+' '-'
 %right UMINUS
-%left '*' '/'
+%left '*' '/' '%'
 %right '^'
 
 %%
@@ -90,6 +90,7 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
             | expr_[left] '-' expr_[right]  { append_operation(&$$, '-', $[left], $[right]);  }
             | expr_[left] '*' expr_[right]  { append_operation(&$$, '*', $[left], $[right]);  }
             | expr_[left] '/' expr_[right]  { append_operation(&$$, '/', $[left], $[right]);  }
+            | expr_[left] '%' expr_[right]  { append_operation(&$$, '%', $[left], $[right]);  }
             | expr_[left] '^' expr_[right]  { append_operation(&$$, '^', $[left], $[right]);  }
             | '(' expr_ ')'                 { $$ = $2; }
             | '-' expr_ %prec UMINUS        { append_minus_op(&$$, $2); }

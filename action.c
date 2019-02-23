@@ -238,15 +238,15 @@ action_complete_math_simple_operation(Action *action, char operator, Operand op2
 
 void
 action_complete_math_scientific_operation(Action *action, char operator, Operand op2) {
+    String *operator_string = str_create("…");
+    Serializable *s = serializable_create(operator_string, st_str);
+
+    htable_set(action->parameters, "WFMathOperation", s);
+    release(operator_string);
+    release(s);
+
+    String *WF_operation;
     if (operator == '^') {
-        String *ellipsis = str_create("…");
-        Serializable *s = serializable_create(ellipsis, st_str);
-
-        htable_set(action->parameters, "WFMathOperation", s);
-        release(ellipsis);
-        release(s);
-
-        String *WF_operation;
         if (op2.type == number && strcmp("2", op2.value.value) == 0) {
             WF_operation = str_create("x^2");
         } else if (op2.type == number && strcmp("3", op2.value.value) == 0) {
@@ -255,12 +255,15 @@ action_complete_math_scientific_operation(Action *action, char operator, Operand
             WF_operation = str_create("x^y");
             action_complete_math_operand(action, "WFScientificMathOperand", op2);
         }
-
-        s = serializable_create(WF_operation, st_str);
-        htable_set(action->parameters, "WFScientificMathOperation", s);
-        release(WF_operation);
-        release(s);
+    } else if (operator == '%') {
+        WF_operation = str_create("Modulus");
+        action_complete_math_operand(action, "WFScientificMathOperand", op2);
     }
+
+    s = serializable_create(WF_operation, st_str);
+    htable_set(action->parameters, "WFScientificMathOperation", s);
+    release(WF_operation);
+    release(s);
 }
 
 Action *
@@ -279,6 +282,7 @@ action_create_math_operation(char operator, Operand op2) {
             action_complete_math_simple_operation(action, operator, op2);
             break;
         case '^':
+        case '%':
             action_complete_math_scientific_operation(action, operator, op2);
             break;
     }
