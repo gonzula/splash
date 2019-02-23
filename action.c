@@ -228,12 +228,18 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                            Serializable *s3 = serializable_create(ask, st_str);
                            htable_set(h2, "Type", s3);
 
+                           String *token_attachment = str_create("WFTextTokenAttachment");
+                           Serializable *s5 = serializable_create(token_attachment, st_str);
+                           htable_set(h1, "WFSerializationType", s5);
+
                            release(h1);
                            release(s1);
                            release(h2);
                            release(s2);
                            release(ask);
                            release(s3);
+                           release(token_attachment);
+                           release(s5);
                          }
                          break;
     }
