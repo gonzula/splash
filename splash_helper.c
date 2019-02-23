@@ -125,14 +125,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
         op2 = tmp;
     }
 
-    Action *in_action;
-    switch (op1.type) {
-        case number: in_action = action_create_number(op1); break;
-        case variable: in_action = action_create_get_variable(op1); break;
-        case magicVariable: in_action = action_create_get_magic_variable(op1); break;
-    }
-
-    scope_add_action(current_scope, in_action);
+    place_operand(op1);
 
     Action *operation_action = action_create_math_operation(operator, op2);
     scope_add_action(current_scope, operation_action);
@@ -145,7 +138,6 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     strcpy(new_stack.uuid, operation_action->uuid);
 
     *stack = new_stack;
-    release(in_action);
     release(operation_action);
 }
 
