@@ -29,9 +29,7 @@ void yyerror();
 %token GE
 %token <char100> ID
 
-%left LT
-%left LE
-%left EQ
+%left LT LE EQ
 %right ATT
 %left '+' '-'
 %right UMINUS
