@@ -55,6 +55,19 @@ append_operand(Operand *stack, OpType type, char100 operand) {
         case number:        strcpy((*stack).value.value, operand.value); break;
         case variable:      strcpy((*stack).name.value, operand.value); break;
         case magicVariable: strcpy((*stack).name.value, operand.value); break;
+        case ask_number: break;
+    }
+}
+
+void
+append_func_call(Operand *stack, char100 name) {
+    if (strcmp(name.value, "AskNumber") == ) {
+        Operand temp;
+        *stack = temp;
+        (*stack).type = ask_number;
+        uuid_gen((*stack).uuid);
+    } else {
+        DEBUGPRINT("uninplemented function");
     }
 }
 

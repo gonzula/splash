@@ -10,7 +10,8 @@ typedef union {
 typedef enum {
     number,
     magicVariable,
-    variable
+    variable,
+    ask_number
 } OpType;
 
 typedef struct {
@@ -75,6 +76,7 @@ Action *action_create(ActionID id);
 void action_add_subaction(Action *this, Action *other);
 
 void append_operand(Operand *, OpType, char100);
+void append_func_call(Operand *, char100);
 void append_operation(Operand *, char, Operand, Operand);
 void append_minus_op(Operand *, Operand);
 void set_variable(char100, Operand);

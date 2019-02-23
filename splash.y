@@ -97,6 +97,7 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
             | '-' expr_ %prec UMINUS        { append_minus_op(&$$, $2); }
             | NUM                           { append_operand(&$$, number, $1); }
             | ID                            { append_operand(&$$, variable, $1); }
+            | ID '(' ')'                    { append_func_call($$, $1); }
             ;
 
 %%
