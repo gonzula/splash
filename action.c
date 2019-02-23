@@ -371,7 +371,7 @@ action_create_cond_control(int value, int control_count) {
     release(number_action);
 
     char100 var_name;
-    sprintf(var_name.value, "$splash_if_%d", if_count);
+    sprintf(var_name.value, "$splash_if_%d", control_count);
 
     Action *set_var_action = action_create_set_variable(var_name);
     list_append(actions, set_var_action);
