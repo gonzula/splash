@@ -404,6 +404,8 @@ action_create_close_cond(Action *action) {
 
     release(s);
     release(s1);
+    release(uuid);
+    release(close_action);
 
     return actions;
 }
