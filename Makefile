@@ -8,7 +8,7 @@ syntax:
 	/usr/local/opt/bison/bin/bison splash.y
 
 compile:
-	cc structures/*.c scope.c action.c output.c utils.c splash_helper.c splash.tab.c -ly -ll
+	cc structures/*.c scope.c action.c output.c utils.c splash_helper.c splash.tab.c -ly -ll -lm -o splash
 
 .PHONY : clean
 clean:
@@ -16,5 +16,5 @@ clean:
 		splash.tab.c \
 		lex.yy.c \
 		y.tab.c \
-		a.out \
+		splash \
 		2> /dev/null || :
