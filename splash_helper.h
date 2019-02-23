@@ -58,11 +58,13 @@ typedef struct {
     int cond_should_close_control;
 } Action;
 
+FILE *input_file;
+FILE *output_file;
 Scope *current_scope;
 HashTable *scopes;
 int if_count;
 
-void init_parse();  /* Must be called before starting parse */
+FILE *init_parse(int argc, char *argv[]);  /* Must be called before starting parse */
 void end_parse();  /* Must be called after ending parse */
 
 void increment_if_count();

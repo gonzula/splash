@@ -4,6 +4,7 @@
 #include "output.h"
 #include "splash_helper.h"
 
+extern FILE *yyin;
 int yylex();
 void yyerror();
 
@@ -103,8 +104,13 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
 #include "lex.yy.c"
 
 int
-main() {
-    init_parse();
+main(int argc, char *argv[]) {
+    FILE *fp = init_parse(argc, argv);
+    if (!fp) {
+        return EXIT_FAILURE;
+    }
+    yyin = fp;
     yyparse();
     end_parse();
+    return EXIT_SUCCESS;
 }

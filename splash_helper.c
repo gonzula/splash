@@ -11,18 +11,29 @@
 
 void _action_release(void *obj);
 
-void
-init_parse() {
-    output_header(stdout);
+FILE *
+init_parse(int argc, char *argv[]) {
+    if (argc != 3) {
+        fprintf(stderr, "usage: %s (input splash file) (output shortcut)\n", argv[0]);
+        return NULL;
+    }
+
+    input_file = fopen(argv[1], "r");
+    output_file = fopen(argv[2], "w");
+    output_header(output_file);
     scopes = htable_init();
     current_scope = scope_create("main");
     if_count = 0;
+
+    return input_file;
 }
 
 void
 end_parse() {
-    scope_output(current_scope, stdout);
-    output_footer(stdout);
+    scope_output(current_scope, output_file);
+    output_footer(output_file);
+    fclose(output_file);
+    fclose(input_file);
     release(scopes);
     release(current_scope);
 }
