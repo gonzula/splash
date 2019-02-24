@@ -124,6 +124,10 @@ action_create_text(Operand op) {
     Serializable *s4 = serializable_create(interpolated->str, st_str);
     htable_set(value, "string", s4);
 
+    String *serialization_type = str_create("WFTextTokenString");
+    Serializable *s5 = serializable_create(serialization_type, st_str);
+    htable_set(action_text, "WFSerializationType", s5);
+
     release(uuid);
     release(s);
     release(attachments);
@@ -133,6 +137,8 @@ action_create_text(Operand op) {
     release(action_text);
     release(s1);
     release(s4);
+    release(serialization_type);
+    release(s5);
     return action;
 }
 
