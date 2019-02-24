@@ -238,7 +238,7 @@ place_operand(Operand op) {
         case number: action = action_create_number(op); break;
         case variable: action = action_create_get_variable(op); break;
         case magicVariable: action = action_create_get_magic_variable(op); break;
-        case string: action_create_text(op); break;
+        case string: action = action_create_text(op); break;
     }
 
     scope_add_action(current_scope, action);
