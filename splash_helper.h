@@ -1,7 +1,18 @@
 #ifndef SPLASH_HELPER_H
 #define SPLASH_HELPER_H
 
+#include <stdio.h>
 #include "structures/structures.h"
+
+typedef struct {
+    String *name;
+    int position;
+} StringToken;
+
+typedef struct {
+    String *str;
+    List *tokens;
+} Interpolated;  // Interpolated String
 
 typedef union {
     char value[100];
