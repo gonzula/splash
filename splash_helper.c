@@ -57,16 +57,30 @@ append_operand(Operand *stack, OpType type, char100 operand) {
         case magicVariable: strcpy((*stack).name.value, operand.value); break;
         case string:        strcpy((*stack).value.value, operand.value); break;
         case ask_number: break;
+        case null: break;
     }
 }
 
 void
-append_func_call(Operand *stack, char100 name) {
+append_null_operand(Operand *stack) {
+    Operand temp;
+    *stack = temp;
+    (*stack).type = null;
+}
+
+void
+append_func_call(Operand *stack, char100 name, Operand parameter) {
     if (strcmp(name.value, "AskNumber") == 0) {
         Operand temp;
         *stack = temp;
         (*stack).type = ask_number;
         uuid_gen((*stack).uuid);
+    } else if (strcmp(name.value, "ShowResult") == 0) {
+        append_null_operand(stack);
+        Action *action = action_create_show_result(parameter);
+        scope_add_action(current_scope, action);
+
+        release(action);
     } else {
         DEBUGPRINT("uninplemented function");
     }
@@ -239,8 +253,11 @@ place_operand(Operand op) {
         case variable: action = action_create_get_variable(op); break;
         case magicVariable: action = action_create_get_magic_variable(op); break;
         case string: action = action_create_text(op); break;
+        case null: action = NULL; break;
     }
 
-    scope_add_action(current_scope, action);
-    release(action);
+    if (action) {
+        scope_add_action(current_scope, action);
+        release(action);
+    }
 }

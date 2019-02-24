@@ -85,60 +85,15 @@ action_create_text(Operand op) {
 
     Interpolated *interpolated = interpolated_create(op.value);
 
-    HashTable *action_text = htable_init();
-    Serializable *s1 = serializable_create(action_text, st_ht);
+    HashTable *dict = interpolated_dict(interpolated);
+    Serializable *s1 = serializable_create(dict, st_ht);
     htable_set(action->parameters, "WFTextActionText", s1);
 
-    HashTable *value = htable_init();
-    Serializable *s2 = serializable_create(value, st_ht);
-    htable_set(action_text, "Value", s2);
 
-    HashTable *attachments = htable_init();
-    Serializable *s3 = serializable_create(attachments, st_ht);
-    htable_set(value, "attachmentsByRange", s3);
-
-    LIST_LOOP(interpolated->tokens) {
-        StringToken *token = (StringToken *)node->object;
-
-        HashTable *dict = htable_init();
-        Serializable *s1 = serializable_create(dict, st_ht);
-
-        char range[100];
-        sprintf(range, "{%d, 1}", token->position);
-        htable_set(attachments, range, s1);
-
-        String *type = str_create("Variable");
-        Serializable *s2 = serializable_create(type, st_str);
-        htable_set(dict, "Type", s2);
-
-        Serializable * s3 = serializable_create(token->name, st_str);
-        htable_set(dict, "VariableName", s3);
-
-        release(s1);
-        release(dict);
-        release(type);
-        release(s2);
-        release(s3);
-    }
-
-    Serializable *s4 = serializable_create(interpolated->str, st_str);
-    htable_set(value, "string", s4);
-
-    String *serialization_type = str_create("WFTextTokenString");
-    Serializable *s5 = serializable_create(serialization_type, st_str);
-    htable_set(action_text, "WFSerializationType", s5);
-
+    release(dict);
     release(uuid);
     release(s);
-    release(attachments);
-    release(s3);
-    release(value);
-    release(s2);
-    release(action_text);
     release(s1);
-    release(s4);
-    release(serialization_type);
-    release(s5);
     return action;
 }
 
@@ -231,9 +186,8 @@ action_create_get_magic_variable(Operand op) {
 void
 action_complete_math_operand(Action *action, const char *key, Operand op2) {
     switch (op2.type) {
-        case string:
-            fprintf(stderr, "Invalid string inside math operation\n");
-            break;
+        case null: fprintf(stderr, "Invalid null inside math operation\n"); break;
+        case string: fprintf(stderr, "Invalid string inside math operation\n"); break;
         case number: {
                          Serializable *s = serializable_init();
                          s->type = st_float;
@@ -488,6 +442,39 @@ action_create_comp(Comparison comp) {
     return action;
 }
 
+Action *
+action_create_show_result(Operand op) {
+    Action *action = action_create(WF_show_result);
+
+    if (op.type == string) {
+        Interpolated *interpolated = interpolated_create(op.value);
+
+        HashTable *dict = interpolated_dict(interpolated);
+        Serializable *s1 = serializable_create(dict, st_ht);
+        htable_set(action->parameters, "Text", s1);
+        release(interpolated);
+        release(dict);
+        release(s1);
+    } else if (op.type == variable) {
+        /*Interpolated *interpolated = interpolated_init();*/
+        char100 text;
+        sprintf(text.value, "\"{%s}\"", op.name.value);
+
+        Interpolated *interpolated = interpolated_create(text);
+
+        HashTable *dict = interpolated_dict(interpolated);
+        Serializable *s1 = serializable_create(dict, st_ht);
+        htable_set(action->parameters, "Text", s1);
+        release(interpolated);
+        release(dict);
+        release(s1);
+    } else {
+        fprintf(stderr, "Invalid parameter in ShowResult()\n");
+    }
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -549,6 +536,7 @@ action_create_close_scope(Action *action) {
         case WF_math:
         case WF_number:
         case WF_text:
+        case WF_show_result:
         case WF_set_variable: return list_init();
     }
 }
@@ -568,6 +556,8 @@ action_output(Action *action, FILE *output) {
         case WF_number: fprintf(output, "number"); break;
         case WF_text: fprintf(output, "gettext"); break;
         case WF_set_variable: fprintf(output, "setvariable"); break;
+
+        case WF_show_result: fprintf(output, "showresult"); break;
     }
 
     fprintf(output, "</string>");

@@ -80,6 +80,60 @@ interpolated_create(char100 source) {
     return interpolated;
 }
 
+HashTable *
+interpolated_dict(Interpolated *interpolated) {
+    HashTable *dict = htable_init();
+
+    HashTable *value = htable_init();
+    Serializable *s2 = serializable_create(value, st_ht);
+    htable_set(dict, "Value", s2);
+
+    HashTable *attachments = htable_init();
+    Serializable *s3 = serializable_create(attachments, st_ht);
+    htable_set(value, "attachmentsByRange", s3);
+
+    LIST_LOOP(interpolated->tokens) {
+        StringToken *token = (StringToken *)node->object;
+
+        HashTable *dict = htable_init();
+        Serializable *s1 = serializable_create(dict, st_ht);
+
+        char range[100];
+        sprintf(range, "{%d, 1}", token->position);
+        htable_set(attachments, range, s1);
+
+        String *type = str_create("Variable");
+        Serializable *s2 = serializable_create(type, st_str);
+        htable_set(dict, "Type", s2);
+
+        Serializable * s3 = serializable_create(token->name, st_str);
+        htable_set(dict, "VariableName", s3);
+
+        release(s1);
+        release(dict);
+        release(type);
+        release(s2);
+        release(s3);
+    }
+
+    Serializable *s4 = serializable_create(interpolated->str, st_str);
+    htable_set(value, "string", s4);
+
+    String *serialization_type = str_create("WFTextTokenString");
+    Serializable *s5 = serializable_create(serialization_type, st_str);
+    htable_set(dict, "WFSerializationType", s5);
+
+    release(attachments);
+    release(s3);
+    release(value);
+    release(s2);
+    release(s4);
+    release(serialization_type);
+    release(s5);
+
+    return dict;
+}
+
 void
 _token_release(void *obj) {
     StringToken *token = (StringToken *)obj;

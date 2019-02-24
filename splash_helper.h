@@ -23,7 +23,8 @@ typedef enum {
     magicVariable,
     variable,
     ask_number,
-    string
+    string,
+    null
 } OpType;
 
 typedef struct {
@@ -60,7 +61,11 @@ typedef enum {
     WF_math,
     WF_number,
     WF_text,
-    WF_set_variable
+    WF_set_variable,
+
+    // functions
+    WF_show_result
+
 } ActionID;
 
 typedef struct {
@@ -89,7 +94,8 @@ Action *action_create(ActionID id);
 void action_add_subaction(Action *this, Action *other);
 
 void append_operand(Operand *, OpType, char100);
-void append_func_call(Operand *, char100);
+void append_null_operand(Operand *);
+void append_func_call(Operand *, char100, Operand parameter);
 void append_operation(Operand *, char, Operand, Operand);
 void append_minus_op(Operand *, Operand);
 void set_variable(char100, Operand);
