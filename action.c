@@ -79,6 +79,10 @@ action_create_text(Operand op) {
     Action *action = action_create(WF_text);
     strcpy(action->uuid, op.uuid);
 
+    String *uuid = str_create(action->uuid);
+    Serializable *s = serializable_create(uuid, st_str);
+    htable_set(action->parameters, "UUID", s);
+
     Interpolated *interpolated = interpolated_create(op.value);
 
     HashTable *action_text = htable_init();
@@ -120,6 +124,8 @@ action_create_text(Operand op) {
     Serializable *s4 = serializable_create(interpolated->str, st_str);
     htable_set(value, "string", s4);
 
+    release(uuid);
+    release(s);
     release(attachments);
     release(s3);
     release(value);
