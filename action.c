@@ -186,9 +186,8 @@ action_create_get_magic_variable(Operand op) {
 void
 action_complete_math_operand(Action *action, const char *key, Operand op2) {
     switch (op2.type) {
-        case string:
-            fprintf(stderr, "Invalid string inside math operation\n");
-            break;
+        case null: fprintf(stderr, "Invalid null inside math operation\n"); break;
+        case string: fprintf(stderr, "Invalid string inside math operation\n"); break;
         case number: {
                          Serializable *s = serializable_init();
                          s->type = st_float;
@@ -443,6 +442,39 @@ action_create_comp(Comparison comp) {
     return action;
 }
 
+Action *
+action_create_show_result(Operand op) {
+    Action *action = action_create(WF_show_result);
+
+    if (op.type == string) {
+        Interpolated *interpolated = interpolated_create(op.value);
+
+        HashTable *dict = interpolated_dict(interpolated);
+        Serializable *s1 = serializable_create(dict, st_ht);
+        htable_set(action->parameters, "Text", s1);
+        release(interpolated);
+        release(dict);
+        release(s1);
+    } else if (op.type == variable) {
+        /*Interpolated *interpolated = interpolated_init();*/
+        char100 text;
+        sprintf(text.value, "\"{%s}\"", op.name.value);
+
+        Interpolated *interpolated = interpolated_create(text);
+
+        HashTable *dict = interpolated_dict(interpolated);
+        Serializable *s1 = serializable_create(dict, st_ht);
+        htable_set(action->parameters, "Text", s1);
+        release(interpolated);
+        release(dict);
+        release(s1);
+    } else {
+        fprintf(stderr, "Invalid parameter in ShowResult()\n");
+    }
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -504,6 +536,7 @@ action_create_close_scope(Action *action) {
         case WF_math:
         case WF_number:
         case WF_text:
+        case WF_show_result:
         case WF_set_variable: return list_init();
     }
 }
@@ -523,6 +556,8 @@ action_output(Action *action, FILE *output) {
         case WF_number: fprintf(output, "number"); break;
         case WF_text: fprintf(output, "gettext"); break;
         case WF_set_variable: fprintf(output, "setvariable"); break;
+
+        case WF_show_result: fprintf(output, "showresult"); break;
     }
 
     fprintf(output, "</string>");
