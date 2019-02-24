@@ -74,12 +74,14 @@ interpolated_create(char100 source) {
     return interpolated;
 }
 
-void _token_release(void *obj) {
+void
+_token_release(void *obj) {
     StringToken *token = (StringToken *)obj;
     release(token->name);
 }
 
-void _interpolated_release(void *obj) {
+void
+_interpolated_release(void *obj) {
     Interpolated *interpolated = (Interpolated *)obj;
     release(interpolated->str);
     release(interpolated->tokens);
