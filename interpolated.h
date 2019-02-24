@@ -6,5 +6,6 @@
 Interpolated *interpolated_init();
 StringToken *token_init();
 
+Interpolated *interpolated_create(char100 source);
 
 #endif  /* INTERPOLATED_H */
