@@ -23,7 +23,8 @@ typedef enum {
     magicVariable,
     variable,
     ask_number,
-    string
+    string,
+    null
 } OpType;
 
 typedef struct {
