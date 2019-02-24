@@ -55,6 +55,7 @@ append_operand(Operand *stack, OpType type, char100 operand) {
         case number:        strcpy((*stack).value.value, operand.value); break;
         case variable:      strcpy((*stack).name.value, operand.value); break;
         case magicVariable: strcpy((*stack).name.value, operand.value); break;
+        case string:        strcpy((*stack).value.value, operand.value); break;
         case ask_number: break;
     }
 }
@@ -237,6 +238,7 @@ place_operand(Operand op) {
         case number: action = action_create_number(op); break;
         case variable: action = action_create_get_variable(op); break;
         case magicVariable: action = action_create_get_magic_variable(op); break;
+        case string: action_create_text(op); break;
     }
 
     scope_add_action(current_scope, action);
