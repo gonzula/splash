@@ -65,7 +65,11 @@ interpolated_create(char100 source) {
             continue;
         } else if (c == '{') {
             current_token = token_init();
-            current_token->position = interpolated->str->len;
+            current_token->position = str_unicode_len(interpolated->str);
+            //EFBFBC
+            str_append_char(interpolated->str, 0xEF);
+            str_append_char(interpolated->str, 0xBF);
+            str_append_char(interpolated->str, 0xBC);
             is_inside_interpolation = 1;
             continue;
         }
