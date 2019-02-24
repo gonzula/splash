@@ -98,6 +98,7 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
             | NUM                           { append_operand(&$$, number, $1); }
             | ID                            { append_operand(&$$, variable, $1); }
             | ID '(' ')'                    { append_func_call(&$$, $1); }
+            | STR                           { append_operand(&$$, string, $1); }
             ;
 
 %%

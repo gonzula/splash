@@ -7,6 +7,7 @@
 Action *action_init();
 Action *action_create(ActionID id);
 Action *action_create_number(Operand op);
+Action *action_create_text(Operand op);
 Action *action_create_get_variable(Operand op);
 Action *action_create_get_magic_variable(Operand op);
 Action *action_create_math_operation(char operator, Operand op2);

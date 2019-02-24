@@ -1,7 +1,18 @@
 #ifndef SPLASH_HELPER_H
 #define SPLASH_HELPER_H
 
+#include <stdio.h>
 #include "structures/structures.h"
+
+typedef struct {
+    String *name;
+    int position;
+} StringToken;
+
+typedef struct {
+    String *str;
+    List *tokens;
+} Interpolated;  // Interpolated String
 
 typedef union {
     char value[100];
@@ -11,7 +22,8 @@ typedef enum {
     number,
     magicVariable,
     variable,
-    ask_number
+    ask_number,
+    string
 } OpType;
 
 typedef struct {
@@ -47,6 +59,7 @@ typedef enum {
     WF_get_variable,
     WF_math,
     WF_number,
+    WF_text,
     WF_set_variable
 } ActionID;
 
