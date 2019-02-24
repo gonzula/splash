@@ -95,7 +95,7 @@ action_create_text(Operand op) {
 
     HashTable *attachments = htable_init();
     Serializable *s3 = serializable_create(attachments, st_ht);
-    htable_set(value, "Value", s3);
+    htable_set(value, "attachmentsByRange", s3);
 
     LIST_LOOP(interpolated->tokens) {
         StringToken *token = (StringToken *)node->object;
