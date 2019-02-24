@@ -77,6 +77,7 @@ action_create_number(Operand op) {
 Action *
 action_create_text(Operand op) {
     Action *action = action_create(WF_text);
+    strcpy(action->uuid, op.uuid);
 
     Interpolated *interpolated = interpolated_create(op.value);
 
