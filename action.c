@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "scope.h"
 #include "output.h"
+#include "interpolated.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -70,6 +71,61 @@ action_create_number(Operand op) {
         release(s);
     }
 
+    return action;
+}
+
+Action *
+action_create_text(Operand op) {
+    Action *action = action_create(WF_text);
+
+    Interpolated *interpolated = interpolated_create(op.value);
+
+    HashTable *action_text = htable_init();
+    Serializable *s1 = serializable_create(action_text, st_ht);
+    htable_set(action->parameters, "WFTextActionText", s1);
+
+    HashTable *value = htable_init();
+    Serializable *s2 = serializable_create(value, st_ht);
+    htable_set(action_text, "Value", s2);
+
+    HashTable *attachments = htable_init();
+    Serializable *s3 = serializable_create(attachments, st_ht);
+    htable_set(value, "Value", s3);
+
+    LIST_LOOP(interpolated->tokens) {
+        StringToken *token = (StringToken *)node->object;
+
+        HashTable *dict = htable_init();
+        Serializable *s1 = serializable_create(dict, st_ht);
+
+        char range[100];
+        sprintf(range, "{%d, 1}", token->position);
+        htable_set(attachments, range, s1);
+
+        String *type = str_create("Variable");
+        Serializable *s2 = serializable_create(type, st_str);
+        htable_set(dict, "Type", s2);
+
+        Serializable * s3 = serializable_create(token->name, st_str);
+        htable_set(dict, "VariableName", s3);
+
+        release(s1);
+        release(dict);
+        release(type);
+        release(s2);
+        release(s3);
+    }
+
+    Serializable *s4 = serializable_create(interpolated->str, st_str);
+    htable_set(value, "string", s4);
+
+    release(attachments);
+    release(s3);
+    release(value);
+    release(s2);
+    release(action_text);
+    release(s1);
+    release(s4);
     return action;
 }
 
@@ -162,6 +218,9 @@ action_create_get_magic_variable(Operand op) {
 void
 action_complete_math_operand(Action *action, const char *key, Operand op2) {
     switch (op2.type) {
+        case string:
+            fprintf(stderr, "Invalid string inside math operation\n");
+            break;
         case number: {
                          Serializable *s = serializable_init();
                          s->type = st_float;
@@ -476,6 +535,7 @@ action_create_close_scope(Action *action) {
         case WF_get_variable:
         case WF_math:
         case WF_number:
+        case WF_text:
         case WF_set_variable: return list_init();
     }
 }
@@ -493,6 +553,7 @@ action_output(Action *action, FILE *output) {
         case WF_get_variable: fprintf(output, "getvariable"); break;
         case WF_math: fprintf(output, "math"); break;
         case WF_number: fprintf(output, "number"); break;
+        case WF_text: fprintf(output, "gettext"); break;
         case WF_set_variable: fprintf(output, "setvariable"); break;
     }
 
