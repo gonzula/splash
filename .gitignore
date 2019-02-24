@@ -2,7 +2,6 @@ splash
 lex.yy.c
 splash.tab.c
 *.shortcut
-*.splash
 
 # github macOS gitignore: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
 # General
