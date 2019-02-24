@@ -1,3 +1,4 @@
+#include <string.h>
 #include "interpolated.h"
 
 void _token_release(void *obj);
@@ -40,7 +41,8 @@ interpolated_create(char100 source) {
     int is_escaped = 0;
     int is_inside_interpolation = 0;
     StringToken *current_token = NULL;
-    for (int i = 0; s[i]; i++) {
+    size_t len = strlen(s);
+    for (int i = 1; i < len - 1; i++) {
         unsigned char c = s[i];
         if (is_escaped) {
             str_append_char(interpolated->str, _unescape_char(c));
