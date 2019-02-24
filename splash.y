@@ -113,5 +113,6 @@ main(int argc, char *argv[]) {
     yyin = fp;
     yyparse();
     end_parse();
+    yylex_destroy();
     return EXIT_SUCCESS;
 }
