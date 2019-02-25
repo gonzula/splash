@@ -130,11 +130,13 @@ Download the compiled version:
 On macOS:
 ```
 curl https://github.com/gonzula/splash/releases/download/v0.1.1/splash.macOS > /usr/local/bin/splash
+chmod +x /usr/local/bin/splash
 ```
 
 On linux:
 ```
 curl https://github.com/gonzula/splash/releases/download/v0.1.1/splash.linux > /usr/bin/splash
+chmod +x /usr/bin/splash
 ```
 
 [macOS version](http://example.com)
