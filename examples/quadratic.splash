@@ -1,0 +1,28 @@
+a := AskNumber()
+b := AskNumber()
+c := AskNumber()
+
+delta := b^2 - 4 * a * c
+
+if a == 0 {
+    x := -c/b
+
+    answer := "x = {x}"
+} else if delta == 0 {
+    x := -b / (2 * a)
+
+    answer := "x1 = x2 = {x}"
+} else if delta > 0 {
+    x1 := (-b + delta^(1/2))/(2 * a)
+    x2 := (-b + -delta^(1/2))/(2 * a)
+
+    answer := "x1 = {x1}\nx2 = {x2}"
+} else {
+    xr := -b / (2 * a)
+    xi := (-delta)^(1/2) / (2 * a)
+    nxi := -xi
+
+    answer := "x1 = {xr} + {xi}i\nx2 = {xr} + {nxi}i"
+}
+
+ShowResult(answer)

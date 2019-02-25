@@ -1,0 +1,11 @@
+age := AskNumber()
+
+if age < 12 {
+    ShowResult("Child")
+} else if age < 18 {
+    ShowResult("Teen")
+} else if age < 60 {
+    ShowResult("Adult")
+} else {
+    ShowResult("Elder")
+}
