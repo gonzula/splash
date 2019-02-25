@@ -125,23 +125,16 @@ ShowResult("{year} is a {type} year")
 
 ### The easy way
 
-Download the compiled version:
+Download the compiled version from the latest [release](https://github.com/gonzula/splash/releases)
 
-On macOS:
-```
-curl https://github.com/gonzula/splash/releases/download/v0.1.1/splash.macOS > /usr/local/bin/splash
-chmod +x /usr/local/bin/splash
-```
+[linux version](https://github.com/gonzula/splash/releases/download/v0.1.1/splash.linux)
+[macOS version](https://github.com/gonzula/splash/releases/download/v0.1.1/splash.macOS)
 
-On linux:
-```
-curl https://github.com/gonzula/splash/releases/download/v0.1.1/splash.linux > /usr/bin/splash
-chmod +x /usr/bin/splash
-```
+and run 
 
-[macOS version](http://example.com)
-
-[linux version](http://example.com)
+``` BASH
+chmod +x splash
+```
 
 
 ### Compiling from source
