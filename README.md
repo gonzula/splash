@@ -31,7 +31,7 @@ The best way to learn is with some examples
 Here's an example splash program that given an age tells the person's stage of life.
 
 [shortcut file](https://github.com/gonzula/splash/blob/master/examples/age.shortcut)
-[vídeo of the shortcut](https://github.com/gonzula/splash/blob/master/examples/age.mov)
+[video of the shortcut](https://github.com/gonzula/splash/blob/master/examples/age.mov)
 
 
 ``` BASH
@@ -57,7 +57,7 @@ if age < 12 {
 Here's an example with more advanced expressions that solves any quadratic expression in the form ax² + bx + c = 0
 
 [shortcut file](https://github.com/gonzula/splash/blob/master/examples/quadratic.shortcut)
-[vídeo of the shortcut](https://github.com/gonzula/splash/blob/master/examples/quadratic.mov)
+[video of the shortcut](https://github.com/gonzula/splash/blob/master/examples/quadratic.mov)
 
 ``` BASH
 a := AskNumber()
@@ -95,7 +95,7 @@ ShowResult(answer)  # ShowResult shows an alert with the
 And a last example that tells if an year is a leap year:
 
 [shortcut file](https://github.com/gonzula/splash/blob/master/examples/leap_year.shortcut)
-[vídeo of the shortcut](https://github.com/gonzula/splash/blob/master/examples/leap_year.mov)
+[video of the shortcut](https://github.com/gonzula/splash/blob/master/examples/leap_year.mov)
 
 ``` BASH
 year := AskNumber()
