@@ -14,7 +14,7 @@ void _action_release(void *obj);
 FILE *
 init_parse(int argc, char *argv[]) {
     if (argc != 3) {
-        DEBUGPRINT("usage: %s (input splash file) (output shortcut)\n", argv[0]);
+        fprintf(stderr, "usage: %s (input splash file) (output shortcut)\n", argv[0]);
         return NULL;
     }
 
