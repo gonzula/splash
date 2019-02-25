@@ -19,6 +19,7 @@ Splash is meant to reduce substantially the manual labor, improve readability an
 
 And those are some of the features in the backlog:
 
+* iOS app to write your splash code and export to shortcuts directly
 * Loops
 * Functions declarations
 
