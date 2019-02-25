@@ -125,9 +125,10 @@ ShowResult("{year} is a {type} year")
 
 ### The easy way
 
-Download the compiled version from the latest [release](https://github.com/gonzula/splash/releases)
+Download the compiled version from the latest release 
 
 [linux version](https://github.com/gonzula/splash/releases/download/v0.1.1/splash.linux)
+
 [macOS version](https://github.com/gonzula/splash/releases/download/v0.1.1/splash.macOS)
 
 and run 
