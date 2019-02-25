@@ -29,6 +29,7 @@ greater_or_equal_than|>=  { return GE; }
 
 [a-zA-Z_][a-zA-Z_0-9]*  { strcpy(yylval.ID.value, yytext); return ID; }
 
+<<EOF>>                 { return END_OF_FILE; }
 \n|.                     { return yytext[0]; }
 
 %%

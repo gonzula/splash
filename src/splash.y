@@ -29,6 +29,7 @@ void yyerror();
 %token LE
 %token GT
 %token GE
+%token END_OF_FILE
 %token <char100> ID
 
 %left LT LE EQ
