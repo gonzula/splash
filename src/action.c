@@ -89,7 +89,7 @@ action_create_text(Operand op) {
     Serializable *s1 = serializable_create(dict, st_ht);
     htable_set(action->parameters, "WFTextActionText", s1);
 
-
+    release(interpolated);
     release(dict);
     release(uuid);
     release(s);
