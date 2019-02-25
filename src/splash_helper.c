@@ -19,7 +19,9 @@ init_parse(int argc, char *argv[]) {
     }
 
     input_file = fopen(argv[1], "r");
-    output_file = fopen(argv[2], "w");
+    char output_name[1000];
+    sprintf(output_name, "%s.shortcut", argv[2]);
+    output_file = fopen(output_name, "w");
     output_header(output_file);
     scopes = htable_init();
     current_scope = scope_create("main");
