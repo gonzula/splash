@@ -47,7 +47,7 @@ prog        : stat_list { YYACCEPT; }
 
 stat_list   : stat_list stat '\n' {}
             | stat_list '\n' {}
-            |
+            | %empty
             ;
 
 stat        : expr  { DEBUGPRINT("<reduced expr_>\n"); }
@@ -77,7 +77,7 @@ opt_else    : ELSE { append_else(); }
             '{'
             stat_list
             '}' { close_scope(); }
-            |
+            | %empty
             ;
 
 comp        : expr_ EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
@@ -104,7 +104,7 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
             ;
 
 param       : expr_
-            |                               { append_null_operand(&$$); }
+            | %empty                        { append_null_operand(&$$); }
             ;
 
 %%
