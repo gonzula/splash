@@ -41,12 +41,16 @@ void yyerror();
 %%
 
 prog        : stat_list { YYACCEPT; }
-            | error '\n' { yyerror("Invalid"); yyerrok; }
+            | error new_line { yyerror("Invalid Syntax"); yyerrok; }
             ;
 
-stat_list   : stat_list stat '\n' {}
-            | stat_list '\n' {}
-            |
+stat_list   : stat_list stat new_line {}
+            | stat_list new_line {}
+            | %empty
+            ;
+
+new_line    : '\n'
+            | '\r'
             ;
 
 stat        : expr  { DEBUGPRINT("<reduced expr_>\n"); }
@@ -76,7 +80,7 @@ opt_else    : ELSE { append_else(); }
             '{'
             stat_list
             '}' { close_scope(); }
-            |
+            | %empty
             ;
 
 comp        : expr_ EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
@@ -103,7 +107,7 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
             ;
 
 param       : expr_
-            |                               { append_null_operand(&$$); }
+            | %empty                        { append_null_operand(&$$); }
             ;
 
 %%
