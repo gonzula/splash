@@ -29,7 +29,6 @@ void yyerror();
 %token LE
 %token GT
 %token GE
-%token END_OF_FILE
 %token <char100> ID
 
 %left LT LE EQ
@@ -42,12 +41,16 @@ void yyerror();
 %%
 
 prog        : stat_list { YYACCEPT; }
-            | error '\n' { yyerror("Invalid"); yyerrok; }
+            | error new_line { yyerror("Invalid Syntax"); yyerrok; }
             ;
 
-stat_list   : stat_list stat '\n' {}
-            | stat_list '\n' {}
+stat_list   : stat_list stat new_line {}
+            | stat_list new_line {}
             | %empty
+            ;
+
+new_line    : '\n'
+            | '\r'
             ;
 
 stat        : expr  { DEBUGPRINT("<reduced expr_>\n"); }
