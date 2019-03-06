@@ -9,7 +9,7 @@ Although the Shortcuts app is designed for non programmers/beginners, it's progr
 
 To solve this problem, `SPLASH` is being developed as a programming language designed for non programmers/beginners that compiles directly to shortcuts.
 
-## For what is worth
+## For what it's worth
 
 Splash is meant to reduce substantially the manual labor, improve readability and maintainability of shortcuts. It's still under development but with a few fully working features. Between them:
 
