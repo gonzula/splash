@@ -2,18 +2,18 @@ splash: lexycal syntax compile
 	@echo DONE
 
 lexycal:
-	flex -o src/lex.yy.c src/splash.lex
+	flex -o compiler/lex.yy.c compiler/splash.lm
 syntax:
-	bison src/splash.y -o src/splash.tab.c
+	bison -d compiler/splash.ym -o compiler/splash.tab.c
 
 compile:
-	cc src/structures/*.c src/scope.c src/action.c src/output.c src/utils.c src/splash_helper.c src/interpolated.c src/splash.tab.c -ly -ll -lm -o splash
+	cc compiler/structures/*.c compiler/scope.c compiler/action.c compiler/output.c compiler/utils.c compiler/splash_helper.c compiler/interpolated.c compiler/lex.yy.c compiler/splash.tab.c compiler/main.c -ly -ll -lm -o splash
 
 .PHONY : clean
 clean:
 	@rm \
-		src/splash.tab.c \
-		src/lex.yy.c \
-		src/y.tab.c \
+		compiler/splash.tab.c \
+		compiler/lex.yy.c \
+		compiler/y.tab.c \
 		splash \
 		2> /dev/null || :

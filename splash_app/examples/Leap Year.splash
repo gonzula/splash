@@ -1,0 +1,19 @@
+year := AskNumber()
+
+if year % 4 > 0 {
+    leap := 0
+} else if year % 100 > 0 {
+    leap := 1
+} else if year % 400 > 0 {
+    leap := 0
+} else {
+    leap := 1
+}
+
+if leap == 0 {
+    type := "common"
+} else {
+    type := "leap"
+}
+
+ShowResult("{year} is a {type} year")
