@@ -127,7 +127,22 @@ if leap == 0 {
 ShowResult("{year} is a {type} year")
 ```
 
-## How to install
+## How to get started
+
+You can use this language on your iOS device by [downloading the app from the App Store](https://itunes.apple.com/us/app/splash-programming-language/id1455793030?mt=8) or cloning this repo and compiling it on your Xcode. (You will need an Apple Developer account)
+
+Or you can compile the compiler on your computer. It's pure C code, without any dependencies, so it works on any operating system.
+
+## Installing the app via Xcode
+
+You will need to have installed `bison` installed.
+```
+brew install bison
+ln -s /usr/local/opt/bison/bin/bison /usr/local/bin/bison
+```
+And then it's just a matter of building the Xcode project
+
+## Compiling the Compiler
 
 ### The easy way
 
