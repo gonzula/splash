@@ -62,7 +62,7 @@ void
 append_func_call(Operand *stack, char100 name, Operand parameter) {
     Action *action = NULL;
     if (strcmp(name.value, "AskNumber") == 0) {
-        Action *action = action_create_ask_number(parameter);
+        action = action_create_ask_number(parameter);
 
         (*stack).type = magicVariable;
         char name[] = "Ask for Input";
@@ -71,7 +71,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         *stack = (*stack);
     } else if (strcmp(name.value, "ShowResult") == 0) {
         append_null_operand(stack);
-        Action *action = action_create_show_result(parameter);
+        action = action_create_show_result(parameter);
     } else {
         DEBUGPRINT("uninplemented function");
     }
