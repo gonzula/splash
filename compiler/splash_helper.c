@@ -49,7 +49,6 @@ append_operand(Operand *stack, OpType type, char100 operand) {
         case variable:      strcpy((*stack).name.value, operand.value); break;
         case magicVariable: strcpy((*stack).name.value, operand.value); break;
         case string:        strcpy((*stack).value.value, operand.value); break;
-        case ask_number: break;
         case null: break;
     }
 }
@@ -62,8 +61,6 @@ append_null_operand(Operand *stack) {
 void
 append_func_call(Operand *stack, char100 name, Operand parameter) {
     if (strcmp(name.value, "AskNumber") == 0) {
-        (*stack).type = ask_number;
-        uuid_gen((*stack).uuid);
     } else if (strcmp(name.value, "ShowResult") == 0) {
         append_null_operand(stack);
         Action *action = action_create_show_result(parameter);
@@ -236,7 +233,6 @@ void
 place_operand(Operand op) {
     Action *action;
     switch (op.type) {
-        case ask_number:
         case number: action = action_create_number(op); break;
         case variable: action = action_create_get_variable(op); break;
         case magicVariable: action = action_create_get_magic_variable(op); break;

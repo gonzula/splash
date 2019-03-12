@@ -22,7 +22,6 @@ typedef enum {
     number,
     magicVariable,
     variable,
-    ask_number,
     string,
     null
 } OpType;
