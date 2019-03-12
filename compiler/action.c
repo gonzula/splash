@@ -396,6 +396,7 @@ action_create_ask_number(Operand op) {
         HashTable *dict = interpolated_dict(interpolated);
         Serializable *s1 = serializable_create(dict, st_ht);
         htable_set(action->parameters, "WFAskActionPrompt", s1);
+
         release(interpolated);
         release(dict);
         release(s1);
@@ -411,10 +412,23 @@ action_create_ask_number(Operand op) {
         release(interpolated);
         release(dict);
         release(s1);
+    } else if (op.type == null) {
     } else {
-        fprintf(stderr, "Invalid parameter in ShowResult()\n");
+        fprintf(stderr, "Invalid parameter in AskNumber()\n");
     }
 
+    String *empty = str_init();
+    Serializable *s2 = serializable_create(empty, st_str);
+    htable_set(action->parameters, "WFAskActionDefaultAnswer", s2);
+
+    String *number = str_create("Number");
+    Serializable *s3 = serializable_create(number, st_str);
+    htable_set(action->parameters, "WFInputType", s3);
+
+    release(number);
+    release(s3);
+    release(empty);
+    release(s2);
     return action;
 }
 
