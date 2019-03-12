@@ -9,12 +9,26 @@
 
 void _action_release(void *obj);
 
+void
+action_set_uuid(Action *action, char uuid[37]) {
+    strcpy(action->uuid, uuid);
+
+    String *uuidString = str_create(action->uuid);
+    Serializable *s = serializable_create(uuidString, st_str);
+    htable_set(action->parameters, "UUID", s);
+
+    release(uuidString);
+    release(s);
+}
+
 Action *
 action_create(ActionID id) {
     Action *action = (Action *)alloc(sizeof(Action), _action_release);
     action->id = id;
     action->parameters = htable_init();
-    uuid_gen(action->uuid);
+    char uuid[37];
+    uuid_gen(uuid);
+    action_set_uuid(action, uuid);
 
     action->sub_scope = NULL;
 
@@ -24,7 +38,7 @@ action_create(ActionID id) {
 Action *
 action_create_number(Operand op) {
     Action *action = action_create(WF_number);
-    strcpy(action->uuid, op.uuid);
+    action_set_uuid(action, op.uuid);
 
     Serializable *s = serializable_init();
     s->type = st_float;
@@ -38,11 +52,7 @@ action_create_number(Operand op) {
 Action *
 action_create_text(Operand op) {
     Action *action = action_create(WF_text);
-    strcpy(action->uuid, op.uuid);
-
-    String *uuid = str_create(action->uuid);
-    Serializable *s = serializable_create(uuid, st_str);
-    htable_set(action->parameters, "UUID", s);
+    action_set_uuid(action, op.uuid);
 
     Interpolated *interpolated = interpolated_create(op.value);
 
@@ -52,8 +62,6 @@ action_create_text(Operand op) {
 
     release(interpolated);
     release(dict);
-    release(uuid);
-    release(s);
     release(s1);
     return action;
 }
@@ -61,7 +69,7 @@ action_create_text(Operand op) {
 Action *
 action_create_get_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
-    strcpy(action->uuid, op.uuid);
+    action_set_uuid(action, op.uuid);
 
     HashTable *variable = htable_init();
     Serializable *s1 = serializable_create(variable, st_ht);
@@ -101,7 +109,7 @@ action_create_get_variable(Operand op) {
 Action *
 action_create_get_magic_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
-    strcpy(action->uuid, op.uuid);
+    action_set_uuid(action, op.uuid);
 
     HashTable *variable = htable_init();
     Serializable *s1 = serializable_create(variable, st_ht);
@@ -285,10 +293,6 @@ Action *
 action_create_math_operation(char operator, Operand op2) {
     Action *action = action_create(WF_math);
 
-    String *uuid = str_create(action->uuid);
-    Serializable *s = serializable_create(uuid, st_str);
-    htable_set(action->parameters, "UUID", s);
-
     switch (operator) {
         case '+':
         case '-':
@@ -301,9 +305,6 @@ action_create_math_operation(char operator, Operand op2) {
             action_complete_math_scientific_operation(action, operator, op2);
             break;
     }
-
-    release(uuid);
-    release(s);
 
     return action;
 }
@@ -487,7 +488,7 @@ action_create_close_cond(Action *action) {
 
     Action *close_action = action_create(WF_conditional);
     list_append(actions, close_action);
-    strcpy(close_action->uuid, action->uuid);
+    action_set_uuid(close_action, action->uuid);
 
     String *uuid = str_create(close_action->uuid);
     Serializable *s = serializable_create(uuid, st_str);
