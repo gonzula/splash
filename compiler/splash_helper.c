@@ -65,7 +65,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         Action *action = action_create_ask_number(parameter);
 
         (*stack).type = magicVariable;
-        char name[] = "Calculation Result";
+        char name[] = "Ask for Input";
         strcpy((*stack).name.value, name);
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
