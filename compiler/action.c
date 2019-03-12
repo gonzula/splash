@@ -10,17 +10,6 @@
 void _action_release(void *obj);
 
 Action *
-action_init() {
-    Action *action = (Action *)alloc(sizeof(Action), _action_release);
-    action->id = 0;
-    action->parameters = NULL;
-    action->uuid[0] = 0;
-    action->sub_scope = NULL;
-
-    return action;
-}
-
-Action *
 action_create(ActionID id) {
     Action *action = (Action *)alloc(sizeof(Action), _action_release);
     action->id = id;

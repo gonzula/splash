@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "splash_helper.h"
 
-Action *action_init(void);
 Action *action_create(ActionID id);
 Action *action_create_number(Operand op);
 Action *action_create_text(Operand op);
