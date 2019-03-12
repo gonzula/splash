@@ -537,6 +537,7 @@ action_create_close_scope(Action *action) {
         case WF_number:
         case WF_text:
         case WF_show_result:
+        case WF_ask:
         case WF_set_variable: return list_init();
     }
 }
@@ -557,6 +558,7 @@ action_output(Action *action, FILE *output) {
         case WF_text: fprintf(output, "gettext"); break;
         case WF_set_variable: fprintf(output, "setvariable"); break;
 
+        case WF_ask: fprintf(output, "ask"); break;
         case WF_show_result: fprintf(output, "showresult"); break;
     }
 
