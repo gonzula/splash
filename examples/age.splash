@@ -1,4 +1,4 @@
-age := AskNumber()
+age := AskNumber("Enter the age")
 
 if age < 12 {
     ShowResult("Child")
