@@ -60,15 +60,25 @@ append_null_operand(Operand *stack) {
 
 void
 append_func_call(Operand *stack, char100 name, Operand parameter) {
+    Action *action = NULL;
     if (strcmp(name.value, "AskNumber") == 0) {
+        Action *action = action_create_ask_number(parameter);
+
+        (*stack).type = magicVariable;
+        char name[] = "Calculation Result";
+        strcpy((*stack).name.value, name);
+        strcpy((*stack).uuid, action->uuid);
+        *stack = (*stack);
     } else if (strcmp(name.value, "ShowResult") == 0) {
         append_null_operand(stack);
         Action *action = action_create_show_result(parameter);
-        scope_add_action(current_scope, action);
-
-        release(action);
     } else {
         DEBUGPRINT("uninplemented function");
+    }
+
+    if (action) {
+        scope_add_action(current_scope, action);
+        release(action);
     }
 }
 

@@ -338,7 +338,6 @@ action_create_set_variable(char100 name) {
 
 void
 action_complete_comp_operand(Action *action, CompOp operator, Operand operand) {
-
     switch (operator) {
         case CompOpEQ: {
                            String *str = str_create(operand.value.value);
@@ -388,6 +387,38 @@ action_create_comp(Comparison comp) {
 }
 
 Action *
+action_create_ask_number(Operand op) {
+    Action *action = action_create(WF_ask);
+
+    if (op.type == string) {
+        Interpolated *interpolated = interpolated_create(op.value);
+
+        HashTable *dict = interpolated_dict(interpolated);
+        Serializable *s1 = serializable_create(dict, st_ht);
+        htable_set(action->parameters, "WFAskActionPrompt", s1);
+        release(interpolated);
+        release(dict);
+        release(s1);
+    } else if (op.type == variable) {
+        char100 text;
+        sprintf(text.value, "\"{%s}\"", op.name.value);
+
+        Interpolated *interpolated = interpolated_create(text);
+
+        HashTable *dict = interpolated_dict(interpolated);
+        Serializable *s1 = serializable_create(dict, st_ht);
+        htable_set(action->parameters, "WFAskActionPrompt", s1);
+        release(interpolated);
+        release(dict);
+        release(s1);
+    } else {
+        fprintf(stderr, "Invalid parameter in ShowResult()\n");
+    }
+
+    return action;
+}
+
+Action *
 action_create_show_result(Operand op) {
     Action *action = action_create(WF_show_result);
 
@@ -401,7 +432,6 @@ action_create_show_result(Operand op) {
         release(dict);
         release(s1);
     } else if (op.type == variable) {
-        /*Interpolated *interpolated = interpolated_init();*/
         char100 text;
         sprintf(text.value, "\"{%s}\"", op.name.value);
 
