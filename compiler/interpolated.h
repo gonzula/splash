@@ -8,6 +8,6 @@ StringToken *token_init(void);
 
 Interpolated *interpolated_create(char100 source);
 
-HashTable *interpolated_dict(Interpolated *interpolated);
+Serializable *interpolated_parameters(Interpolated *interpolated);
 
 #endif  /* INTERPOLATED_H */

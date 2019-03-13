@@ -80,8 +80,8 @@ interpolated_create(char100 source) {
     return interpolated;
 }
 
-HashTable *
-interpolated_dict(Interpolated *interpolated) {
+Serializable *
+interpolated_parameters(Interpolated *interpolated) {
     HashTable *dict = htable_init();
 
     HashTable *value = htable_init();
@@ -131,7 +131,9 @@ interpolated_dict(Interpolated *interpolated) {
     release(serialization_type);
     release(s5);
 
-    return dict;
+    Serializable *s = serializable_create_ht(dict);
+    release(dict);
+    return s;
 }
 
 void

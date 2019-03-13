@@ -54,12 +54,10 @@ action_create_text(Operand op) {
 
     Interpolated *interpolated = interpolated_create(op.value);
 
-    HashTable *dict = interpolated_dict(interpolated);
-    Serializable *s1 = serializable_create_ht(dict);
+    Serializable *s1 = interpolated_parameters(interpolated);
     htable_set(action->parameters, "WFTextActionText", s1);
 
     release(interpolated);
-    release(dict);
     release(s1);
     return action;
 }
@@ -377,12 +375,10 @@ action_create_ask_number(Operand op) {
     if (op.type == string) {
         Interpolated *interpolated = interpolated_create(op.value);
 
-        HashTable *dict = interpolated_dict(interpolated);
-        Serializable *s1 = serializable_create_ht(dict);
+        Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "WFAskActionPrompt", s1);
 
         release(interpolated);
-        release(dict);
         release(s1);
     } else if (op.type == variable) {
         char100 text;
@@ -390,11 +386,9 @@ action_create_ask_number(Operand op) {
 
         Interpolated *interpolated = interpolated_create(text);
 
-        HashTable *dict = interpolated_dict(interpolated);
-        Serializable *s1 = serializable_create_ht(dict);
+        Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "WFAskActionPrompt", s1);
         release(interpolated);
-        release(dict);
         release(s1);
     } else if (op.type == null) {
     } else {
@@ -423,11 +417,9 @@ action_create_show_result(Operand op) {
     if (op.type == string) {
         Interpolated *interpolated = interpolated_create(op.value);
 
-        HashTable *dict = interpolated_dict(interpolated);
-        Serializable *s1 = serializable_create_ht(dict);
+        Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "Text", s1);
         release(interpolated);
-        release(dict);
         release(s1);
     } else if (op.type == variable) {
         char100 text;
@@ -435,11 +427,9 @@ action_create_show_result(Operand op) {
 
         Interpolated *interpolated = interpolated_create(text);
 
-        HashTable *dict = interpolated_dict(interpolated);
-        Serializable *s1 = serializable_create_ht(dict);
+        Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "Text", s1);
         release(interpolated);
-        release(dict);
         release(s1);
     } else {
         fprintf(stderr, "Invalid parameter in ShowResult()\n");
