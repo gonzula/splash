@@ -19,11 +19,11 @@ typedef union {
 } char100;
 
 typedef enum {
-    number,
-    magicVariable,
-    variable,
-    string,
-    null
+    op_number,
+    op_magic_variable,  // referencied by uuid
+    op_variable, // referencied by name
+    op_string,
+    op_null
 } OpType;
 
 typedef struct {
@@ -34,11 +34,11 @@ typedef struct {
 } Operand;
 
 typedef enum {
-    CompOpEQ,
-    CompOpLT,
-    /* CompOpLE,  not implemented */
-    CompOpGT
-    /* CompOpGE not implemented */
+    comp_op_eq,
+    comp_op_lt,
+    /* comp_op_le,  not implemented */
+    comp_op_gt
+    /* comp_op_ge not implemented */
 } CompOp;
 
 typedef struct {

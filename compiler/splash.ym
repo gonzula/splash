@@ -85,9 +85,9 @@ opt_else    : ELSE { append_else(); }
             | %empty
             ;
 
-comp        : expr_ EQ expr_  { append_comparison(&$$, CompOpEQ, $1, $3); }
-            | expr_ LT expr_  { append_comparison(&$$, CompOpLT, $1, $3); }
-            | expr_ GT expr_  { append_comparison(&$$, CompOpGT, $1, $3); }
+comp        : expr_ EQ expr_  { append_comparison(&$$, comp_op_eq, $1, $3); }
+            | expr_ LT expr_  { append_comparison(&$$, comp_op_lt, $1, $3); }
+            | expr_ GT expr_  { append_comparison(&$$, comp_op_gt, $1, $3); }
             | '(' comp ')'  { $$ = $2; }
             ;
 
@@ -102,10 +102,10 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
             | expr_[left] '^' expr_[right]  { append_operation(&$$, '^', $[left], $[right]);  }
             | '(' expr_ ')'                 { $$ = $2; }
             | '-' expr_ %prec UMINUS        { append_minus_op(&$$, $2); }
-            | NUM                           { append_operand(&$$, number, $1); }
-            | ID                            { append_operand(&$$, variable, $1); }
+            | NUM                           { append_operand(&$$, op_number, $1); }
+            | ID                            { append_operand(&$$, op_variable, $1); }
             | ID '(' param ')'              { append_func_call(&$$, $1, $3); }
-            | STR                           { append_operand(&$$, string, $1); }
+            | STR                           { append_operand(&$$, op_string, $1); }
             ;
 
 param       : expr_

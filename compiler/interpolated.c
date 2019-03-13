@@ -80,6 +80,15 @@ interpolated_create(char100 source) {
     return interpolated;
 }
 
+Interpolated *
+interpolated_create_from_token(const char *token_name) {
+    char100 text;
+    sprintf(text.value, "\"{%s}\"", token_name);
+
+    Interpolated *interpolated = interpolated_create(text);
+    return interpolated;
+}
+
 Serializable *
 interpolated_parameters(Interpolated *interpolated) {
     HashTable *dict = htable_init();

@@ -45,17 +45,17 @@ append_operand(Operand *stack, OpType type, char100 operand) {
     uuid_gen((*stack).uuid);
 
     switch (type) {
-        case number:        strcpy((*stack).value.value, operand.value); break;
-        case variable:      strcpy((*stack).name.value, operand.value); break;
-        case magicVariable: strcpy((*stack).name.value, operand.value); break;
-        case string:        strcpy((*stack).value.value, operand.value); break;
-        case null: break;
+        case op_number:        strcpy((*stack).value.value, operand.value); break;
+        case op_variable:      strcpy((*stack).name.value, operand.value); break;
+        case op_magic_variable: strcpy((*stack).name.value, operand.value); break;
+        case op_string:        strcpy((*stack).value.value, operand.value); break;
+        case op_null: break;
     }
 }
 
 void
 append_null_operand(Operand *stack) {
-    (*stack).type = null;
+    (*stack).type = op_null;
 }
 
 void
@@ -64,7 +64,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
     if (strcmp(name.value, "AskNumber") == 0) {
         action = action_create_ask_number(parameter);
 
-        (*stack).type = magicVariable;
+        (*stack).type = op_magic_variable;
         char name[] = "Ask for Input";
         strcpy((*stack).name.value, name);
         strcpy((*stack).uuid, action->uuid);
@@ -86,7 +86,7 @@ void
 operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) {
     DEBUGPRINT("optimizing %s %c %s\n", op1.value.value, operator, op2.value.value);
     Operand new_stack;
-    new_stack.type = number;
+    new_stack.type = op_number;
 
     uuid_gen(new_stack.uuid);
 
@@ -124,7 +124,7 @@ operator_is_commutative(char operator) {
 
 void
 append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
-    if (op1.type == number && op2.type == number) { // can optimize
+    if (op1.type == op_number && op2.type == op_number) { // can optimize
         operation_optimization(stack, operator, op1, op2);
         return;
     }
@@ -142,7 +142,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     scope_add_action(current_scope, operation_action);
 
     Operand new_stack;
-    new_stack.type = magicVariable;
+    new_stack.type = op_magic_variable;
 
     char name[] = "Calculation Result";
     strcpy(new_stack.name.value, name);
@@ -155,7 +155,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
 void
 append_minus_op(Operand *stack, Operand op) {
     Operand temp;
-    temp.type = number;
+    temp.type = op_number;
     uuid_gen(temp.uuid);
     char minus_one[] = "-1";
     strcpy(temp.value.value, minus_one);
@@ -188,16 +188,16 @@ append_conditional(Comparison comp) {
 void
 append_else() {
     Comparison comp;
-    comp.operator = CompOpEQ;
+    comp.operator = comp_op_eq;
 
     Operand op1;
-    op1.type = variable;
+    op1.type = op_variable;
 
     uuid_gen(op1.uuid);
     sprintf(op1.name.value, "$splash_if_%d", if_count);
 
     Operand op2;
-    op2.type = number;
+    op2.type = op_number;
     strcpy(op2.value.value, "0");
 
     comp.op1 = op1;
@@ -243,11 +243,11 @@ void
 place_operand(Operand op) {
     Action *action;
     switch (op.type) {
-        case number: action = action_create_number(op); break;
-        case variable: action = action_create_get_variable(op); break;
-        case magicVariable: action = action_create_get_magic_variable(op); break;
-        case string: action = action_create_text(op); break;
-        case null: action = NULL; break;
+        case op_number: action = action_create_number(op); break;
+        case op_variable: action = action_create_get_variable(op); break;
+        case op_magic_variable: action = action_create_get_magic_variable(op); break;
+        case op_string: action = action_create_text(op); break;
+        case op_null: action = NULL; break;
     }
 
     if (action) {

@@ -13,11 +13,11 @@ void
 action_set_uuid(Action *action, char uuid[37]) {
     strcpy(action->uuid, uuid);
 
-    String *uuidString = str_create(action->uuid);
-    Serializable *s = serializable_create_str(uuidString);
+    String *uuid_string = str_create(action->uuid);
+    Serializable *s = serializable_create_str(uuid_string);
     htable_set(action->parameters, "UUID", s);
 
-    release(uuidString);
+    release(uuid_string);
     release(s);
 }
 
@@ -151,15 +151,15 @@ action_create_get_magic_variable(Operand op) {
 void
 action_complete_math_operand(Action *action, const char *key, Operand op2) {
     switch (op2.type) {
-        case null: fprintf(stderr, "Invalid null inside math operation\n"); break;
-        case string: fprintf(stderr, "Invalid string inside math operation\n"); break;
-        case number: {
+        case op_null: fprintf(stderr, "Invalid null inside math operation\n"); break;
+        case op_string: fprintf(stderr, "Invalid string inside math operation\n"); break;
+        case op_number: {
                          Serializable *s = serializable_create_float(atof(op2.value.value));
                          htable_set(action->parameters, key, s);
                          release(s);
                      }
                      break;
-        case magicVariable: {
+        case op_magic_variable: {
                                 HashTable *h1 = htable_init();
                                 Serializable *s1 = serializable_create_ht(h1);
                                 htable_set(action->parameters, key, s1);
@@ -199,7 +199,7 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                                 release(s6);
                             }
                             break;
-        case variable: {
+        case op_variable: {
                            HashTable *h1 = htable_init();
                            Serializable *s1 = serializable_create_ht(h1);
                            htable_set(action->parameters, key, s1);
@@ -264,9 +264,9 @@ action_complete_math_scientific_operation(Action *action, char operator, Operand
 
     String *WF_operation = NULL;
     if (operator == '^') {
-        if (op2.type == number && strcmp("2", op2.value.value) == 0) {
+        if (op2.type == op_number && strcmp("2", op2.value.value) == 0) {
             WF_operation = str_create("x^2");
-        } else if (op2.type == number && strcmp("3", op2.value.value) == 0) {
+        } else if (op2.type == op_number && strcmp("3", op2.value.value) == 0) {
             WF_operation = str_create("x^3");
         } else {
             WF_operation = str_create("x^y");
@@ -323,7 +323,7 @@ action_create_set_variable(char100 name) {
 void
 action_complete_comp_operand(Action *action, CompOp operator, Operand operand) {
     switch (operator) {
-        case CompOpEQ: {
+        case comp_op_eq: {
                            String *str = str_create(operand.value.value);
                            Serializable *s = serializable_create_str(str);
                            htable_set(action->parameters,  "WFConditionalActionString", s);
@@ -331,8 +331,8 @@ action_complete_comp_operand(Action *action, CompOp operator, Operand operand) {
                            release(str);
                        }
                        break;
-        case CompOpLT:
-        case CompOpGT: action_complete_math_operand(action, "WFNumberValue", operand); break;
+        case comp_op_lt:
+        case comp_op_gt: action_complete_math_operand(action, "WFNumberValue", operand); break;
     }
 }
 
@@ -347,9 +347,9 @@ action_create_comp(Comparison comp) {
 
     String *operator;
     switch (comp.operator) {
-        case CompOpEQ: operator = str_create("Equals"); break;
-        case CompOpLT: operator = str_create("Is Less Than"); break;
-        case CompOpGT: operator = str_create("Is Greater Than"); break;
+        case comp_op_eq: operator = str_create("Equals"); break;
+        case comp_op_lt: operator = str_create("Is Less Than"); break;
+        case comp_op_gt: operator = str_create("Is Greater Than"); break;
     }
     Serializable *s1 = serializable_create_str(operator);
     htable_set(action->parameters, "WFCondition", s1);
@@ -372,7 +372,7 @@ Action *
 action_create_ask_number(Operand op) {
     Action *action = action_create(WF_ask);
 
-    if (op.type == string) {
+    if (op.type == op_string) {
         Interpolated *interpolated = interpolated_create(op.value);
 
         Serializable *s1 = interpolated_parameters(interpolated);
@@ -380,17 +380,14 @@ action_create_ask_number(Operand op) {
 
         release(interpolated);
         release(s1);
-    } else if (op.type == variable) {
-        char100 text;
-        sprintf(text.value, "\"{%s}\"", op.name.value);
-
-        Interpolated *interpolated = interpolated_create(text);
+    } else if (op.type == op_variable) {
+        Interpolated *interpolated = interpolated_create_from_token(op.name.value);
 
         Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "WFAskActionPrompt", s1);
         release(interpolated);
         release(s1);
-    } else if (op.type == null) {
+    } else if (op.type == op_null) {
     } else {
         fprintf(stderr, "Invalid parameter in AskNumber()\n");
     }
@@ -414,18 +411,15 @@ Action *
 action_create_show_result(Operand op) {
     Action *action = action_create(WF_show_result);
 
-    if (op.type == string) {
+    if (op.type == op_string) {
         Interpolated *interpolated = interpolated_create(op.value);
 
         Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "Text", s1);
         release(interpolated);
         release(s1);
-    } else if (op.type == variable) {
-        char100 text;
-        sprintf(text.value, "\"{%s}\"", op.name.value);
-
-        Interpolated *interpolated = interpolated_create(text);
+    } else if (op.type == op_variable) {
+        Interpolated *interpolated = interpolated_create_from_token(op.name.value);
 
         Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "Text", s1);
@@ -443,7 +437,7 @@ action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
 
     Operand op;
-    op.type = number;
+    op.type = op_number;
     sprintf(op.value.value, "%d", value);
     uuid_gen(op.uuid);
 
