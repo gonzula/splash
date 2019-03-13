@@ -13,11 +13,11 @@ void
 action_set_uuid(Action *action, char uuid[37]) {
     strcpy(action->uuid, uuid);
 
-    String *uuidString = str_create(action->uuid);
-    Serializable *s = serializable_create_str(uuidString);
+    String *uuid_string = str_create(action->uuid);
+    Serializable *s = serializable_create_str(uuid_string);
     htable_set(action->parameters, "UUID", s);
 
-    release(uuidString);
+    release(uuid_string);
     release(s);
 }
 
