@@ -381,10 +381,7 @@ action_create_ask_number(Operand op) {
         release(interpolated);
         release(s1);
     } else if (op.type == variable) {
-        char100 text;
-        sprintf(text.value, "\"{%s}\"", op.name.value);
-
-        Interpolated *interpolated = interpolated_create(text);
+        Interpolated *interpolated = interpolated_create_from_token(op.name.value);
 
         Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "WFAskActionPrompt", s1);
@@ -422,10 +419,7 @@ action_create_show_result(Operand op) {
         release(interpolated);
         release(s1);
     } else if (op.type == variable) {
-        char100 text;
-        sprintf(text.value, "\"{%s}\"", op.name.value);
-
-        Interpolated *interpolated = interpolated_create(text);
+        Interpolated *interpolated = interpolated_create_from_token(op.name.value);
 
         Serializable *s1 = interpolated_parameters(interpolated);
         htable_set(action->parameters, "Text", s1);
