@@ -20,6 +20,15 @@ class EditorView: UITextView {
     }
 
     private func setup() {
+        NotificationCenter.default.addObserver(forName: .themeChanged, object: nil, queue: nil) { _ in
+            self.colorizeText()
+            self.backgroundColor = ThemeManager.shared.backgroundColor
+            self.keyboardAppearance = ThemeManager.shared.keyboardAppearance
+        }
+
+        backgroundColor = ThemeManager.shared.backgroundColor
+        keyboardAppearance = ThemeManager.shared.keyboardAppearance
+
         inputAccessoryView = CodeAccessoryView(delegate: self)
         font = UIFont(name: "Menlo", size: UIFont.systemFontSize)
         autocapitalizationType = .none
@@ -35,7 +44,7 @@ class EditorView: UITextView {
 
     func colorizeText() {
         keepLocation { () -> Int? in
-            attributedText = SyntaxColorManager().colorize(text)
+            attributedText = SyntaxColorizer().colorize(text)
             return nil
         }
     }
