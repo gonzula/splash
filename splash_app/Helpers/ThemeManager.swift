@@ -33,6 +33,13 @@ class ThemeManager {
         case .dark: return .dark
         }
     }
+
+    var navigationBarStyle: UIBarStyle {
+        switch theme {
+        case .light: return .default
+        case .dark: return .black
+        }
+    }
 }
 
 extension ThemeManager {

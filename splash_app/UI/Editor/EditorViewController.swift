@@ -37,6 +37,8 @@ class EditorNavigationController: UINavigationController {
 
 class EditorViewController: UIViewController {
 
+    var observers = [Any]()
+
     var splashDocument: SplashDocument? {
         didSet {
             title = splashDocument?.fileName
@@ -54,6 +56,7 @@ class EditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.navigationBar.barStyle = ThemeManager.shared.navigationBarStyle
         setupObservers()
     }
 
@@ -61,6 +64,10 @@ class EditorViewController: UIViewController {
         super.viewDidAppear(animated)
 
         textView.becomeFirstResponder()
+    }
+
+    deinit {
+        observers.forEach(NotificationCenter.default.removeObserver)
     }
 
     private func setupNavigationBarItems() {
@@ -80,6 +87,14 @@ class EditorViewController: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(adjustForKeyboard),
                                                name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+
+        observers.append(  // swiftlint:disable:next discarded_notification_center_observer
+            NotificationCenter.default.addObserver(
+                forName: .themeChanged,
+                object: nil,
+                queue: nil) { [weak self] _ in
+                    self?.navigationController?.navigationBar.barStyle = ThemeManager.shared.navigationBarStyle
+        })
     }
 
     func set(_ document: SplashDocument, completion: @escaping () -> Void) {
@@ -116,8 +131,8 @@ class EditorViewController: UIViewController {
                 guard let self = self else {return}
                 if let error = error {
                     self.present(UIAlertController(error: error),
-                                  animated: true,
-                                  completion: nil)
+                                 animated: true,
+                                 completion: nil)
                 }
                 self.present(controller, animated: true, completion: nil)
         }
@@ -166,7 +181,7 @@ extension EditorViewController {
         let userInfo = notification.userInfo!
 
         guard let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?
-                .cgRectValue else { return }
+            .cgRectValue else { return }
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
 
         if notification.name == UIResponder.keyboardWillHideNotification {
