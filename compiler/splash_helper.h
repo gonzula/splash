@@ -22,7 +22,6 @@ typedef enum {
     number,
     magicVariable,
     variable,
-    ask_number,
     string,
     null
 } OpType;
@@ -64,8 +63,8 @@ typedef enum {
     WF_set_variable,
 
     // functions
+    WF_ask,
     WF_show_result
-
 } ActionID;
 
 typedef struct {

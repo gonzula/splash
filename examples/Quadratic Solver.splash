@@ -1,6 +1,6 @@
-a := AskNumber()
-b := AskNumber()
-c := AskNumber()
+a := AskNumber("a =")
+b := AskNumber("b =")
+c := AskNumber("c =")
 
 delta := b^2 - 4 * a * c
 

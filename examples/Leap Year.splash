@@ -1,4 +1,4 @@
-year := AskNumber()
+year := AskNumber("Enter the year")
 
 if year % 4 > 0 {
     leap := 0

@@ -9,15 +9,16 @@
 
 void _action_release(void *obj);
 
-Action *
-action_init() {
-    Action *action = (Action *)alloc(sizeof(Action), _action_release);
-    action->id = 0;
-    action->parameters = NULL;
-    action->uuid[0] = 0;
-    action->sub_scope = NULL;
+void
+action_set_uuid(Action *action, char uuid[37]) {
+    strcpy(action->uuid, uuid);
 
-    return action;
+    String *uuidString = str_create(action->uuid);
+    Serializable *s = serializable_create(uuidString, st_str);
+    htable_set(action->parameters, "UUID", s);
+
+    release(uuidString);
+    release(s);
 }
 
 Action *
@@ -25,7 +26,9 @@ action_create(ActionID id) {
     Action *action = (Action *)alloc(sizeof(Action), _action_release);
     action->id = id;
     action->parameters = htable_init();
-    uuid_gen(action->uuid);
+    char uuid[37];
+    uuid_gen(uuid);
+    action_set_uuid(action, uuid);
 
     action->sub_scope = NULL;
 
@@ -35,41 +38,13 @@ action_create(ActionID id) {
 Action *
 action_create_number(Operand op) {
     Action *action = action_create(WF_number);
-    strcpy(action->uuid, op.uuid);
+    action_set_uuid(action, op.uuid);
 
-    if (op.type == ask_number) {
-        HashTable *h1 = htable_init();
-        Serializable *s1 = serializable_create(h1, st_ht);
-
-        HashTable *h2 = htable_init();
-        Serializable *s2 = serializable_create(h2, st_ht);
-        htable_set(h1, "Value", s2);
-
-        String *ask = str_create("Ask");
-        Serializable *s3 = serializable_create(ask, st_str);
-        htable_set(h2, "Type", s3);
-
-        String *attachment = str_create("WFTextTokenAttachment");
-        Serializable *s4 = serializable_create(attachment, st_str);
-        htable_set(h1, "WFSerializationType", s4);
-
-        htable_set(action->parameters, "WFNumberActionNumber", s1);
-
-        release(attachment);
-        release(s4);
-        release(ask);
-        release(s3);
-        release(s1);
-        release(h1);
-        release(s2);
-        release(h2);
-    } else if (op.type == number) {
-        Serializable *s = serializable_init();
-        s->type = st_float;
-        s->f = atof(op.value.value);
-        htable_set(action->parameters, "WFNumberActionNumber", s);
-        release(s);
-    }
+    Serializable *s = serializable_init();
+    s->type = st_float;
+    s->f = atof(op.value.value);
+    htable_set(action->parameters, "WFNumberActionNumber", s);
+    release(s);
 
     return action;
 }
@@ -77,11 +52,7 @@ action_create_number(Operand op) {
 Action *
 action_create_text(Operand op) {
     Action *action = action_create(WF_text);
-    strcpy(action->uuid, op.uuid);
-
-    String *uuid = str_create(action->uuid);
-    Serializable *s = serializable_create(uuid, st_str);
-    htable_set(action->parameters, "UUID", s);
+    action_set_uuid(action, op.uuid);
 
     Interpolated *interpolated = interpolated_create(op.value);
 
@@ -91,8 +62,6 @@ action_create_text(Operand op) {
 
     release(interpolated);
     release(dict);
-    release(uuid);
-    release(s);
     release(s1);
     return action;
 }
@@ -100,7 +69,7 @@ action_create_text(Operand op) {
 Action *
 action_create_get_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
-    strcpy(action->uuid, op.uuid);
+    action_set_uuid(action, op.uuid);
 
     HashTable *variable = htable_init();
     Serializable *s1 = serializable_create(variable, st_ht);
@@ -140,7 +109,7 @@ action_create_get_variable(Operand op) {
 Action *
 action_create_get_magic_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
-    strcpy(action->uuid, op.uuid);
+    action_set_uuid(action, op.uuid);
 
     HashTable *variable = htable_init();
     Serializable *s1 = serializable_create(variable, st_ht);
@@ -269,33 +238,6 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                            release(s5);
                        }
                        break;
-        case ask_number: {
-                           HashTable *h1 = htable_init();
-                           Serializable *s1 = serializable_create(h1, st_ht);
-                           htable_set(action->parameters, key, s1);
-
-                           HashTable *h2 = htable_init();
-                           Serializable *s2 = serializable_create(h2, st_ht);
-                           htable_set(h1, "Value", s2);
-
-                           String *ask = str_create("Ask");
-                           Serializable *s3 = serializable_create(ask, st_str);
-                           htable_set(h2, "Type", s3);
-
-                           String *token_attachment = str_create("WFTextTokenAttachment");
-                           Serializable *s5 = serializable_create(token_attachment, st_str);
-                           htable_set(h1, "WFSerializationType", s5);
-
-                           release(h1);
-                           release(s1);
-                           release(h2);
-                           release(s2);
-                           release(ask);
-                           release(s3);
-                           release(token_attachment);
-                           release(s5);
-                         }
-                         break;
     }
 }
 
@@ -351,10 +293,6 @@ Action *
 action_create_math_operation(char operator, Operand op2) {
     Action *action = action_create(WF_math);
 
-    String *uuid = str_create(action->uuid);
-    Serializable *s = serializable_create(uuid, st_str);
-    htable_set(action->parameters, "UUID", s);
-
     switch (operator) {
         case '+':
         case '-':
@@ -367,9 +305,6 @@ action_create_math_operation(char operator, Operand op2) {
             action_complete_math_scientific_operation(action, operator, op2);
             break;
     }
-
-    release(uuid);
-    release(s);
 
     return action;
 }
@@ -393,7 +328,6 @@ action_create_set_variable(char100 name) {
 
 void
 action_complete_comp_operand(Action *action, CompOp operator, Operand operand) {
-
     switch (operator) {
         case CompOpEQ: {
                            String *str = str_create(operand.value.value);
@@ -443,6 +377,52 @@ action_create_comp(Comparison comp) {
 }
 
 Action *
+action_create_ask_number(Operand op) {
+    Action *action = action_create(WF_ask);
+
+    if (op.type == string) {
+        Interpolated *interpolated = interpolated_create(op.value);
+
+        HashTable *dict = interpolated_dict(interpolated);
+        Serializable *s1 = serializable_create(dict, st_ht);
+        htable_set(action->parameters, "WFAskActionPrompt", s1);
+
+        release(interpolated);
+        release(dict);
+        release(s1);
+    } else if (op.type == variable) {
+        char100 text;
+        sprintf(text.value, "\"{%s}\"", op.name.value);
+
+        Interpolated *interpolated = interpolated_create(text);
+
+        HashTable *dict = interpolated_dict(interpolated);
+        Serializable *s1 = serializable_create(dict, st_ht);
+        htable_set(action->parameters, "WFAskActionPrompt", s1);
+        release(interpolated);
+        release(dict);
+        release(s1);
+    } else if (op.type == null) {
+    } else {
+        fprintf(stderr, "Invalid parameter in AskNumber()\n");
+    }
+
+    String *empty = str_init();
+    Serializable *s2 = serializable_create(empty, st_str);
+    htable_set(action->parameters, "WFAskActionDefaultAnswer", s2);
+
+    String *number = str_create("Number");
+    Serializable *s3 = serializable_create(number, st_str);
+    htable_set(action->parameters, "WFInputType", s3);
+
+    release(number);
+    release(s3);
+    release(empty);
+    release(s2);
+    return action;
+}
+
+Action *
 action_create_show_result(Operand op) {
     Action *action = action_create(WF_show_result);
 
@@ -456,7 +436,6 @@ action_create_show_result(Operand op) {
         release(dict);
         release(s1);
     } else if (op.type == variable) {
-        /*Interpolated *interpolated = interpolated_init();*/
         char100 text;
         sprintf(text.value, "\"{%s}\"", op.name.value);
 
@@ -509,7 +488,7 @@ action_create_close_cond(Action *action) {
 
     Action *close_action = action_create(WF_conditional);
     list_append(actions, close_action);
-    strcpy(close_action->uuid, action->uuid);
+    action_set_uuid(close_action, action->uuid);
 
     String *uuid = str_create(close_action->uuid);
     Serializable *s = serializable_create(uuid, st_str);
@@ -537,6 +516,7 @@ action_create_close_scope(Action *action) {
         case WF_number:
         case WF_text:
         case WF_show_result:
+        case WF_ask:
         case WF_set_variable: return list_init();
     }
 }
@@ -557,6 +537,7 @@ action_output(Action *action, FILE *output) {
         case WF_text: fprintf(output, "gettext"); break;
         case WF_set_variable: fprintf(output, "setvariable"); break;
 
+        case WF_ask: fprintf(output, "ask"); break;
         case WF_show_result: fprintf(output, "showresult"); break;
     }
 
