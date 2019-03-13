@@ -25,7 +25,12 @@ typedef struct {
     SerializableType type;
 } Serializable;
 
-Serializable * serializable_init(void);
-Serializable * serializable_create(void *obj, SerializableType type);
+Serializable *serializable_create_ht(HashTable *ht);
+Serializable *serializable_create_list(List *list);
+Serializable *serializable_create_str(String *str);
+Serializable *serializable_create_int(int i);
+Serializable *serializable_create_float(float f);
+Serializable *serializable_create_bool(int i);
+Serializable *serializable_create_null(void);
 
 #endif //__serializable_H_

@@ -40,6 +40,57 @@ serializable_create(void *obj, SerializableType type)
     return s;
 }
 
+Serializable *
+serializable_create_ht(HashTable *ht) {
+    return serializable_create(ht, st_ht);
+}
+
+Serializable *
+serializable_create_list(List *list) {
+    return serializable_create(list, st_list);
+}
+
+Serializable *
+serializable_create_str(String *str) {
+    return serializable_create(str, st_str);
+}
+
+Serializable *
+serializable_create_int(int i) {
+    Serializable *s = serializable_init();
+    s->type = st_int;
+    s->i = i;
+
+    return s;
+}
+
+Serializable *
+serializable_create_float(float f) {
+    Serializable *s = serializable_init();
+    s->type = st_float;
+    s->f = f;
+
+    return s;
+}
+
+Serializable *
+serializable_create_bool(int i) {
+    Serializable *s = serializable_init();
+    s->type = st_bool;
+    s->i = i;
+
+    return s;
+}
+
+Serializable *
+serializable_create_null() {
+    Serializable *s = serializable_init();
+    s->type = st_null;
+    s->i = 0;
+
+    return s;
+}
+
 void
 serializable_free(void *sobj)
 {
