@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         installExamples()
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = ViewController()
+        window!.rootViewController = OnboardViewController()//ViewController()
         window!.makeKeyAndVisible()
 
         return true

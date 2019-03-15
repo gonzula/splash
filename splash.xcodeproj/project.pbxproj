@@ -17,6 +17,9 @@
 		9F159E6E2235B88700ECF57C /* Quadratic Solver.splash in Resources */ = {isa = PBXBuildFile; fileRef = 9F159E6B2235B88700ECF57C /* Quadratic Solver.splash */; };
 		9F159E6F2235B88700ECF57C /* Age.splash in Resources */ = {isa = PBXBuildFile; fileRef = 9F159E6C2235B88700ECF57C /* Age.splash */; };
 		9F159E712235B9AD00ECF57C /* FileManager+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F159E702235B9AD00ECF57C /* FileManager+Utils.swift */; };
+		9F26039C223B313300C337F5 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F26039B223B313300C337F5 /* PageViewController.swift */; };
+		9F26039E223B315A00C337F5 /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F26039D223B315A00C337F5 /* OnboardViewController.swift */; };
+		9F2603A1223B31FF00C337F5 /* OnboardViewController+Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */; };
 		9F3363FF222B37C200E9726E /* splash.ym in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E2222AC54D00220811 /* splash.ym */; };
 		9F336405222B3D6700E9726E /* splash.lm in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F9222AC54E00220811 /* splash.lm */; };
 		9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518975222ABC0A0054A381 /* AppDelegate.swift */; };
@@ -101,6 +104,9 @@
 		9F159E6B2235B88700ECF57C /* Quadratic Solver.splash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Quadratic Solver.splash"; sourceTree = "<group>"; };
 		9F159E6C2235B88700ECF57C /* Age.splash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Age.splash; sourceTree = "<group>"; };
 		9F159E702235B9AD00ECF57C /* FileManager+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Utils.swift"; sourceTree = "<group>"; };
+		9F26039B223B313300C337F5 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		9F26039D223B315A00C337F5 /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
+		9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+Intro.swift"; sourceTree = "<group>"; };
 		9F518972222ABC0A0054A381 /* splash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F518975222ABC0A0054A381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F518977222ABC0A0054A381 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +194,15 @@
 			path = Editor;
 			sourceTree = "<group>";
 		};
+		9F26039F223B317200C337F5 /* Onboard */ = {
+			isa = PBXGroup;
+			children = (
+				9F26039D223B315A00C337F5 /* OnboardViewController.swift */,
+				9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */,
+			);
+			path = Onboard;
+			sourceTree = "<group>";
+		};
 		9F518969222ABC0A0054A381 = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +258,7 @@
 		9F6C462C222C7D1900BD8625 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				9F26039B223B313300C337F5 /* PageViewController.swift */,
 				9F8AC12722389338002044CB /* ThemeManager.swift */,
 				9F8AC12D223895B7002044CB /* Notification+Constants.swift */,
 				9F8AC12B22389424002044CB /* UserDefaults+Constants.swift */,
@@ -283,6 +299,7 @@
 			children = (
 				9F518977222ABC0A0054A381 /* ViewController.swift */,
 				9F159E622235AF9A00ECF57C /* HelpViewController.swift */,
+				9F26039F223B317200C337F5 /* Onboard */,
 				9F159E6122356EAB00ECF57C /* Editor */,
 			);
 			path = UI;
@@ -503,6 +520,7 @@
 				9F6C4639222DC5AB00BD8625 /* UIScrollView+Utils.swift in Sources */,
 				9FBA02D8222BFCE8001D5C4D /* scope.c in Sources */,
 				9F6C4635222D827900BD8625 /* UIView+Utils.swift in Sources */,
+				9F2603A1223B31FF00C337F5 /* OnboardViewController+Intro.swift in Sources */,
 				9FBA02D5222BFCE8001D5C4D /* action.c in Sources */,
 				9F6C462B222C7D0F00BD8625 /* UIAlertController+Error.swift in Sources */,
 				9FBA02D7222BFCE8001D5C4D /* output.c in Sources */,
@@ -511,10 +529,12 @@
 				9F6C4637222DC4E900BD8625 /* CodeAccessoryView.swift in Sources */,
 				9F159E6022356D7100ECF57C /* EditorView.swift in Sources */,
 				9F6C463D222DD5AD00BD8625 /* SyntaxColorizer.swift in Sources */,
+				9F26039E223B315A00C337F5 /* OnboardViewController.swift in Sources */,
 				9FBA02D9222BFCE8001D5C4D /* splash_helper.c in Sources */,
 				9F159E5E2234669C00ECF57C /* NSRange+Utils.swift in Sources */,
 				9FBA02D6222BFCE8001D5C4D /* interpolated.c in Sources */,
 				9F3363FF222B37C200E9726E /* splash.ym in Sources */,
+				9F26039C223B313300C337F5 /* PageViewController.swift in Sources */,
 				9F6C463B222DC9D500BD8625 /* UIColor+Utils.swift in Sources */,
 				9F6C462F222C819000BD8625 /* SplashDocument.swift in Sources */,
 				9F336405222B3D6700E9726E /* splash.lm in Sources */,
