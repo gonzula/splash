@@ -20,6 +20,7 @@
 		9F26039C223B313300C337F5 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F26039B223B313300C337F5 /* PageViewController.swift */; };
 		9F26039E223B315A00C337F5 /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F26039D223B315A00C337F5 /* OnboardViewController.swift */; };
 		9F2603A1223B31FF00C337F5 /* OnboardViewController+Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */; };
+		9F2603A3223B410A00C337F5 /* OnboardViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2603A2223B410A00C337F5 /* OnboardViewController+View.swift */; };
 		9F3363FF222B37C200E9726E /* splash.ym in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E2222AC54D00220811 /* splash.ym */; };
 		9F336405222B3D6700E9726E /* splash.lm in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F9222AC54E00220811 /* splash.lm */; };
 		9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518975222ABC0A0054A381 /* AppDelegate.swift */; };
@@ -107,6 +108,7 @@
 		9F26039B223B313300C337F5 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		9F26039D223B315A00C337F5 /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
 		9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+Intro.swift"; sourceTree = "<group>"; };
+		9F2603A2223B410A00C337F5 /* OnboardViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+View.swift"; sourceTree = "<group>"; };
 		9F518972222ABC0A0054A381 /* splash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F518975222ABC0A0054A381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F518977222ABC0A0054A381 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				9F26039D223B315A00C337F5 /* OnboardViewController.swift */,
+				9F2603A2223B410A00C337F5 /* OnboardViewController+View.swift */,
 				9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */,
 			);
 			path = Onboard;
@@ -534,6 +537,7 @@
 				9F159E5E2234669C00ECF57C /* NSRange+Utils.swift in Sources */,
 				9FBA02D6222BFCE8001D5C4D /* interpolated.c in Sources */,
 				9F3363FF222B37C200E9726E /* splash.ym in Sources */,
+				9F2603A3223B410A00C337F5 /* OnboardViewController+View.swift in Sources */,
 				9F26039C223B313300C337F5 /* PageViewController.swift in Sources */,
 				9F6C463B222DC9D500BD8625 /* UIColor+Utils.swift in Sources */,
 				9F6C462F222C819000BD8625 /* SplashDocument.swift in Sources */,

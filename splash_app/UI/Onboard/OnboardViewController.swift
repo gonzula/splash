@@ -15,21 +15,17 @@ class OnboardViewController: PageViewController {
         IntroViewController()
     ]
 
-    let pageControl = UIPageControl()
+    let fixedView = FixedContent()
+    var pageControl: UIPageControl {return fixedView.pageControl}
 
     override func loadView() {
         super.loadView()
 
-        pageControl.setupForAutoLayout(in: view)
-        pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                            constant: -8).isActive = true
-        pageControl.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-
-        pageControl.pageIndicatorTintColor = .lightGray
-        pageControl.currentPageIndicatorTintColor = .black
+        fixedView.setupForAutoLayout(in: view)
+        fixedView.pinToSuperview()
 
         for viewController in viewControllers {
-            viewController.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+            viewController.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
         }
 
         totalPageCount = viewControllers.count
