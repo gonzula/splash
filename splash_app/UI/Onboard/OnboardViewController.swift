@@ -12,8 +12,10 @@ class OnboardViewController: PageViewController {
 
     let viewControllers: [UIViewController] = [
         IntroViewController(),
-        IntroViewController()
+        GitHubViewController()
     ]
+
+    var currentViewController: UIViewController?
 
     let fixedView = FixedContent()
     var pageControl: UIPageControl {return fixedView.pageControl}
@@ -21,7 +23,9 @@ class OnboardViewController: PageViewController {
     override func loadView() {
         super.loadView()
 
-        fixedView.setupForAutoLayout(in: view)
+//        fixedView.setupForAutoLayout(in: view)
+        fixedView.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(fixedView, belowSubview: contentView)
         fixedView.pinToSuperview()
 
         for viewController in viewControllers {
@@ -32,6 +36,16 @@ class OnboardViewController: PageViewController {
         self.pageIndicatorDelegate = pageControl
 
         let firstViewController = viewControllers.first!
+        currentViewController = firstViewController
         present(firstViewController, at: 0, animated: false)
+    }
+
+    func advance() {
+        guard let currentViewController = currentViewController else {return}
+        guard let index = viewControllers.firstIndex(of: currentViewController),
+            index < viewControllers.count - 1 else {return}
+
+        self.currentViewController = viewControllers[index + 1]
+        present(self.currentViewController!, at: index + 1, animated: true)
     }
 }

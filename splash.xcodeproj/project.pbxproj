@@ -21,6 +21,7 @@
 		9F26039E223B315A00C337F5 /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F26039D223B315A00C337F5 /* OnboardViewController.swift */; };
 		9F2603A1223B31FF00C337F5 /* OnboardViewController+Intro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */; };
 		9F2603A3223B410A00C337F5 /* OnboardViewController+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2603A2223B410A00C337F5 /* OnboardViewController+View.swift */; };
+		9F2603A5223B42EA00C337F5 /* OnboardViewController+Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2603A4223B42EA00C337F5 /* OnboardViewController+Github.swift */; };
 		9F3363FF222B37C200E9726E /* splash.ym in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E2222AC54D00220811 /* splash.ym */; };
 		9F336405222B3D6700E9726E /* splash.lm in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F9222AC54E00220811 /* splash.lm */; };
 		9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518975222ABC0A0054A381 /* AppDelegate.swift */; };
@@ -109,6 +110,7 @@
 		9F26039D223B315A00C337F5 /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
 		9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+Intro.swift"; sourceTree = "<group>"; };
 		9F2603A2223B410A00C337F5 /* OnboardViewController+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+View.swift"; sourceTree = "<group>"; };
+		9F2603A4223B42EA00C337F5 /* OnboardViewController+Github.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+Github.swift"; sourceTree = "<group>"; };
 		9F518972222ABC0A0054A381 /* splash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F518975222ABC0A0054A381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F518977222ABC0A0054A381 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				9F26039D223B315A00C337F5 /* OnboardViewController.swift */,
 				9F2603A2223B410A00C337F5 /* OnboardViewController+View.swift */,
 				9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */,
+				9F2603A4223B42EA00C337F5 /* OnboardViewController+Github.swift */,
 			);
 			path = Onboard;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */,
 				9F8AC12822389338002044CB /* ThemeManager.swift in Sources */,
 				9F8AC12C22389424002044CB /* UserDefaults+Constants.swift in Sources */,
+				9F2603A5223B42EA00C337F5 /* OnboardViewController+Github.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
