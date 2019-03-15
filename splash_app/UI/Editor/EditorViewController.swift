@@ -142,8 +142,6 @@ class EditorViewController: UIViewController {
     // MARK: - User Interaction
 
     @objc func doneTouched(sender: UIBarButtonItem) {
-        ThemeManager.shared.theme = ThemeManager.shared.theme.other
-        return;
         guard let document = splashDocument else {
             dismiss(animated: true, completion: nil)
             return
