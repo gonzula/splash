@@ -30,7 +30,11 @@
 		9F6C4637222DC4E900BD8625 /* CodeAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6C4636222DC4E900BD8625 /* CodeAccessoryView.swift */; };
 		9F6C4639222DC5AB00BD8625 /* UIScrollView+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6C4638222DC5AB00BD8625 /* UIScrollView+Utils.swift */; };
 		9F6C463B222DC9D500BD8625 /* UIColor+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6C463A222DC9D500BD8625 /* UIColor+Utils.swift */; };
-		9F6C463D222DD5AD00BD8625 /* SyntaxColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6C463C222DD5AD00BD8625 /* SyntaxColorManager.swift */; };
+		9F6C463D222DD5AD00BD8625 /* SyntaxColorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6C463C222DD5AD00BD8625 /* SyntaxColorizer.swift */; };
+		9F8AC12822389338002044CB /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AC12722389338002044CB /* ThemeManager.swift */; };
+		9F8AC12A223893E6002044CB /* UserDefaults+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AC129223893E6002044CB /* UserDefaults+Key.swift */; };
+		9F8AC12C22389424002044CB /* UserDefaults+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AC12B22389424002044CB /* UserDefaults+Constants.swift */; };
+		9F8AC12E223895B7002044CB /* Notification+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8AC12D223895B7002044CB /* Notification+Constants.swift */; };
 		9FBA02D5222BFCE8001D5C4D /* action.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E6222AC54D00220811 /* action.c */; };
 		9FBA02D6222BFCE8001D5C4D /* interpolated.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E0222AC54C00220811 /* interpolated.c */; };
 		9FBA02D7222BFCE8001D5C4D /* output.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E5222AC54D00220811 /* output.c */; };
@@ -114,7 +118,11 @@
 		9F6C4636222DC4E900BD8625 /* CodeAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAccessoryView.swift; sourceTree = "<group>"; };
 		9F6C4638222DC5AB00BD8625 /* UIScrollView+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Utils.swift"; sourceTree = "<group>"; };
 		9F6C463A222DC9D500BD8625 /* UIColor+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Utils.swift"; sourceTree = "<group>"; };
-		9F6C463C222DD5AD00BD8625 /* SyntaxColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxColorManager.swift; sourceTree = "<group>"; };
+		9F6C463C222DD5AD00BD8625 /* SyntaxColorizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxColorizer.swift; sourceTree = "<group>"; };
+		9F8AC12722389338002044CB /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		9F8AC129223893E6002044CB /* UserDefaults+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Key.swift"; sourceTree = "<group>"; };
+		9F8AC12B22389424002044CB /* UserDefaults+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Constants.swift"; sourceTree = "<group>"; };
+		9F8AC12D223895B7002044CB /* Notification+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Constants.swift"; sourceTree = "<group>"; };
 		9FCD88DF222AC54C00220811 /* splash-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "splash-Bridging-Header.h"; sourceTree = "<group>"; };
 		9FCD88E0222AC54C00220811 /* interpolated.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interpolated.c; sourceTree = "<group>"; };
 		9FCD88E1222AC54D00220811 /* interpolated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolated.h; sourceTree = "<group>"; };
@@ -174,7 +182,7 @@
 			children = (
 				9F6C4632222C843900BD8625 /* EditorViewController.swift */,
 				9F159E5F22356D7100ECF57C /* EditorView.swift */,
-				9F6C463C222DD5AD00BD8625 /* SyntaxColorManager.swift */,
+				9F6C463C222DD5AD00BD8625 /* SyntaxColorizer.swift */,
 				9F6C4636222DC4E900BD8625 /* CodeAccessoryView.swift */,
 			);
 			path = Editor;
@@ -235,6 +243,10 @@
 		9F6C462C222C7D1900BD8625 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				9F8AC12722389338002044CB /* ThemeManager.swift */,
+				9F8AC12D223895B7002044CB /* Notification+Constants.swift */,
+				9F8AC12B22389424002044CB /* UserDefaults+Constants.swift */,
+				9F8AC129223893E6002044CB /* UserDefaults+Key.swift */,
 				9F159E642235B08B00ECF57C /* Help.md */,
 				9F159E662235B43200ECF57C /* Help.html */,
 				9F159E5D2234669C00ECF57C /* NSRange+Utils.swift */,
@@ -485,6 +497,8 @@
 				9F159E632235AF9A00ECF57C /* HelpViewController.swift in Sources */,
 				9FBA02DA222BFCE8001D5C4D /* list.c in Sources */,
 				9FBA02DD222BFCE8001D5C4D /* str.c in Sources */,
+				9F8AC12E223895B7002044CB /* Notification+Constants.swift in Sources */,
+				9F8AC12A223893E6002044CB /* UserDefaults+Key.swift in Sources */,
 				9FBA02DE222BFCE8001D5C4D /* serializable.c in Sources */,
 				9F6C4639222DC5AB00BD8625 /* UIScrollView+Utils.swift in Sources */,
 				9FBA02D8222BFCE8001D5C4D /* scope.c in Sources */,
@@ -496,7 +510,7 @@
 				9FBA02DF222BFCE8001D5C4D /* utils.c in Sources */,
 				9F6C4637222DC4E900BD8625 /* CodeAccessoryView.swift in Sources */,
 				9F159E6022356D7100ECF57C /* EditorView.swift in Sources */,
-				9F6C463D222DD5AD00BD8625 /* SyntaxColorManager.swift in Sources */,
+				9F6C463D222DD5AD00BD8625 /* SyntaxColorizer.swift in Sources */,
 				9FBA02D9222BFCE8001D5C4D /* splash_helper.c in Sources */,
 				9F159E5E2234669C00ECF57C /* NSRange+Utils.swift in Sources */,
 				9FBA02D6222BFCE8001D5C4D /* interpolated.c in Sources */,
@@ -507,6 +521,8 @@
 				9F518978222ABC0A0054A381 /* ViewController.swift in Sources */,
 				9F159E692235B69800ECF57C /* Bundle+Resources.swift in Sources */,
 				9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */,
+				9F8AC12822389338002044CB /* ThemeManager.swift in Sources */,
+				9F8AC12C22389424002044CB /* UserDefaults+Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

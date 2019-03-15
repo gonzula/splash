@@ -1,5 +1,5 @@
 //
-//  SyntaxColorManager.swift
+//  SyntaxColorizer.swift
 //  splash
 //
 //  Created by Gonzo Fialho on 04/03/19.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class SyntaxColorManager {
+class SyntaxColorizer {
     enum TokenKind {
+        case regular
         case comment
         case keyword
         case functionCall
@@ -17,17 +18,52 @@ class SyntaxColorManager {
         case number
         case string
 
-        var attributes: [NSAttributedString.Key: Any] {
+        var lightColor: UIColor {
             switch self {
-            case .comment: return [.foregroundColor: UIColor(hex: 0x536579),
-                                   .font: UIFont(name: "Menlo-Italic", size: UIFont.systemFontSize)!]
-            case .keyword: return [.foregroundColor: UIColor(hex: 0x9B2393),
-                                   .font: UIFont(name: "Menlo-Bold", size: UIFont.systemFontSize)!]
-            case .functionCall: return [.foregroundColor: UIColor(hex: 0x3900A0)]
-            case .identifier: return [.foregroundColor: UIColor(hex: 0x000000)]
-            case .number: return [.foregroundColor: UIColor(hex: 0x1C00CF)]
-            case .string: return [.foregroundColor: UIColor(hex: 0xC41A16)]
+            case .regular: return UIColor(hex: 0x000000)
+            case .comment: return UIColor(hex: 0x536579)
+            case .keyword: return UIColor(hex: 0x9B2393)
+            case .functionCall: return UIColor(hex: 0x3900A0)
+            case .identifier: return UIColor(hex: 0x000000)
+            case .number: return UIColor(hex: 0x1C00CF)
+            case .string: return UIColor(hex: 0xC41A16)
             }
+        }
+
+        var darkColor: UIColor {
+            switch self {
+            case .regular: return UIColor(hex: 0xffffff)
+            case .comment: return UIColor(hex: 0x6C7986)
+            case .keyword: return UIColor(hex: 0xFC5FA3)
+            case .functionCall: return UIColor(hex: 0x75B492)
+            case .identifier: return UIColor(hex: 0xffffff)
+            case .number: return UIColor(hex: 0x9686F5)
+            case .string: return UIColor(hex: 0xFC6A5D)
+            }
+        }
+
+        var color: UIColor {
+            switch ThemeManager.shared.theme {
+            case .light: return lightColor
+            case .dark: return darkColor
+            }
+        }
+
+        var attributes: [NSAttributedString.Key: Any] {
+            var attributes = [NSAttributedString.Key: Any]()
+            attributes[.foregroundColor] = self.color
+
+            switch self {
+            case .comment: attributes[.font] = UIFont(name: "Menlo-Italic", size: UIFont.systemFontSize)!
+            case .keyword: attributes[.font] = UIFont(name: "Menlo-Bold", size: UIFont.systemFontSize)!
+            case .functionCall,
+                 .identifier,
+                 .number,
+                 .regular,
+                 .string: break
+            }
+
+            return attributes
         }
     }
 
@@ -46,7 +82,7 @@ class SyntaxColorManager {
     func colorize(_ input: String) -> NSAttributedString {
         let attributedString = NSMutableAttributedString(string: input, attributes: [
             .font: UIFont(name: "Menlo", size: UIFont.systemFontSize)!,
-            .foregroundColor: UIColor.black
+            .foregroundColor: TokenKind.regular.color
             ])
 
         let regex = try! NSRegularExpression(pattern: pattern, options: []) // swiftlint:disable:this force_try

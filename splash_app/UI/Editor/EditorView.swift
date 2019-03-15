@@ -9,6 +9,9 @@
 import UIKit
 
 class EditorView: UITextView {
+
+    var observers = [Any]()
+
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
 
@@ -19,7 +22,22 @@ class EditorView: UITextView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        observers.forEach(NotificationCenter.default.removeObserver)
+    }
+
     private func setup() {
+        observers.append(  // swiftlint:disable:next discarded_notification_center_observer
+            NotificationCenter.default.addObserver(
+            forName: .themeChanged, object: nil, queue: nil) {[weak self] _ in
+                self?.colorizeText()
+                self?.backgroundColor = ThemeManager.shared.backgroundColor
+                self?.keyboardAppearance = ThemeManager.shared.keyboardAppearance
+        })
+
+        backgroundColor = ThemeManager.shared.backgroundColor
+        keyboardAppearance = ThemeManager.shared.keyboardAppearance
+
         inputAccessoryView = CodeAccessoryView(delegate: self)
         font = UIFont(name: "Menlo", size: UIFont.systemFontSize)
         autocapitalizationType = .none
@@ -35,7 +53,7 @@ class EditorView: UITextView {
 
     func colorizeText() {
         keepLocation { () -> Int? in
-            attributedText = SyntaxColorManager().colorize(text)
+            attributedText = SyntaxColorizer().colorize(text)
             return nil
         }
     }
