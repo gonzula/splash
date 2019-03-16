@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 extension OnboardViewController {
     class GitHubViewController: UIViewController {
@@ -21,6 +22,7 @@ extension OnboardViewController {
 
         let titleLabel = UILabel()
         let descriptionLabel = UILabel()
+        let webView = WKWebView()
 
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -35,6 +37,7 @@ extension OnboardViewController {
         private func setup() {
             setupTitleLabel()
             setupDescriptionLabel()
+            setupWebView()
         }
 
         fileprivate func setupTitleLabel() {
@@ -68,6 +71,18 @@ extension OnboardViewController {
             descriptionLabel.font = .preferredFont(forTextStyle: .body)
             descriptionLabel.adjustsFontSizeToFitWidth = true
             descriptionLabel.numberOfLines = 0
+        }
+
+        fileprivate func setupWebView() {
+            webView.setupForAutoLayout(in: self)
+
+            let url = URL(string: "https://github.com/gonzula/splash")!
+            webView.load(URLRequest(url: url))
+
+            webView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20).isActive = true
+            webView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+            webView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+            webView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         }
     }
 }
