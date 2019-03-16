@@ -27,6 +27,8 @@ extension OnboardViewController {
 extension OnboardViewController {
     class IntroView: UIView {
 
+        let editorView = EditorView()
+
         override init(frame: CGRect) {
             super.init(frame: frame)
 
@@ -38,7 +40,20 @@ extension OnboardViewController {
         }
 
         private func setup() {
-            backgroundColor = .clear
+            setupEditorView()
+        }
+
+        private func setupEditorView() {
+            editorView.setupForAutoLayout(in: self)
+
+            editorView.topAnchor.constraint(equalTo: topAnchor).activate()
+            editorView.leftAnchor.constraint(equalTo: leftAnchor).activate()
+            editorView.rightAnchor.constraint(equalTo: rightAnchor).activate()
+            editorView.heightAnchor.constraint(equalToConstant: 44).activate()
+
+            editorView.text = "ShowResult(\"Hello World\")"
+            editorView.colorizeText()
+            editorView.isUserInteractionEnabled = false
         }
     }
 }
