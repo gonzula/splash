@@ -11,9 +11,10 @@ import UIKit
 extension OnboardViewController {
     class FixedContent: UIView {
         let pageControl = UIPageControl()
+        let bottomView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
 
         override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-            return pageControl.hitTest(self.convert(point, to: pageControl), with: event)
+            return bottomView.hitTest(self.convert(point, to: bottomView), with: event)
         }
 
         override init(frame: CGRect) {
@@ -27,13 +28,30 @@ extension OnboardViewController {
         }
 
         private func setup() {
-            pageControl.setupForAutoLayout(in: self)
-            pageControl.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor,
+            setupBottomView()
+            setupPageControl()
+        }
+
+        private func setupBottomView() {
+            bottomView.setupForAutoLayout(in: self)
+
+            bottomView.leftAnchor.constraint(equalTo: leftAnchor).activate()
+            bottomView.rightAnchor.constraint(equalTo: rightAnchor).activate()
+            bottomView.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+            bottomView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -64).activate()
+        }
+
+        private func setupPageControl() {
+            pageControl.setupForAutoLayout(in: bottomView.contentView)
+            pageControl.bottomAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.bottomAnchor,
                                                 constant: -20).activate()
-            pageControl.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).activate()
+            pageControl.centerXAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.centerXAnchor).activate()
 
             pageControl.pageIndicatorTintColor = .lightGray
             pageControl.currentPageIndicatorTintColor = .black
+            pageControl.addTarget(nil,
+                                  action: #selector(OnboardViewController.pageControlChanged(sender:)),
+                                  for: .valueChanged)
         }
     }
 }

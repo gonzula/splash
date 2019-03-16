@@ -15,6 +15,7 @@ public protocol PageIndicator: class {
 
 open class PageViewController: UIViewController {
 
+    var isAnimatingViewChange: Bool = false
     open var updatesPageIndicatorAutomatically = true
     open weak var pageIndicatorDelegate: PageIndicator?
 
@@ -94,9 +95,11 @@ open class PageViewController: UIViewController {
         viewControllerToDismiss?.beginAppearanceTransition(false, animated: animated)
 
         if animated {
+            isAnimatingViewChange = true
             UIView.animate(withDuration: 0.3, animations: {
                 self.contentView.bounds.origin.x = self.offset(for: index)
             }, completion: {(_) in
+                self.isAnimatingViewChange = false
                 viewController.endAppearanceTransition()
                 viewControllerToDismiss?.endAppearanceTransition()
                 completion?()

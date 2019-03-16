@@ -15,6 +15,16 @@ class OnboardViewController: PageViewController {
         GitHubViewController()
     ]
 
+    override var isAnimatingViewChange: Bool {
+        set {
+            super.isAnimatingViewChange = newValue
+            pageControl.isEnabled = !newValue
+        }
+        get {
+            return super.isAnimatingViewChange
+        }
+    }
+
     var currentViewController: UIViewController?
 
     let fixedView = FixedContent()
@@ -27,7 +37,7 @@ class OnboardViewController: PageViewController {
         fixedView.pinToSuperview()
 
         for viewController in viewControllers {
-            viewController.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 44, right: 0)
+            viewController.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 64, right: 0)
         }
 
         totalPageCount = viewControllers.count
@@ -53,5 +63,15 @@ class OnboardViewController: PageViewController {
 
         self.currentViewController = viewControllers[index + 1]
         present(self.currentViewController!, at: index + 1, animated: true)
+    }
+
+    @objc
+    func pageControlChanged(sender: UIPageControl) {
+        let currentPage = sender.currentPage
+        let viewControllersRange = viewControllers.startIndex..<viewControllers.endIndex
+        guard viewControllersRange.contains(currentPage) else {return}
+
+        self.currentViewController = viewControllers[currentPage]
+        present(self.currentViewController!, at: currentPage, animated: true)
     }
 }
