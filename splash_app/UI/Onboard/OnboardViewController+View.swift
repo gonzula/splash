@@ -9,7 +9,7 @@
 import UIKit
 
 extension OnboardViewController {
-    class FixedContent: UIView {
+    class FixedView: UIView {
         let pageControl = UIPageControl()
         let bottomView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
 

@@ -28,7 +28,7 @@ class OnboardViewController: PageViewController {
 
     var currentViewController: UIViewController?
 
-    let fixedView = FixedContent()
+    let fixedView = FixedView()
     var pageControl: UIPageControl {return fixedView.pageControl}
 
     override func loadView() {
