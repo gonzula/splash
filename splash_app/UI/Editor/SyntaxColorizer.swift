@@ -42,16 +42,16 @@ class SyntaxColorizer {
             }
         }
 
-        var color: UIColor {
-            switch ThemeManager.shared.theme {
+        func color(`for` theme: ThemeManager.Theme) -> UIColor {
+            switch theme {
             case .light: return lightColor
             case .dark: return darkColor
             }
         }
 
-        var attributes: [NSAttributedString.Key: Any] {
+        func attributes(`for` theme: ThemeManager.Theme) -> [NSAttributedString.Key: Any] {
             var attributes = [NSAttributedString.Key: Any]()
-            attributes[.foregroundColor] = self.color
+            attributes[.foregroundColor] = self.color(for: theme)
 
             switch self {
             case .comment: attributes[.font] = UIFont(name: "Menlo-Italic", size: UIFont.systemFontSize)!
@@ -79,11 +79,9 @@ class SyntaxColorizer {
         .map {"(\($0.0))"}
         .joined(separator: "|")
 
-    func colorize(_ input: String) -> NSAttributedString {
-        let attributedString = NSMutableAttributedString(string: input, attributes: [
-            .font: UIFont(name: "Menlo", size: UIFont.systemFontSize)!,
-            .foregroundColor: TokenKind.regular.color
-            ])
+    func colorize(_ input: String, theme: ThemeManager.Theme) -> NSAttributedString {
+        let attributedString = NSMutableAttributedString(string: input,
+                                                         attributes: TokenKind.regular.attributes(for: theme))
 
         let regex = try! NSRegularExpression(pattern: pattern, options: []) // swiftlint:disable:this force_try
         let results = regex.matches(in: input, options: [], range: NSRange(location: 0, length: input.count))
@@ -96,12 +94,12 @@ class SyntaxColorizer {
                 let value = (input as NSString).substring(with: result.range)
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                 if isKeyword(identifier: value) {
-                    attributes = TokenKind.keyword.attributes
+                    attributes = TokenKind.keyword.attributes(for: theme)
                 } else {
-                    attributes = kind.attributes
+                    attributes = kind.attributes(for: theme)
                 }
             } else {
-                attributes = kind.attributes
+                attributes = kind.attributes(for: theme)
             }
 
             attributedString.addAttributes(attributes, range: result.range)
