@@ -91,6 +91,8 @@ class OnboardViewController: PageViewController {
         let theme = ThemeManager.shared.theme
         view.backgroundColor = theme.backgroundColor
         setNeedsStatusBarAppearanceUpdate()
+
+        fixedView.bottomView.effect = theme.blurEffect
     }
 
     // MARK: - Page Control

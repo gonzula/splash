@@ -51,6 +51,13 @@ extension ThemeManager {
             }
         }
 
+        var blurEffect: UIBlurEffect {
+            switch self {
+            case .light: return UIBlurEffect(style: .extraLight)
+            case .dark: return UIBlurEffect(style: .dark)
+            }
+        }
+
         var keyboardAppearance: UIKeyboardAppearance {
             switch self {
             case .light: return .light
