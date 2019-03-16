@@ -26,6 +26,8 @@ class OnboardViewController: PageViewController {
         }
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .portrait}
+
     var currentViewController: UIViewController?
 
     let fixedView = FixedView()
