@@ -40,6 +40,14 @@ class OnboardViewController: PageViewController {
         present(firstViewController, at: 0, animated: false)
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        viewControllers
+            .compactMap {$0 as? GitHubViewController}
+            .forEach {_ = $0.view} // load view to load github page
+    }
+
     func advance() {
         guard let currentViewController = currentViewController else {return}
         guard let index = viewControllers.firstIndex(of: currentViewController),
