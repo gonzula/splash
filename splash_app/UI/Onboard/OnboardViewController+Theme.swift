@@ -31,6 +31,13 @@ extension OnboardViewController {
         @objc
         func changeTheme(sender: UISegmentedControl) {
             view.endEditing(true)
+
+            let themes = ThemeManager.Theme.allCases
+            let themesRange = themes.startIndex..<themes.endIndex
+            let index = sender.selectedSegmentIndex
+            guard themesRange.contains(index) else {return}
+            let theme = themes[index]
+            ThemeManager.shared.theme = theme
         }
     }
 }
