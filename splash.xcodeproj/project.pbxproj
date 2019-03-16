@@ -54,6 +54,7 @@
 		9FBA02DD222BFCE8001D5C4D /* str.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F1222AC54E00220811 /* str.c */; };
 		9FBA02DE222BFCE8001D5C4D /* serializable.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F7222AC54E00220811 /* serializable.c */; };
 		9FBA02DF222BFCE8001D5C4D /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E8222AC54D00220811 /* utils.c */; };
+		9FC2D2E0223D621200AAB282 /* OnboardViewController+PageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC2D2DF223D621200AAB282 /* OnboardViewController+PageVC.swift */; };
 		9FCD8906222AC54E00220811 /* splash.lm in Resources */ = {isa = PBXBuildFile; fileRef = 9FCD88F9222AC54E00220811 /* splash.lm */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +140,7 @@
 		9F8AC129223893E6002044CB /* UserDefaults+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Key.swift"; sourceTree = "<group>"; };
 		9F8AC12B22389424002044CB /* UserDefaults+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Constants.swift"; sourceTree = "<group>"; };
 		9F8AC12D223895B7002044CB /* Notification+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Constants.swift"; sourceTree = "<group>"; };
+		9FC2D2DF223D621200AAB282 /* OnboardViewController+PageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+PageVC.swift"; sourceTree = "<group>"; };
 		9FCD88DF222AC54C00220811 /* splash-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "splash-Bridging-Header.h"; sourceTree = "<group>"; };
 		9FCD88E0222AC54C00220811 /* interpolated.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interpolated.c; sourceTree = "<group>"; };
 		9FCD88E1222AC54D00220811 /* interpolated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolated.h; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			children = (
 				9F26039D223B315A00C337F5 /* OnboardViewController.swift */,
 				9F2603A2223B410A00C337F5 /* OnboardViewController+View.swift */,
+				9FC2D2DF223D621200AAB282 /* OnboardViewController+PageVC.swift */,
 				9F2603A0223B31FF00C337F5 /* OnboardViewController+Intro.swift */,
 				9F2603A4223B42EA00C337F5 /* OnboardViewController+Github.swift */,
 				9F2603A8223D558200C337F5 /* OnboardViewController+Theme.swift */,
@@ -553,6 +556,7 @@
 				9FBA02D6222BFCE8001D5C4D /* interpolated.c in Sources */,
 				9F3363FF222B37C200E9726E /* splash.ym in Sources */,
 				9F2603A3223B410A00C337F5 /* OnboardViewController+View.swift in Sources */,
+				9FC2D2E0223D621200AAB282 /* OnboardViewController+PageVC.swift in Sources */,
 				9F26039C223B313300C337F5 /* PageViewController.swift in Sources */,
 				9F6C463B222DC9D500BD8625 /* UIColor+Utils.swift in Sources */,
 				9F6C462F222C819000BD8625 /* SplashDocument.swift in Sources */,
