@@ -55,6 +55,7 @@
 		9FBA02DE222BFCE8001D5C4D /* serializable.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F7222AC54E00220811 /* serializable.c */; };
 		9FBA02DF222BFCE8001D5C4D /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E8222AC54D00220811 /* utils.c */; };
 		9FC2D2E0223D621200AAB282 /* OnboardViewController+PageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC2D2DF223D621200AAB282 /* OnboardViewController+PageVC.swift */; };
+		9FC2D2E2223DA8AC00AAB282 /* ActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC2D2E1223DA8AC00AAB282 /* ActionView.swift */; };
 		9FCD8906222AC54E00220811 /* splash.lm in Resources */ = {isa = PBXBuildFile; fileRef = 9FCD88F9222AC54E00220811 /* splash.lm */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,7 @@
 		9F8AC12B22389424002044CB /* UserDefaults+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Constants.swift"; sourceTree = "<group>"; };
 		9F8AC12D223895B7002044CB /* Notification+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Constants.swift"; sourceTree = "<group>"; };
 		9FC2D2DF223D621200AAB282 /* OnboardViewController+PageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+PageVC.swift"; sourceTree = "<group>"; };
+		9FC2D2E1223DA8AC00AAB282 /* ActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionView.swift; sourceTree = "<group>"; };
 		9FCD88DF222AC54C00220811 /* splash-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "splash-Bridging-Header.h"; sourceTree = "<group>"; };
 		9FCD88E0222AC54C00220811 /* interpolated.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = interpolated.c; sourceTree = "<group>"; };
 		9FCD88E1222AC54D00220811 /* interpolated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolated.h; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 		9F6C462C222C7D1900BD8625 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				9FC2D2E1223DA8AC00AAB282 /* ActionView.swift */,
 				9F2603AA223D596300C337F5 /* String+Utils.swift */,
 				9F26039B223B313300C337F5 /* PageViewController.swift */,
 				9F8AC12722389338002044CB /* ThemeManager.swift */,
@@ -532,6 +535,7 @@
 				9F6C4633222C843900BD8625 /* EditorViewController.swift in Sources */,
 				9FBA02DC222BFCE8001D5C4D /* refcnt.c in Sources */,
 				9F159E632235AF9A00ECF57C /* HelpViewController.swift in Sources */,
+				9FC2D2E2223DA8AC00AAB282 /* ActionView.swift in Sources */,
 				9FBA02DA222BFCE8001D5C4D /* list.c in Sources */,
 				9FBA02DD222BFCE8001D5C4D /* str.c in Sources */,
 				9F8AC12E223895B7002044CB /* Notification+Constants.swift in Sources */,

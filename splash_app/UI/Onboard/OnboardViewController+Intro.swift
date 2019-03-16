@@ -28,6 +28,7 @@ extension OnboardViewController {
     class IntroView: UIView {
 
         let editorView = EditorView()
+        let actionView = ActionView()
 
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -41,6 +42,7 @@ extension OnboardViewController {
 
         private func setup() {
             setupEditorView()
+            setupActionView()
         }
 
         private func setupEditorView() {
@@ -54,6 +56,13 @@ extension OnboardViewController {
             editorView.text = "ShowResult(\"Hello World\")"
             editorView.colorizeText()
             editorView.isUserInteractionEnabled = false
+        }
+
+        private func setupActionView() {
+            actionView.setupForAutoLayout(in: self)
+
+            actionView.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
+            actionView.topAnchor.constraint(equalTo: editorView.bottomAnchor, constant: 8).activate()
         }
     }
 }
