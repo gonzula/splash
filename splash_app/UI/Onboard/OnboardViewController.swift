@@ -23,8 +23,7 @@ class OnboardViewController: PageViewController {
     override func loadView() {
         super.loadView()
 
-        fixedView.translatesAutoresizingMaskIntoConstraints = false
-        view.insertSubview(fixedView, belowSubview: contentView)
+        fixedView.setupForAutoLayout(in: view)
         fixedView.pinToSuperview()
 
         for viewController in viewControllers {

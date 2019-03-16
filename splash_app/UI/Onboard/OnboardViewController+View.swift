@@ -12,6 +12,10 @@ extension OnboardViewController {
     class FixedContent: UIView {
         let pageControl = UIPageControl()
 
+        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            return pageControl.hitTest(self.convert(point, to: pageControl), with: event)
+        }
+
         override init(frame: CGRect) {
             super.init(frame: frame)
 
