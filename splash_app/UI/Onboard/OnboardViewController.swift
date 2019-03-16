@@ -31,6 +31,9 @@ class OnboardViewController: PageViewController {
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .portrait}
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ThemeManager.shared.theme.statusBarStyle
+    }
 
     var currentViewController: UIViewController?
     var currentPageIndex: Int? {
@@ -39,6 +42,8 @@ class OnboardViewController: PageViewController {
     }
 
     let fixedView = FixedView()
+
+    var observers = [Any]()
 
     override func loadView() {
         super.loadView()
@@ -60,6 +65,14 @@ class OnboardViewController: PageViewController {
         viewControllers
             .compactMap {$0 as? GitHubViewController}
             .forEach {_ = $0.view} // load view to load github page
+        observers.append(  // swiftlint:disable:next discarded_notification_center_observer
+            NotificationCenter.default.addObserver(forName: .themeChanged,
+                                                   object: nil,
+                                                   queue: nil,
+                                                   using: { _ in
+                                                    self.setupAppearance()
+            }))
+        setupAppearance()
     }
 
     override func viewDidLayoutSubviews() {
@@ -68,6 +81,16 @@ class OnboardViewController: PageViewController {
         let bottomViewHeight = fixedView.bottomView.frame.height
         let safeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: bottomViewHeight, right: 0)
         viewControllers.forEach {$0.additionalSafeAreaInsets = safeAreaInsets}
+    }
+
+    deinit {
+        observers.forEach(NotificationCenter.default.removeObserver)
+    }
+
+    func setupAppearance() {
+        let theme = ThemeManager.shared.theme
+        view.backgroundColor = theme.backgroundColor
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     // MARK: - Page Control

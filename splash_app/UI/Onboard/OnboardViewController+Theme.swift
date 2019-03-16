@@ -14,7 +14,7 @@ extension OnboardViewController {
             super.loadView()
 
             title = "One more thing…"
-            caption = "Please choose the appearence of the your app (you can change it later)."
+            caption = "Please choose the appearance of the your app (you can change it later)."
 
             let themeView = ThemeView()
             themeView.setupForAutoLayout(in: contentView)

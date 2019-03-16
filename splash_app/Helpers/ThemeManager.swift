@@ -44,6 +44,13 @@ extension ThemeManager {
             }
         }
 
+        var statusBarStyle: UIStatusBarStyle {
+            switch self {
+            case .light: return .default
+            case .dark: return .lightContent
+            }
+        }
+
         var keyboardAppearance: UIKeyboardAppearance {
             switch self {
             case .light: return .light

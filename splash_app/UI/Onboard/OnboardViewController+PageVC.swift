@@ -34,8 +34,34 @@ extension OnboardViewController {
 
         var contentView: UIView {return insideView.contentView}
 
+        var observers = [Any]()
+
         override func loadView() {
             view = insideView
+        }
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+
+            observers.append(  // swiftlint:disable:next discarded_notification_center_observer
+                NotificationCenter.default.addObserver(forName: .themeChanged,
+                                                       object: nil,
+                                                       queue: nil,
+                                                       using: { [weak self] _ in
+                                                        self?.setupAppearance()
+                })
+            )
+            setupAppearance()
+        }
+
+        deinit {
+            observers.forEach(NotificationCenter.default.removeObserver)
+        }
+
+        func setupAppearance() {
+            let theme = ThemeManager.shared.theme
+            insideView.titleLabel.textColor = theme.textColor
+            insideView.captionLabel.textColor = theme.textColor
         }
     }
 }
@@ -101,7 +127,7 @@ extension OnboardViewController {
                                              constant: 20).activate()
             contentView.leftAnchor.constraint(equalTo: leftAnchor).activate()
             contentView.rightAnchor.constraint(equalTo: rightAnchor).activate()
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor).setPriority(999).activate()
         }
     }
 }
