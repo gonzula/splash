@@ -51,10 +51,10 @@ extension OnboardViewController {
 
             titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 44).isActive = true
             titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-            let constraint = titleLabel.rightAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.rightAnchor,
+            titleLabel.rightAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.rightAnchor,
                                               constant: -20)
-            constraint.priority = UILayoutPriority(rawValue: 999)
-            constraint.isActive = true
+                .setPriority(999)
+                .activate()
 
             titleLabel.text = "Welcome to Splash!"
             titleLabel.font = .preferredFont(forTextStyle: .title1)
@@ -68,10 +68,10 @@ extension OnboardViewController {
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44).isActive = true
             descriptionLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
                                                    constant: 30).isActive = true
-            let constraint = descriptionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
+            descriptionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
                                                     constant: -30)
-            constraint.priority = UILayoutPriority(rawValue: 999)
-            constraint.isActive = true
+                .setPriority(999)
+                .activate()
 
             descriptionLabel.text = """
             Splash is a programming language that helps you to create your (complex) shortcuts.
@@ -85,10 +85,10 @@ extension OnboardViewController {
             button.setupForAutoLayout(in: self)
 
             button.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
-            let constraint = button.leftAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.leftAnchor,
-                                                          constant: 20)
-            constraint.priority = UILayoutPriority(rawValue: 999)
-            constraint.isActive = true
+            button.leftAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.leftAnchor,
+                                         constant: 20)
+                .setPriority(999)
+                .activate()
             button.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
 
             button.setTitle("Continue", for: .normal)

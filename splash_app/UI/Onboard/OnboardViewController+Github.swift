@@ -60,10 +60,10 @@ extension OnboardViewController {
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44).isActive = true
             descriptionLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
                                                    constant: 30).isActive = true
-            let constraint = descriptionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
-                                                                     constant: -30)
-            constraint.priority = UILayoutPriority(rawValue: 999)
-            constraint.isActive = true
+            descriptionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
+                                                    constant: -30)
+                .setPriority(999)
+                .activate()
 
             descriptionLabel.text = """
             So, if you find a bug, have a feature request, want to know how the development is going or want to \
