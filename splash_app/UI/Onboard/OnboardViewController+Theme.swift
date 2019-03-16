@@ -84,6 +84,7 @@ extension OnboardViewController {
 
         private func setupLightEditor() {
             lightEditor.setupForAutoLayout(in: self)
+            lightEditor.forcedTheme = .light
 
             lightEditor.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20).activate()
             lightEditor.leftAnchor.constraint(equalTo: leftAnchor).activate()
@@ -96,6 +97,7 @@ extension OnboardViewController {
 
         private func setupDarkEditor() {
             darkEditor.setupForAutoLayout(in: self)
+            darkEditor.forcedTheme = .dark
 
             darkEditor.topAnchor.constraint(equalTo: lightEditor.bottomAnchor, constant: 20).activate()
             darkEditor.leftAnchor.constraint(equalTo: leftAnchor).activate()
