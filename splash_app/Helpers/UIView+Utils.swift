@@ -10,10 +10,10 @@ import UIKit
 
 extension UIView {
     func pin(to other: UIView, withInset inset: UIEdgeInsets = .zero) {
-        topAnchor.constraint(equalTo: other.topAnchor, constant: inset.top).isActive = true
-        leftAnchor.constraint(equalTo: other.leftAnchor, constant: inset.left).isActive = true
-        rightAnchor.constraint(equalTo: other.rightAnchor, constant: -inset.right).isActive = true
-        bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -inset.bottom).isActive = true
+        topAnchor.constraint(equalTo: other.topAnchor, constant: inset.top).activate()
+        leftAnchor.constraint(equalTo: other.leftAnchor, constant: inset.left).activate()
+        rightAnchor.constraint(equalTo: other.rightAnchor, constant: -inset.right).activate()
+        bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -inset.bottom).activate()
     }
 
     func pinToSuperview(withInset inset: UIEdgeInsets = .zero) {
@@ -21,8 +21,8 @@ extension UIView {
     }
 
     func placeAtCenter() {
-        centerXAnchor.constraint(equalTo: superview!.centerXAnchor).isActive = true
-        centerYAnchor.constraint(equalTo: superview!.centerYAnchor).isActive = true
+        centerXAnchor.constraint(equalTo: superview!.centerXAnchor).activate()
+        centerYAnchor.constraint(equalTo: superview!.centerYAnchor).activate()
     }
 
     func setupForAutoLayout(in superview: UIView) {

@@ -10,6 +10,14 @@ import UIKit
 
 class EditorView: UITextView {
 
+    var forcedTheme: ThemeManager.Theme? {
+        didSet {
+            setupAppearence()
+        }
+    }
+
+    private var theme: ThemeManager.Theme {return forcedTheme ?? ThemeManager.shared.theme}
+
     var observers = [Any]()
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -30,13 +38,10 @@ class EditorView: UITextView {
         observers.append(  // swiftlint:disable:next discarded_notification_center_observer
             NotificationCenter.default.addObserver(
             forName: .themeChanged, object: nil, queue: nil) {[weak self] _ in
-                self?.colorizeText()
-                self?.backgroundColor = ThemeManager.shared.backgroundColor
-                self?.keyboardAppearance = ThemeManager.shared.keyboardAppearance
+                self?.setupAppearence()
         })
 
-        backgroundColor = ThemeManager.shared.backgroundColor
-        keyboardAppearance = ThemeManager.shared.keyboardAppearance
+        setupAppearence()
 
         inputAccessoryView = CodeAccessoryView(delegate: self)
         font = UIFont(name: "Menlo", size: UIFont.systemFontSize)
@@ -51,9 +56,15 @@ class EditorView: UITextView {
         keyboardDismissMode = .interactive
     }
 
+    private func setupAppearence() {
+        self.colorizeText()
+        self.backgroundColor = self.theme.backgroundColor
+        self.keyboardAppearance = self.theme.keyboardAppearance
+    }
+
     func colorizeText() {
         keepLocation { () -> Int? in
-            attributedText = SyntaxColorizer().colorize(text)
+            attributedText = SyntaxColorizer().colorize(text, theme: theme)
             return nil
         }
     }

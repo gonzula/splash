@@ -56,7 +56,7 @@ class EditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.barStyle = ThemeManager.shared.navigationBarStyle
+        navigationController?.navigationBar.barStyle = ThemeManager.shared.theme.navigationBarStyle
         setupObservers()
     }
 
@@ -93,7 +93,7 @@ class EditorViewController: UIViewController {
                 forName: .themeChanged,
                 object: nil,
                 queue: nil) { [weak self] _ in
-                    self?.navigationController?.navigationBar.barStyle = ThemeManager.shared.navigationBarStyle
+                    self?.navigationController?.navigationBar.barStyle = ThemeManager.shared.theme.navigationBarStyle
         })
     }
 

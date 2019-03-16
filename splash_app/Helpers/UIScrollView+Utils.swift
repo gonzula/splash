@@ -13,11 +13,11 @@ extension UIScrollView {
         let view = UIView()
         view.setupForAutoLayout(in: self)
         view.backgroundColor = .clear
-        view.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        view.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        view.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        view.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: topAnchor).activate()
+        view.leftAnchor.constraint(equalTo: leftAnchor).activate()
+        view.rightAnchor.constraint(equalTo: rightAnchor).activate()
+        view.heightAnchor.constraint(equalToConstant: 1).activate()
+        view.widthAnchor.constraint(equalTo: widthAnchor).activate()
         view.setRequiredSize()
     }
 
@@ -25,11 +25,11 @@ extension UIScrollView {
         let view = UIView()
         view.setupForAutoLayout(in: self)
         view.backgroundColor = .clear
-        view.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        view.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        view.widthAnchor.constraint(equalToConstant: 1).isActive = true
-        view.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: topAnchor).activate()
+        view.leftAnchor.constraint(equalTo: leftAnchor).activate()
+        view.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+        view.widthAnchor.constraint(equalToConstant: 1).activate()
+        view.heightAnchor.constraint(equalTo: heightAnchor).activate()
         view.setRequiredSize()
     }
 }
