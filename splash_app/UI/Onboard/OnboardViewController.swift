@@ -57,6 +57,7 @@ class OnboardViewController: PageViewController {
             .forEach {_ = $0.view} // load view to load github page
     }
 
+    @objc
     func advance() {
         guard let currentViewController = currentViewController else {return}
         guard let index = viewControllers.firstIndex(of: currentViewController),

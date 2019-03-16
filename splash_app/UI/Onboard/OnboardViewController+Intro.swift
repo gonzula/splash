@@ -12,9 +12,6 @@ extension OnboardViewController {
     class IntroViewController: UIViewController {
         override func loadView() {
             view = IntroView()
-            (view as? IntroView)?.continueAction = { [unowned self] in
-                (self.parent as? OnboardViewController)?.advance()
-            }
         }
     }
 }
@@ -23,10 +20,6 @@ extension OnboardViewController {
     class IntroView: UIView {
         let titleLabel = UILabel()
         let descriptionLabel = UILabel()
-
-        let button = UIButton(type: .system)
-
-        var continueAction: (() -> Void)?
 
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -43,13 +36,12 @@ extension OnboardViewController {
 
             setupTitleLabel()
             setupDescriptionLabel()
-            setupButton()
         }
 
         fileprivate func setupTitleLabel() {
             titleLabel.setupForAutoLayout(in: self)
 
-            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 44).activate()
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20).activate()
             titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20).activate()
             titleLabel.rightAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.rightAnchor,
                                               constant: -20)
@@ -79,27 +71,6 @@ extension OnboardViewController {
             descriptionLabel.font = .preferredFont(forTextStyle: .body)
             descriptionLabel.adjustsFontSizeToFitWidth = true
             descriptionLabel.numberOfLines = 0
-        }
-
-        fileprivate func setupButton() {
-            button.setupForAutoLayout(in: self)
-
-            button.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).activate()
-            button.leftAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.leftAnchor,
-                                         constant: 20)
-                .setPriority(999)
-                .activate()
-            button.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20).activate()
-
-            button.setTitle("Continue", for: .normal)
-
-            button.addTarget(self, action: #selector(continueTouched), for: .touchUpInside)
-        }
-
-        // MARK: - User Interaction
-
-        @objc func continueTouched() {
-            continueAction?()
         }
     }
 }

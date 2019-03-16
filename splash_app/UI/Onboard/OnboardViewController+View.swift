@@ -10,6 +10,7 @@ import UIKit
 
 extension OnboardViewController {
     class FixedView: UIView {
+        let continueButton = UIButton(type: .system)
         let pageControl = UIPageControl()
         let bottomView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
 
@@ -30,6 +31,7 @@ extension OnboardViewController {
         private func setup() {
             setupBottomView()
             setupPageControl()
+            setupContinueButton()
         }
 
         private func setupBottomView() {
@@ -38,13 +40,13 @@ extension OnboardViewController {
             bottomView.leftAnchor.constraint(equalTo: leftAnchor).activate()
             bottomView.rightAnchor.constraint(equalTo: rightAnchor).activate()
             bottomView.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
-            bottomView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -64).activate()
+//            bottomView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -64).activate()
         }
 
         private func setupPageControl() {
             pageControl.setupForAutoLayout(in: bottomView.contentView)
             pageControl.bottomAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.bottomAnchor,
-                                                constant: -20).activate()
+                                                constant: 0).activate()
             pageControl.centerXAnchor.constraint(equalTo: bottomView.safeAreaLayoutGuide.centerXAnchor).activate()
 
             pageControl.pageIndicatorTintColor = .lightGray
@@ -52,6 +54,20 @@ extension OnboardViewController {
             pageControl.addTarget(nil,
                                   action: #selector(OnboardViewController.pageControlChanged(sender:)),
                                   for: .valueChanged)
+        }
+
+        private func setupContinueButton() {
+            continueButton.setupForAutoLayout(in: bottomView.contentView)
+
+            continueButton.setTitle("Continue", for: .normal)
+            continueButton.addTarget(nil,
+                                     action: #selector(OnboardViewController.advance),
+                                     for: .touchUpInside)
+
+            continueButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).activate()
+            continueButton.bottomAnchor.constraint(equalTo: pageControl.topAnchor, constant: -4).activate()
+            continueButton.topAnchor.constraint(equalTo: bottomView.contentView.topAnchor,
+                                                constant: 8).activate()
         }
     }
 }
