@@ -51,8 +51,10 @@ extension OnboardViewController {
 
             titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 44).isActive = true
             titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
-            titleLabel.rightAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.rightAnchor,
-                                              constant: -20).isActive = true
+            let constraint = titleLabel.rightAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.rightAnchor,
+                                              constant: -20)
+            constraint.priority = UILayoutPriority(rawValue: 999)
+            constraint.isActive = true
 
             titleLabel.text = "Welcome to Splash!"
             titleLabel.font = .preferredFont(forTextStyle: .title1)
