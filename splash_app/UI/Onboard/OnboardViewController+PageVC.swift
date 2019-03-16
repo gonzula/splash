@@ -11,10 +11,31 @@ import UIKit
 extension OnboardViewController {
     class InsidePageViewController: UIViewController {
 
-        var contentView: UIView {return (view as! InsideView).contentView}
+        let insideView = InsideView()
+
+        override var title: String? {
+            set {
+                super.title = newValue
+                insideView.titleLabel.text = title
+            }
+            get {
+                return super.title
+            }
+        }
+
+        var caption: String? {
+            set {
+                insideView.captionLabel.text = newValue
+            }
+            get {
+                return insideView.captionLabel.text
+            }
+        }
+
+        var contentView: UIView {return insideView.contentView}
 
         override func loadView() {
-            view = InsideView()
+            view = insideView
         }
     }
 }
@@ -22,12 +43,14 @@ extension OnboardViewController {
 extension OnboardViewController {
     class InsideView: UIView {
         let titleLabel = UILabel()
-        let descriptionLabel = UILabel()
+        let captionLabel = UILabel()
 
         let contentView = UIView()
 
         override init(frame: CGRect) {
             super.init(frame: frame)
+
+            setup()
         }
 
         required init?(coder aDecoder: NSCoder) {
@@ -36,7 +59,7 @@ extension OnboardViewController {
 
         private func setup() {
             setupTitleLabel()
-            setupDescriptionLabel()
+            setupCaptionLabel()
             setupContentView()
         }
 
@@ -50,35 +73,31 @@ extension OnboardViewController {
                 .setPriority(999)
                 .activate()
 
-            titleLabel.text = "Welcome to Splash!"
             titleLabel.font = .preferredFont(forTextStyle: .title1)
             titleLabel.adjustsFontForContentSizeCategory = true
             titleLabel.numberOfLines = 0
         }
 
-        fileprivate func setupDescriptionLabel() {
-            descriptionLabel.setupForAutoLayout(in: self)
+        fileprivate func setupCaptionLabel() {
+            captionLabel.setupForAutoLayout(in: self)
 
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44).activate()
-            descriptionLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
+            captionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).activate()
+            captionLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
                                                    constant: 30).activate()
-            descriptionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
+            captionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
                                                     constant: -30)
                 .setPriority(999)
                 .activate()
 
-            descriptionLabel.text = """
-            Splash is a programming language that helps you to create your (complex) shortcuts.
-            """
-            descriptionLabel.font = .preferredFont(forTextStyle: .body)
-            descriptionLabel.adjustsFontSizeToFitWidth = true
-            descriptionLabel.numberOfLines = 0
+            captionLabel.font = .preferredFont(forTextStyle: .body)
+            captionLabel.adjustsFontSizeToFitWidth = true
+            captionLabel.numberOfLines = 0
         }
 
         fileprivate func setupContentView() {
             contentView.setupForAutoLayout(in: self)
 
-            contentView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor,
+            contentView.topAnchor.constraint(equalTo: captionLabel.bottomAnchor,
                                              constant: 20).activate()
             contentView.leftAnchor.constraint(equalTo: leftAnchor).activate()
             contentView.rightAnchor.constraint(equalTo: rightAnchor).activate()

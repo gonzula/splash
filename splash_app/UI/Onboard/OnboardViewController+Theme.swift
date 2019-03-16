@@ -9,9 +9,16 @@
 import UIKit
 
 extension OnboardViewController {
-    class ThemeViewController: UIViewController {
+    class ThemeViewController: InsidePageViewController {
         override func loadView() {
-            view = ThemeView()
+            super.loadView()
+
+            title = "One more thing…"
+            caption = "Please choose the appearence of the your app (you can change it later)."
+
+            let themeView = ThemeView()
+            themeView.setupForAutoLayout(in: contentView)
+            themeView.pinToSuperview()
         }
 
         // MARK: - User Interaction
