@@ -19,19 +19,26 @@ class OnboardViewController: PageViewController {
     override var isAnimatingViewChange: Bool {
         set {
             super.isAnimatingViewChange = newValue
-            pageControl.isEnabled = !newValue
+            fixedView.pageControl.isEnabled = !newValue
         }
         get {
             return super.isAnimatingViewChange
         }
     }
 
+    var canChangePage: Bool {
+        return !isAnimatingViewChange
+    }
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {return .portrait}
 
     var currentViewController: UIViewController?
+    var currentPageIndex: Int? {
+        guard let currentViewController = currentViewController else {return nil}
+        return viewControllers.firstIndex(of: currentViewController)
+    }
 
     let fixedView = FixedView()
-    var pageControl: UIPageControl {return fixedView.pageControl}
 
     override func loadView() {
         super.loadView()
@@ -40,7 +47,7 @@ class OnboardViewController: PageViewController {
         fixedView.pinToSuperview()
 
         totalPageCount = viewControllers.count
-        self.pageIndicatorDelegate = pageControl
+        self.pageIndicatorDelegate = fixedView.pageControl
 
         let firstViewController = viewControllers.first!
         currentViewController = firstViewController
@@ -63,23 +70,29 @@ class OnboardViewController: PageViewController {
         viewControllers.forEach {$0.additionalSafeAreaInsets = safeAreaInsets}
     }
 
+    // MARK: - Page Control
+
     @objc
     func advance() {
-        guard let currentViewController = currentViewController else {return}
-        guard let index = viewControllers.firstIndex(of: currentViewController),
-            index < viewControllers.count - 1 else {return}
+        guard let currentPageIndex = currentPageIndex else {return}
 
-        self.currentViewController = viewControllers[index + 1]
-        present(self.currentViewController!, at: index + 1, animated: true)
+        setPage(at: currentPageIndex + 1)
     }
 
     @objc
     func pageControlChanged(sender: UIPageControl) {
-        let currentPage = sender.currentPage
-        let viewControllersRange = viewControllers.startIndex..<viewControllers.endIndex
-        guard viewControllersRange.contains(currentPage) else {return}
+        setPage(at: sender.currentPage)
+    }
 
-        self.currentViewController = viewControllers[currentPage]
-        present(self.currentViewController!, at: currentPage, animated: true)
+    func setPage(at index: Int) {
+        guard canChangePage else {return}
+        let viewControllersRange = viewControllers.startIndex..<viewControllers.endIndex
+        guard viewControllersRange.contains(index) else {return}
+
+        self.currentViewController = viewControllers[index]
+        present(self.currentViewController!, at: index, animated: true)
+
+        let isLastPage = index == viewControllersRange.upperBound - 1
+        fixedView.buttonState = isLastPage ? .finish : .continue
     }
 }

@@ -9,7 +9,24 @@
 import UIKit
 
 extension OnboardViewController {
+
+    enum ButtonState: String {
+        case `continue`
+        case finish
+
+        var title: String {
+            return rawValue.capitalizingFirstLetter()
+        }
+    }
+
     class FixedView: UIView {
+
+        var buttonState: ButtonState = .continue {
+            didSet {
+                continueButton.setTitle(buttonState.title, for: .normal)
+            }
+        }
+
         let continueButton = UIButton(type: .system)
         let pageControl = UIPageControl()
         let bottomView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
@@ -40,7 +57,6 @@ extension OnboardViewController {
             bottomView.leftAnchor.constraint(equalTo: leftAnchor).activate()
             bottomView.rightAnchor.constraint(equalTo: rightAnchor).activate()
             bottomView.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
-//            bottomView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -64).activate()
         }
 
         private func setupPageControl() {
@@ -59,12 +75,14 @@ extension OnboardViewController {
         private func setupContinueButton() {
             continueButton.setupForAutoLayout(in: bottomView.contentView)
 
-            continueButton.setTitle("Continue", for: .normal)
+            continueButton.setTitle(buttonState.title, for: .normal)
             continueButton.addTarget(nil,
                                      action: #selector(OnboardViewController.advance),
                                      for: .touchUpInside)
 
             continueButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).activate()
+            continueButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
+                                                 constant: 20).setPriority(999).activate()
             continueButton.bottomAnchor.constraint(equalTo: pageControl.topAnchor, constant: -4).activate()
             continueButton.topAnchor.constraint(equalTo: bottomView.contentView.topAnchor,
                                                 constant: 8).activate()
