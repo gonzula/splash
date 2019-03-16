@@ -43,9 +43,13 @@ class ThemeManager {
 }
 
 extension ThemeManager {
-    enum Theme: String {
+    enum Theme: String, CaseIterable {
         case light
         case dark
+
+        var humanName: String {
+            return rawValue.capitalizingFirstLetter()
+        }
     }
 }
 

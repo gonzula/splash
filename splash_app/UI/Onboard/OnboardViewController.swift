@@ -12,7 +12,8 @@ class OnboardViewController: PageViewController {
 
     let viewControllers: [UIViewController] = [
         IntroViewController(),
-        GitHubViewController()
+        GitHubViewController(),
+        ThemeViewController()
     ]
 
     override var isAnimatingViewChange: Bool {
