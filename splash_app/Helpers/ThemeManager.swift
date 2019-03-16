@@ -30,17 +30,17 @@ extension ThemeManager {
             return rawValue.capitalizingFirstLetter()
         }
 
+        var textColor: UIColor {
+            switch self {
+            case .light: return .black
+            case .dark: return .white
+            }
+        }
+
         var backgroundColor: UIColor {
             switch self {
             case .light: return .white
             case .dark: return UIColor(hex: 0x1F1F24)
-            }
-        }
-
-        var other: ThemeManager.Theme {
-            switch self {
-            case .light: return .dark
-            case .dark: return .light
             }
         }
 
@@ -55,6 +55,13 @@ extension ThemeManager {
             switch self {
             case .light: return .default
             case .dark: return .black
+            }
+        }
+
+        var other: ThemeManager.Theme {
+            switch self {
+            case .light: return .dark
+            case .dark: return .light
             }
         }
     }
