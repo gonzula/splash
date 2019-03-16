@@ -58,6 +58,20 @@ extension ThemeManager {
             }
         }
 
+        var pageControlCurrentPageTintColor: UIColor {
+            switch self {
+            case .light: return .black
+            case .dark: return .white
+            }
+        }
+
+        var pageControlTintColor: UIColor {
+            switch self {
+            case .light: return .lightGray
+            case .dark: return .darkGray//UIColor(hex: 0xcccccc)
+            }
+        }
+
         var keyboardAppearance: UIKeyboardAppearance {
             switch self {
             case .light: return .light

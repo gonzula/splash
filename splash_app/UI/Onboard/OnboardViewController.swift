@@ -93,6 +93,8 @@ class OnboardViewController: PageViewController {
         setNeedsStatusBarAppearanceUpdate()
 
         fixedView.bottomView.effect = theme.blurEffect
+        fixedView.pageControl.currentPageIndicatorTintColor = theme.pageControlCurrentPageTintColor
+        fixedView.pageControl.pageIndicatorTintColor = theme.pageControlTintColor
     }
 
     // MARK: - Page Control
