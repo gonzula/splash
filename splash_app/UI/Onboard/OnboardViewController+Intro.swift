@@ -49,8 +49,8 @@ extension OnboardViewController {
         fileprivate func setupTitleLabel() {
             titleLabel.setupForAutoLayout(in: self)
 
-            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 44).isActive = true
-            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 44).activate()
+            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20).activate()
             titleLabel.rightAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.rightAnchor,
                                               constant: -20)
                 .setPriority(999)
@@ -65,9 +65,9 @@ extension OnboardViewController {
         fileprivate func setupDescriptionLabel() {
             descriptionLabel.setupForAutoLayout(in: self)
 
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44).isActive = true
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44).activate()
             descriptionLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
-                                                   constant: 30).isActive = true
+                                                   constant: 30).activate()
             descriptionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
                                                     constant: -30)
                 .setPriority(999)
@@ -84,12 +84,12 @@ extension OnboardViewController {
         fileprivate func setupButton() {
             button.setupForAutoLayout(in: self)
 
-            button.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
+            button.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).activate()
             button.leftAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.leftAnchor,
                                          constant: 20)
                 .setPriority(999)
                 .activate()
-            button.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+            button.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20).activate()
 
             button.setTitle("Continue", for: .normal)
 

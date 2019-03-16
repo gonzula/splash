@@ -25,8 +25,8 @@ extension OnboardViewController {
         private func setup() {
             pageControl.setupForAutoLayout(in: self)
             pageControl.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor,
-                                                constant: -20).isActive = true
-            pageControl.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
+                                                constant: -20).activate()
+            pageControl.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).activate()
 
             pageControl.pageIndicatorTintColor = .lightGray
             pageControl.currentPageIndicatorTintColor = .black

@@ -43,10 +43,10 @@ extension OnboardViewController {
         fileprivate func setupTitleLabel() {
             titleLabel.setupForAutoLayout(in: self)
 
-            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 44).isActive = true
-            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20).isActive = true
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 44).activate()
+            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 20).activate()
             titleLabel.rightAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.rightAnchor,
-                                              constant: -20).isActive = true
+                                              constant: -20).activate()
 
             titleLabel.text = "Splash is completely open source"
             titleLabel.font = .preferredFont(forTextStyle: .title1)
@@ -57,9 +57,9 @@ extension OnboardViewController {
         fileprivate func setupDescriptionLabel() {
             descriptionLabel.setupForAutoLayout(in: self)
 
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44).isActive = true
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 44).activate()
             descriptionLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
-                                                   constant: 30).isActive = true
+                                                   constant: 30).activate()
             descriptionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor,
                                                     constant: -30)
                 .setPriority(999)
@@ -80,10 +80,10 @@ extension OnboardViewController {
             let url = URL(string: "https://github.com/gonzula/splash")!
             webView.load(URLRequest(url: url))
 
-            webView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20).isActive = true
-            webView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-            webView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-            webView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            webView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20).activate()
+            webView.leftAnchor.constraint(equalTo: leftAnchor).activate()
+            webView.rightAnchor.constraint(equalTo: rightAnchor).activate()
+            webView.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
         }
     }
 }

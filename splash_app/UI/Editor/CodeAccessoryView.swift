@@ -184,10 +184,10 @@ class CodeAccessoryView: UIView {
 
         let line = UIView()
         line.setupForAutoLayout(in: self)
-        line.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        line.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        line.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        line.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        line.leftAnchor.constraint(equalTo: leftAnchor).activate()
+        line.rightAnchor.constraint(equalTo: rightAnchor).activate()
+        line.bottomAnchor.constraint(equalTo: bottomAnchor).activate()
+        line.heightAnchor.constraint(equalToConstant: 1).activate()
         line.backgroundColor = UIColor(red: 180/255, green: 188/255, blue: 199/255, alpha: 1)
     }
 
