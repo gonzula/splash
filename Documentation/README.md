@@ -204,3 +204,29 @@ To know more you can read the [Actions Reference](#actions-reference)
 
 
 # Actions Reference
+
+### `AskText([question])`
+
+You can pass an optional `string` parameter that will be promped to the user.
+
+```python
+AskText("What's your name?")
+```
+
+produces: 
+
+![Ask Text action](assets/ask_text.png)
+
+Or you can pass no parameter
+
+```python
+AskText()
+```
+
+produces:
+
+![Ask text without parameter](assets/ask_text_no_parameter.png)
+
+
+### `AskNumber([question])`
+
