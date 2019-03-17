@@ -64,6 +64,11 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(self.doneTouched))
+
         observers.append(  // swiftlint:disable:next discarded_notification_center_observer
             NotificationCenter.default.addObserver(forName: .themeChanged,
                                                    object: nil,
@@ -72,15 +77,19 @@ class SettingsViewController: UITableViewController {
                                                     self?.setupAppearance()
             })
         )
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         setupAppearance()
     }
 
     private func setupAppearance() {
         let theme = ThemeManager.shared.theme
+        navigationController?.navigationBar.barStyle = theme.navigationBarStyle
         view.backgroundColor = theme.tableViewBackgroundColor
-        tableView.visibleCells
-            .compactMap {$0 as? AppearanceAdjustable}
-            .forEach {$0.setupAppearance()}
+        tableView.reloadData()
     }
 
     private func section(at index: Int) -> Section {
@@ -111,5 +120,12 @@ class SettingsViewController: UITableViewController {
                             willDisplay cell: UITableViewCell,
                             forRowAt indexPath: IndexPath) {
         (cell as? AppearanceAdjustable)?.setupAppearance()
+    }
+
+    // MARK: - User Interaction
+
+    @objc
+    func doneTouched() {
+        dismiss(animated: true)
     }
 }
