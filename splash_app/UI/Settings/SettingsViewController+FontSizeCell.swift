@@ -23,6 +23,7 @@ extension SettingsViewController {
 extension SettingsViewController {
     class FontSizeCell: UITableViewCell {
         let label = UILabel()
+        let valueLabel = UILabel()
         let stepper = UIStepper()
 
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -36,6 +37,7 @@ extension SettingsViewController {
         private func setup() {
             setupLabel()
             setupStepper()
+            setupValueLabel()
         }
 
         private func setupLabel() {
@@ -50,6 +52,28 @@ extension SettingsViewController {
 
             stepper.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).activate()
             stepper.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).activate()
+            stepper.minimumValue = 7
+            stepper.maximumValue = 28
+            stepper.stepValue = 1
+            stepper.value = Double(UserDefaults.standard.fontSize)
+            stepper.addTarget(self, action: #selector(changeFontSize), for: .valueChanged)
+        }
+
+        private func setupValueLabel() {
+            valueLabel.setupForAutoLayout(in: contentView)
+
+            valueLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).activate()
+            valueLabel.rightAnchor.constraint(equalTo: stepper.leftAnchor, constant: -8).activate()
+
+            valueLabel.text = "\(Int(stepper.value))"
+        }
+
+        // MARK: - User Interaction
+
+        @objc
+        func changeFontSize(sender: UIStepper) {
+            UserDefaults.standard.fontSize = CGFloat(sender.value)
+            valueLabel.text = "\(Int(sender.value))"
         }
     }
 }
@@ -59,5 +83,6 @@ extension SettingsViewController.FontSizeCell: AppearanceAdjustable {
         let theme = ThemeManager.shared.theme
         backgroundColor = theme.tableViewCellBackgroundColor
         label.textColor = theme.textColor
+        valueLabel.textColor = theme.textColor
     }
 }

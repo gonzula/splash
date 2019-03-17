@@ -54,13 +54,13 @@ class SyntaxColorizer {
             attributes[.foregroundColor] = self.color(for: theme)
 
             switch self {
-            case .comment: attributes[.font] = UIFont(name: "Menlo-Italic", size: UIFont.systemFontSize)!
-            case .keyword: attributes[.font] = UIFont(name: "Menlo-Bold", size: UIFont.systemFontSize)!
+            case .comment: attributes[.font] = UIFont(name: "Menlo-Italic", size: UserDefaults.standard.fontSize)!
+            case .keyword: attributes[.font] = UIFont(name: "Menlo-Bold", size: UserDefaults.standard.fontSize)!
             case .functionCall,
                  .identifier,
                  .number,
                  .regular,
-                 .string: attributes[.font] = UIFont(name: "Menlo", size: UIFont.systemFontSize)!
+                 .string: attributes[.font] = UIFont(name: "Menlo", size: UserDefaults.standard.fontSize)!
             }
 
             return attributes

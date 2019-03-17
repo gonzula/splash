@@ -42,7 +42,7 @@ class EditorView: UITextView {
         setupAppearance()
 
         inputAccessoryView = CodeAccessoryView(delegate: self)
-        font = UIFont(name: "Menlo", size: UIFont.systemFontSize)
+        font = UIFont(name: "Menlo", size: UserDefaults.standard.fontSize)
         autocapitalizationType = .none
         returnKeyType = .default
         autocorrectionType = .no
