@@ -51,9 +51,14 @@ extension OnboardViewController {
             editorView.topAnchor.constraint(equalTo: topAnchor).activate()
             editorView.leftAnchor.constraint(equalTo: leftAnchor).activate()
             editorView.rightAnchor.constraint(equalTo: rightAnchor).activate()
-            editorView.heightAnchor.constraint(equalToConstant: 44).activate()
+            editorView.heightAnchor.constraint(equalToConstant: 84).activate()
 
-            editorView.text = "ShowResult(\"Hello World\")"
+            editorView.text = """
+            # The following code:
+            ShowResult(\"Hello World\")
+
+            # Will compile to the following shortcut:
+            """
             editorView.colorizeText()
             editorView.isUserInteractionEnabled = false
         }

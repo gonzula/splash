@@ -47,6 +47,9 @@ extension OnboardViewController {
 
         fileprivate func setupWebView() {
             webView.setupForAutoLayout(in: self)
+            webView.isOpaque = false
+            webView.backgroundColor = UIColor.clear
+            webView.scrollView.backgroundColor = UIColor.clear
 
             let url = URL(string: "https://github.com/gonzula/splash")!
             webView.load(URLRequest(url: url))
