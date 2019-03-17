@@ -16,6 +16,7 @@ class ThemeManager {
         didSet {
             guard theme != oldValue else {return}
             UserDefaults.standard.lastUsedTheme = theme
+            UIApplication.shared.keyWindow!.tintColor = theme.tintColor
             NotificationCenter.default.post(name: .themeChanged, object: theme)
         }
     }

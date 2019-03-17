@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = ViewController()
         window!.makeKeyAndVisible()
 
+        window!.tintColor = ThemeManager.shared.theme.tintColor
+
         return true
     }
 
