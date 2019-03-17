@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         installExamples()
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.rootViewController = ViewController()
@@ -25,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func installExamples() {
+        guard UserDefaults.standard.alreadyInstalledExamples1 == false else {return}
+
         let fileNames = ["Age", "Leap Year", "Quadratic Solver"].map {$0 + ".splash"}
         let documentsPath = FileManager.documentsDirectory.path
         let examplesPath = (documentsPath as NSString).appendingPathComponent("Examples")
@@ -40,5 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let fullFileName = (examplesPath as NSString).appendingPathComponent(fileName)
             try? data.write(to: URL(fileURLWithPath: fullFileName))
         }
+
+        UserDefaults.standard.alreadyInstalledExamples1 = true
     }
 }
