@@ -54,8 +54,8 @@ class EditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.barStyle = ThemeManager.shared.theme.navigationBarStyle
         setupObservers()
+        setupAppearance()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -66,6 +66,12 @@ class EditorViewController: UIViewController {
 
     deinit {
         observers.forEach(NotificationCenter.default.removeObserver)
+    }
+
+    private func setupAppearance() {
+        let theme = ThemeManager.shared.theme
+        navigationController?.navigationBar.barStyle = theme.navigationBarStyle
+        navigationController?.view.tintColor = theme.tintColor
     }
 
     private func setupNavigationBarItems() {
@@ -91,7 +97,7 @@ class EditorViewController: UIViewController {
                 forName: .themeChanged,
                 object: nil,
                 queue: nil) { [weak self] _ in
-                    self?.navigationController?.navigationBar.barStyle = ThemeManager.shared.theme.navigationBarStyle
+                    self?.setupAppearance()
         })
     }
 

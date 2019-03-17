@@ -13,6 +13,8 @@ class ViewController: UIDocumentBrowserViewController {
     let browserDelegate = BrowserDelegate()  // swiftlint:disable:this weak_delegate
     var transitioningController: UIDocumentBrowserTransitionController?
 
+    var observers = [Any]()
+
     init() {
         super.init(forOpeningFilesWithContentTypes: ["ninja.gonzo.splash.script"])
         delegate = browserDelegate
@@ -25,6 +27,20 @@ class ViewController: UIDocumentBrowserViewController {
 
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        observers.append( // swiftlint:disable:next discarded_notification_center_observer
+            NotificationCenter.default.addObserver(forName: .themeChanged,
+                                                   object: nil,
+                                                   queue: nil,
+                                                   using: { [weak self] _ in
+                                                    self?.setupAppearance()
+            })
+        )
+        setupAppearance()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -32,6 +48,13 @@ class ViewController: UIDocumentBrowserViewController {
             present(OnboardViewController(), animated: animated)
             perform(#selector(showExamplesInRecents(_:)), with: nil, afterDelay: 0.5)
         }
+    }
+
+    func setupAppearance() {
+        let theme = ThemeManager.shared.theme
+
+        browserUserInterfaceStyle = theme.browserUserInterfaceStyle
+        view.tintColor = theme.tintColor
     }
 
     func presentEditor(withURL url: URL) {
