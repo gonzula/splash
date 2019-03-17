@@ -86,6 +86,13 @@ extension ThemeManager {
             }
         }
 
+        var tintColor: UIColor {
+            switch self {
+            case .light: return UIColor(hex: 0x007aff)
+            case .dark: return .orange
+            }
+        }
+
         var other: ThemeManager.Theme {
             switch self {
             case .light: return .dark

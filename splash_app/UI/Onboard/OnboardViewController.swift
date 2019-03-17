@@ -95,6 +95,7 @@ class OnboardViewController: PageViewController {
         fixedView.bottomView.effect = theme.blurEffect
         fixedView.pageControl.currentPageIndicatorTintColor = theme.pageControlCurrentPageTintColor
         fixedView.pageControl.pageIndicatorTintColor = theme.pageControlTintColor
+        view.tintColor = theme.tintColor
     }
 
     // MARK: - Page Control
