@@ -1,5 +1,7 @@
 # Splash Documentation and Reference
 
+Jump to the [actions reference](#actions-reference)
+
 ## Getting started
 
 Splash is in an early stage of development, so it support just a few actions.
@@ -79,7 +81,7 @@ Here are some examples.
 
 You can also perform math operations with numbers
 
-The available operators are: 
+The available operators are:
 
 ```python
 1 + 2    # sum
@@ -185,12 +187,20 @@ c := AskNumber("c =")
 delta := b^2 - 4 * a * c
 
 if delta == 0 {
-	ShowResult("Both roots are equal")
+    ShowResult("Both roots are equal")
 } else if delta < 0 {
-	ShowResult("No real roots")
+    ShowResult("No real roots")
 } else {
-	ShowResult("Equation have two distinct roots")
+    ShowResult("Equation have two distinct roots")
 }
 ```
 
-At the moment, splash supports `<`, `>` and `==`
+At the moment, splash supports `<`, `>` and `==` comparison operators only.
+
+## That's all folks
+
+That covers all the basics of the splash language.
+To know more you can read the [Actions Reference](#actions-reference)
+
+
+# Actions Reference
