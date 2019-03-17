@@ -1,5 +1,5 @@
 //
-//  SettingsViewController+LinkCell.swift
+//  SettingsViewController+DefaultCell.swift
 //  splash
 //
 //  Created by Gonzo Fialho on 17/03/19.
@@ -14,8 +14,8 @@ extension SettingsViewController {
         let name: String
         let url: URL
 
-        var cellIdentifier: String {return "link cell"}
-        var cellClass: UITableViewCell.Type {return LinkCell.self}
+        var cellIdentifier: String {return "default cell"}
+        var cellClass: UITableViewCell.Type {return DefaultCell.self}
 
         func configure(_ cell: UITableViewCell, at indexPath: IndexPath, in viewController: SettingsViewController) {
             cell.textLabel?.text = name
@@ -30,7 +30,7 @@ extension SettingsViewController {
 }
 
 extension SettingsViewController {
-    class LinkCell: UITableViewCell {
+    class DefaultCell: UITableViewCell {
 
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -40,7 +40,7 @@ extension SettingsViewController {
     }
 }
 
-extension SettingsViewController.LinkCell: AppearanceAdjustable {
+extension SettingsViewController.DefaultCell: AppearanceAdjustable {
     func setupAppearance() {
         let theme = ThemeManager.shared.theme
         backgroundColor = theme.tableViewCellBackgroundColor

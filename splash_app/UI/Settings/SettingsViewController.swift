@@ -41,14 +41,15 @@ class SettingsViewController: UITableViewController {
     }
 
     let items: [Section] = [
-        Section(title: "Resources",
-                rows: [
-                    Link(name: "GitHub repo", url: URL(string: "https://github.com/gonzula/splash")!)
-            ]),
         Section(title: "Appearance Settings",
                 rows: [
                     Theme(),
                     FontSize()
+            ]),
+        Section(title: nil,
+                rows: [
+                    Link(name: "GitHub Repository",
+                         url: URL(string: "https://github.com/gonzula/splash")!)
             ])
     ]
 
