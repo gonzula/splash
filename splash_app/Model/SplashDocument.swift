@@ -42,6 +42,7 @@ class SplashDocument: UIDocument {
     }
 
     override func contents(forType typeName: String) throws -> Any {
+        string.formatForCode()
         let data = string.data(using: .utf8)!
         return data
     }
