@@ -104,7 +104,12 @@ class OnboardViewController: PageViewController {
     func advance() {
         guard let currentPageIndex = currentPageIndex else {return}
 
-        setPage(at: currentPageIndex + 1)
+        if currentPageIndex + 1 >= viewControllers.count {
+            UserDefaults.standard.alreadyShowedOnboard1 = true
+            dismiss(animated: true)
+        } else {
+            setPage(at: currentPageIndex + 1)
+        }
     }
 
     @objc

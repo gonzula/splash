@@ -24,6 +24,14 @@ class ViewController: UIDocumentBrowserViewController {
 
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if UserDefaults.standard.alreadyShowedOnboard1 == false {
+            present(OnboardViewController(), animated: animated)
+        }
+    }
+
     fileprivate func presentEditor(withURL url: URL) {
         let editorViewController = EditorNavigationController()
         let document = SplashDocument(fileURL: url)
