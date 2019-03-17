@@ -26,6 +26,7 @@
 		9F336405222B3D6700E9726E /* splash.lm in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F9222AC54E00220811 /* splash.lm */; };
 		9F3507FC223E822000260B89 /* BrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3507FB223E822000260B89 /* BrowserDelegate.swift */; };
 		9F3507FE223EA7DC00260B89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */; };
+		9F35081F223EB0D700260B89 /* SettingsViewController+ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */; };
 		9F350821223EB1D400260B89 /* ThemeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F350820223EB1D400260B89 /* ThemeControl.swift */; };
 		9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518975222ABC0A0054A381 /* AppDelegate.swift */; };
 		9F518978222ABC0A0054A381 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518977222ABC0A0054A381 /* ViewController.swift */; };
@@ -118,6 +119,7 @@
 		9F2603AA223D596300C337F5 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		9F3507FB223E822000260B89 /* BrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserDelegate.swift; sourceTree = "<group>"; };
 		9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+ThemeCell.swift"; sourceTree = "<group>"; };
 		9F350820223EB1D400260B89 /* ThemeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeControl.swift; sourceTree = "<group>"; };
 		9F518972222ABC0A0054A381 /* splash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F518975222ABC0A0054A381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */,
+				9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				9F336405222B3D6700E9726E /* splash.lm in Sources */,
 				9F518978222ABC0A0054A381 /* ViewController.swift in Sources */,
 				9F159E692235B69800ECF57C /* Bundle+Resources.swift in Sources */,
+				9F35081F223EB0D700260B89 /* SettingsViewController+ThemeCell.swift in Sources */,
 				9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */,
 				9F8AC12822389338002044CB /* ThemeManager.swift in Sources */,
 				9F8AC12C22389424002044CB /* UserDefaults+Constants.swift in Sources */,
