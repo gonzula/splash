@@ -23,7 +23,7 @@ class ActionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var intrinsicContentSize: CGSize {return CGSize(width: 710/2, height: 335/2)}
+    override var intrinsicContentSize: CGSize {return CGSize(width: 300, height: 335/2)}
 
     override func draw(_ rect: CGRect) {
         drawTopRect()
@@ -32,6 +32,8 @@ class ActionView: UIView {
 
         drawTitle()
         drawText()
+
+        drawGear()
     }
 
     private func drawTopRect() {
@@ -68,7 +70,7 @@ class ActionView: UIView {
             .font: UIFont.systemFont(ofSize: 16, weight: .regular),
             .foregroundColor: UIColor.black
             ])
-        text.draw(at: CGPoint(x: 44, y: 15))
+        text.draw(at: CGPoint(x: 44, y: 14))
     }
 
     private func drawText() {
@@ -77,5 +79,19 @@ class ActionView: UIView {
             .foregroundColor: UIColor.black
             ])
         text.draw(at: CGPoint(x: 16, y: 57))
+    }
+
+    private func drawGear() {
+        var rect = CGRect(x: 8,
+                          y: 8,
+                          width: 29,
+                          height: 29)
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: 7)
+        UIColor(white: 141/255, alpha: 1.0).setFill()
+        path.fill()
+
+        rect = rect.insetBy(dx: 3, dy: 3)
+        let gear = #imageLiteral(resourceName: "gear")
+        gear.draw(in: rect)
     }
 }
