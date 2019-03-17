@@ -102,7 +102,16 @@ class ViewController: UIDocumentBrowserViewController {
     // MARK: - User Interaction
 
     @objc func presentSettings(sender: UIBarButtonItem?) {
-        self.present(SettingsNavigationController(), animated: true, completion: nil)
+        let viewController = SettingsNavigationController()
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            viewController.modalPresentationStyle = .popover
+            viewController.popoverPresentationController?.barButtonItem = sender
+            viewController.popoverPresentationController?.permittedArrowDirections = .any
+            viewController.popoverPresentationController?.canOverlapSourceViewRect = false
+            self.present(viewController, animated: true, completion: nil)
+        } else {
+            self.present(viewController, animated: true, completion: nil)
+        }
     }
 }
 

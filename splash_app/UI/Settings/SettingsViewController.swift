@@ -181,7 +181,15 @@ class SettingsViewController: UITableViewController {
     }
 
     func presentOnboard() {
-        (navigationController ?? self).present(OnboardViewController(), animated: true, completion: nil)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            dismiss(animated: true) {
+                (UIApplication.shared.delegate as? AppDelegate)?.mainViewController.present(OnboardViewController(),
+                                                                                            animated: true,
+                                                                                            completion: nil)
+            }
+        } else {
+            (navigationController ?? self).present(OnboardViewController(), animated: true, completion: nil)
+        }
     }
 
     func deselectAllRows(animated: Bool) {
