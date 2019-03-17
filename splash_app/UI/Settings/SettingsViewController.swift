@@ -29,6 +29,10 @@ protocol CellConfigurator {
     func action(`for` indexPath: IndexPath) -> ((SettingsViewController) -> Void)?
 }
 
+protocol AppearanceAdjustable {
+    func setupAppearance()
+}
+
 class SettingsViewController: UITableViewController {
     struct Section {
         let title: String?
@@ -43,6 +47,8 @@ class SettingsViewController: UITableViewController {
             ])
     ]
 
+    var observers = [Any]()
+
     init() {
         super.init(style: .grouped)
         tableView.rowHeight = 44
@@ -54,6 +60,28 @@ class SettingsViewController: UITableViewController {
     }
 
     required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        observers.append(  // swiftlint:disable:next discarded_notification_center_observer
+            NotificationCenter.default.addObserver(forName: .themeChanged,
+                                                   object: nil,
+                                                   queue: nil,
+                                                   using: { [weak self] _ in
+                                                    self?.setupAppearance()
+            })
+        )
+        setupAppearance()
+    }
+
+    private func setupAppearance() {
+        let theme = ThemeManager.shared.theme
+        view.backgroundColor = theme.tableViewBackgroundColor
+        tableView.visibleCells
+            .compactMap {$0 as? AppearanceAdjustable}
+            .forEach {$0.setupAppearance()}
+    }
 
     private func section(at index: Int) -> Section {
         return items[index]
@@ -77,6 +105,12 @@ class SettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.section(at: section).title
+    }
+
+    override func tableView(_ tableView: UITableView,
+                            willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
+        (cell as? AppearanceAdjustable)?.setupAppearance()
     }
 }
 

@@ -54,3 +54,11 @@ extension SettingsViewController {
         }
     }
 }
+
+extension SettingsViewController.ThemeCell: AppearanceAdjustable {
+    func setupAppearance() {
+        let theme = ThemeManager.shared.theme
+        backgroundColor = theme.tableViewCellBackgroundColor
+        label.textColor = theme.textColor
+    }
+}

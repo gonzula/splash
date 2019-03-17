@@ -45,6 +45,20 @@ extension ThemeManager {
             }
         }
 
+        var tableViewBackgroundColor: UIColor {
+            switch self {
+            case .light: return UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1.0)
+            case .dark: return self.backgroundColor
+            }
+        }
+
+        var tableViewCellBackgroundColor: UIColor {
+            switch self {
+            case .light: return .white
+            case .dark: return .black
+            }
+        }
+
         var statusBarStyle: UIStatusBarStyle {
             switch self {
             case .light: return .default
