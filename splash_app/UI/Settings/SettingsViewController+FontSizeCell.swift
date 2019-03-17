@@ -1,5 +1,5 @@
 //
-//  SettingsViewController+ThemeCell.swift
+//  SettingsViewController+FontSizeCell.swift
 //  splash
 //
 //  Created by Gonzo Fialho on 17/03/19.

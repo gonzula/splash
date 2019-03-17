@@ -40,6 +40,10 @@ class SettingsViewController: UITableViewController {
     }
 
     let items: [Section] = [
+        Section(title: "Resources",
+                rows: [
+                    Link(name: "GitHub repo", url: URL(string: "https://github.com/gonzula/splash")!)
+            ]),
         Section(title: "Appearance Settings",
                 rows: [
                     Theme(),
@@ -100,6 +104,10 @@ class SettingsViewController: UITableViewController {
         return section(at: indexPath.section).rows[indexPath.row]
     }
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return self.items.count
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.section(at: section).rows.count
     }
@@ -120,6 +128,10 @@ class SettingsViewController: UITableViewController {
                             willDisplay cell: UITableViewCell,
                             forRowAt indexPath: IndexPath) {
         (cell as? AppearanceAdjustable)?.setupAppearance()
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.item(at: indexPath).action(for: indexPath)?(self)
     }
 
     // MARK: - User Interaction

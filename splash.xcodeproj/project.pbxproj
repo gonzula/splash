@@ -29,6 +29,7 @@
 		9F35081F223EB0D700260B89 /* SettingsViewController+ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */; };
 		9F350821223EB1D400260B89 /* ThemeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F350820223EB1D400260B89 /* ThemeControl.swift */; };
 		9F350823223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F350822223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift */; };
+		9F350825223EC0F700260B89 /* SettingsViewController+Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F350824223EC0F700260B89 /* SettingsViewController+Link.swift */; };
 		9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518975222ABC0A0054A381 /* AppDelegate.swift */; };
 		9F518978222ABC0A0054A381 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518977222ABC0A0054A381 /* ViewController.swift */; };
 		9F51897D222ABC0A0054A381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F51897C222ABC0A0054A381 /* Assets.xcassets */; };
@@ -123,6 +124,7 @@
 		9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+ThemeCell.swift"; sourceTree = "<group>"; };
 		9F350820223EB1D400260B89 /* ThemeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeControl.swift; sourceTree = "<group>"; };
 		9F350822223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+FontSizeCell.swift"; sourceTree = "<group>"; };
+		9F350824223EC0F700260B89 /* SettingsViewController+Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Link.swift"; sourceTree = "<group>"; };
 		9F518972222ABC0A0054A381 /* splash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F518975222ABC0A0054A381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F518977222ABC0A0054A381 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */,
 				9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */,
 				9F350822223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift */,
+				9F350824223EC0F700260B89 /* SettingsViewController+Link.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F3507FC223E822000260B89 /* BrowserDelegate.swift in Sources */,
+				9F350825223EC0F700260B89 /* SettingsViewController+Link.swift in Sources */,
 				9F2603AB223D596300C337F5 /* String+Utils.swift in Sources */,
 				9FBA02DB222BFCE8001D5C4D /* htable.c in Sources */,
 				9F2603A7223C894B00C337F5 /* NSLayoutConstraint+Utils.swift in Sources */,
