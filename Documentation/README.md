@@ -14,6 +14,8 @@ ShowResult("Hello World")  # strings can be surrounded by " or '
 
 As you can see, comments are preeceeded with the hash `#` character.
 
+## Data Types
+
 ### Strings
 
 Strings are a sequence of characters that represent text. You can insert them in the middle of your code by puting the characters inside single or double quotes.
@@ -35,3 +37,31 @@ The other option you have is to [escape](https://en.wikipedia.org/wiki/Escape_ch
 ```python
 'String with a single \' quote inside it'
 ```
+
+Strings can also be multiline
+
+```python
+'This is the first line
+This is the second
+This is the third'  # Syntax coloring will not work here, but will work fine in the splash editor.
+```
+
+This will result in the following shortcut
+
+![Multi line string](assets/multi_line_string.png)
+
+#### Ask text from the user
+
+To ask from the user you can use the `AskText()` function
+
+```python
+AskText("What's your name?")
+```
+
+produces:
+
+
+### Numbers
+
+To input numbers you just type them.
+Here are some examples.
