@@ -74,3 +74,24 @@ Here are some examples.
 ```
 
 ![numbers](assets/numbers.png)
+
+You can also perform math operations with numbers
+
+The available operators are: 
+
+```python
+1 + 2    # sum
+3 - 4    # subtraction
+5 * 6    # multiplication
+7 / 8    # division
+9 % 10   #  modulus operation
+11 ^ 12  # 11 to the 12th power
+```
+
+And you can combine them:
+
+```python
+1 + 2 - 3 * 4 / 5 ^ 6  # will result in 2.999232
+```
+
+As you can see, operator precedence is respected as usual.
