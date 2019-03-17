@@ -90,7 +90,7 @@ extension ThemeManager {
         var tintColor: UIColor {
             switch self {
             case .light: return UIColor(hex: 0x007aff)
-            case .dark: return UIColor(red: 218/255, green: 102/255, blue: 150/255, alpha: 1.0)
+            case .dark: return UIColor(hex: 0xE8670C)
             }
         }
 
