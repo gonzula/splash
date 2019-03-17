@@ -9,12 +9,11 @@
 import UIKit
 
 extension SettingsViewController {
-    struct Theme: CellConfigurator {
-        var cellIdentifier: String {return "theme cell"}
-        var cellClass: UITableViewCell.Type {return ThemeCell.self}
+    struct FontSize: CellConfigurator {
+        var cellIdentifier: String {return "font size cell"}
+        var cellClass: UITableViewCell.Type {return FontSizeCell.self}
 
         func configure(_ cell: UITableViewCell, at indexPath: IndexPath, in viewController: SettingsViewController) {
-
         }
 
         func action(for indexPath: IndexPath) -> ((SettingsViewController) -> Void)? {return nil}
@@ -22,9 +21,9 @@ extension SettingsViewController {
 }
 
 extension SettingsViewController {
-    class ThemeCell: UITableViewCell {
+    class FontSizeCell: UITableViewCell {
         let label = UILabel()
-        let themeControl = ThemeControl()
+        let stepper = UIStepper()
 
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,26 +35,26 @@ extension SettingsViewController {
 
         private func setup() {
             setupLabel()
-            setupThemeControl()
+            setupStepper()
         }
 
         private func setupLabel() {
             label.setupForAutoLayout(in: contentView)
             label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).activate()
             label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).activate()
-            label.text = "Theme:"
+            label.text = "Code font size:"
         }
 
-        private func setupThemeControl() {
-            themeControl.setupForAutoLayout(in: contentView)
+        private func setupStepper() {
+            stepper.setupForAutoLayout(in: contentView)
 
-            themeControl.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).activate()
-            themeControl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).activate()
+            stepper.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).activate()
+            stepper.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).activate()
         }
     }
 }
 
-extension SettingsViewController.ThemeCell: AppearanceAdjustable {
+extension SettingsViewController.FontSizeCell: AppearanceAdjustable {
     func setupAppearance() {
         let theme = ThemeManager.shared.theme
         backgroundColor = theme.tableViewCellBackgroundColor

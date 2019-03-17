@@ -113,16 +113,3 @@ class SettingsViewController: UITableViewController {
         (cell as? AppearanceAdjustable)?.setupAppearance()
     }
 }
-
-extension SettingsViewController {
-    struct FontSize: CellConfigurator {
-        var cellIdentifier: String {return "font size cell"}
-        var cellClass: UITableViewCell.Type {return UITableViewCell.self}
-
-        func configure(_ cell: UITableViewCell, at indexPath: IndexPath, in viewController: SettingsViewController) {
-
-        }
-
-        func action(for indexPath: IndexPath) -> ((SettingsViewController) -> Void)? {return nil}
-    }
-}
