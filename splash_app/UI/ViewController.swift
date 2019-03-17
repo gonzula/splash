@@ -57,6 +57,19 @@ class ViewController: UIDocumentBrowserViewController {
     }
 
     func presentEditor(withURL url: URL) {
+        if let presentedViewController = presentedViewController {
+            if let editor = presentedViewController as? EditorNavigationController {
+                editor.close {
+                    self.presentEditor(withURL: url)
+                }
+            } else {
+                presentedViewController.dismiss(animated: true) {
+                    self.presentEditor(withURL: url)
+                }
+            }
+            return
+        }
+
         let editorViewController = EditorNavigationController()
         let document = SplashDocument(fileURL: url)
 
@@ -69,6 +82,8 @@ class ViewController: UIDocumentBrowserViewController {
         editorViewController.set(document) {
             self.present(editorViewController, animated: true, completion: nil)
         }
+
+        print(Thread.isMainThread)
     }
 
     @objc

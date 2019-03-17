@@ -31,6 +31,15 @@ class EditorNavigationController: UINavigationController {
 
         editorViewController.set(document, completion: completion)
     }
+
+    func close(completion: (() -> Void)?) {
+        guard let editorViewController = viewControllers.first as? EditorViewController else {
+            completion?()
+            return
+        }
+
+        editorViewController.closeEditor(completion: completion)
+    }
 }
 
 class EditorViewController: UIViewController {
@@ -145,8 +154,12 @@ class EditorViewController: UIViewController {
     // MARK: - User Interaction
 
     @objc func doneTouched(sender: UIBarButtonItem) {
+        closeEditor(completion: nil)
+    }
+
+    @objc func closeEditor(completion: (() -> Void)?) {
         guard let document = splashDocument else {
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: completion)
             return
         }
         document.string = (textView.text ?? "")
@@ -155,7 +168,7 @@ class EditorViewController: UIViewController {
                         if completed {
                             document.close { success in
                                 if success {
-                                    self.dismiss(animated: true, completion: nil)
+                                    self.dismiss(animated: true, completion: completion)
                                 }
                             }
                         }
