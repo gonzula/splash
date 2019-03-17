@@ -46,7 +46,7 @@ class ViewController: UIDocumentBrowserViewController {
 
         if UserDefaults.standard.alreadyShowedOnboard1 == false {
             present(OnboardViewController(), animated: animated)
-            perform(#selector(showExamplesInRecents(_:completion:)), with: nil, afterDelay: 0.5)
+            perform(#selector(showExamplesDelayed), with: nil, afterDelay: 0.5)
         }
     }
 
@@ -72,6 +72,10 @@ class ViewController: UIDocumentBrowserViewController {
     }
 
     @objc
+    func showExamplesDelayed() {
+        showExamplesInRecents()
+    }
+
     func showExamplesInRecents(_ fileNames: [String]? = nil, completion: (() -> Void)? = nil) {
         let fileNames = fileNames ?? ["Age", "Leap Year", "Quadratic Solver"].map {$0 + ".splash"}
         guard let fileName = fileNames.first else {
