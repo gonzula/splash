@@ -30,7 +30,7 @@ class ViewController: UIDocumentBrowserViewController {
 
         if UserDefaults.standard.alreadyShowedOnboard1 == false {
             present(OnboardViewController(), animated: animated)
-            showExamplesInRecents()
+            perform(#selector(showExamplesInRecents(_:)), with: nil, afterDelay: 0.5)
         }
     }
 
@@ -49,6 +49,7 @@ class ViewController: UIDocumentBrowserViewController {
         }
     }
 
+    @objc
     fileprivate func showExamplesInRecents(_ fileNames: [String]? = nil) {
         let fileNames = fileNames ?? ["Age", "Leap Year", "Quadratic Solver"].map {$0 + ".splash"}
         guard let fileName = fileNames.first else {return}
@@ -57,9 +58,15 @@ class ViewController: UIDocumentBrowserViewController {
         let examplesPath = (documentsPath as NSString).appendingPathComponent("Examples")
         let fullFileName = (examplesPath as NSString).appendingPathComponent(fileName)
         let url = URL(fileURLWithPath: fullFileName)
+
+        let data = Bundle.main.dataFromResource(fileName: fileName)
+        try! data.write(to: URL(fileURLWithPath: fullFileName))  // swiftlint:disable:this force_try
+
         revealDocument(at: url,
                        importIfNeeded: false) { (_, _) in
-                        self.showExamplesInRecents(remainingFiles)
+                        DispatchQueue.main.async {
+                            self.showExamplesInRecents(remainingFiles)
+                        }
         }
     }
 
