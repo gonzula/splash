@@ -35,6 +35,7 @@ extension SettingsViewController {
         required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
         private func setup() {
+            selectionStyle = .none
             setupLabel()
             setupStepper()
             setupValueLabel()
