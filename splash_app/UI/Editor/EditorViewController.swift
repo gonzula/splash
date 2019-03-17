@@ -71,7 +71,6 @@ class EditorViewController: UIViewController {
     private func setupAppearance() {
         let theme = ThemeManager.shared.theme
         navigationController?.navigationBar.barStyle = theme.navigationBarStyle
-        navigationController?.view.tintColor = theme.tintColor
     }
 
     private func setupNavigationBarItems() {

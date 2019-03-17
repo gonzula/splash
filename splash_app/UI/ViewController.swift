@@ -54,7 +54,6 @@ class ViewController: UIDocumentBrowserViewController {
         let theme = ThemeManager.shared.theme
 
         browserUserInterfaceStyle = theme.browserUserInterfaceStyle
-        view.tintColor = theme.tintColor
     }
 
     func presentEditor(withURL url: URL) {
