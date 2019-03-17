@@ -22,10 +22,8 @@ extension SettingsViewController {
         }
 
         func action(for indexPath: IndexPath) -> ((SettingsViewController) -> Void)? {
-            return { _ in
-                UIApplication.shared.open(self.url,
-                                          options: [:],
-                                          completionHandler: nil)
+            return { viewController in
+                viewController.openURL(self.url)
             }
         }
     }

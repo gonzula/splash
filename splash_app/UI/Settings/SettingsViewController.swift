@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class SettingsNavigationController: UINavigationController {
 
@@ -134,10 +135,25 @@ class SettingsViewController: UITableViewController {
         self.item(at: indexPath).action(for: indexPath)?(self)
     }
 
+    func openURL(_ url: URL) {
+        let viewController = SFSafariViewController(url: url)
+
+        viewController.delegate = self
+        viewController.modalTransitionStyle = .coverVertical
+
+        (navigationController ?? self).present(viewController, animated: true, completion: nil)
+    }
+
     // MARK: - User Interaction
 
     @objc
     func doneTouched() {
         dismiss(animated: true)
+    }
+}
+
+extension SettingsViewController: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }
