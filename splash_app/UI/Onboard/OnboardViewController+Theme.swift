@@ -25,28 +25,12 @@ extension OnboardViewController {
             view.endEditing(true)
             super.touchesBegan(touches, with: event)
         }
-
-        // MARK: - User Interaction
-
-        @objc
-        func changeTheme(sender: UISegmentedControl) {
-            view.endEditing(true)
-
-            let themes = ThemeManager.Theme.allCases
-            let themesRange = themes.startIndex..<themes.endIndex
-            let index = sender.selectedSegmentIndex
-            guard themesRange.contains(index) else {return}
-            let theme = themes[index]
-            ThemeManager.shared.theme = theme
-        }
     }
 }
 
 extension OnboardViewController {
     class ThemeView: UIView {
-
-        let themes = ThemeManager.Theme.allCases
-        let segmentedControl = UISegmentedControl()
+        let segmentedControl = ThemeControl()
 
         let lightEditor = EditorView()
         let darkEditor = EditorView()
@@ -67,20 +51,6 @@ extension OnboardViewController {
 
         private func setupSegmentedControl() {
             segmentedControl.setupForAutoLayout(in: self)
-
-            themes
-                .enumerated()
-                .forEach {segmentedControl.insertSegment(withTitle: $0.1.humanName,
-                                                         at: $0.0,
-                                                         animated: false)}
-
-            let selectedTheme = UserDefaults.standard.lastUsedTheme
-            let index = themes.firstIndex(of: selectedTheme)
-            segmentedControl.selectedSegmentIndex = index ?? -1
-
-            segmentedControl.addTarget(nil,
-                                       action: #selector(ThemeViewController.changeTheme(sender:)),
-                                       for: .valueChanged)
 
             segmentedControl.centerXAnchor.constraint(equalTo: centerXAnchor).activate()
             segmentedControl.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor,

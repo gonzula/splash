@@ -26,6 +26,7 @@
 		9F336405222B3D6700E9726E /* splash.lm in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F9222AC54E00220811 /* splash.lm */; };
 		9F3507FC223E822000260B89 /* BrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3507FB223E822000260B89 /* BrowserDelegate.swift */; };
 		9F3507FE223EA7DC00260B89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */; };
+		9F350821223EB1D400260B89 /* ThemeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F350820223EB1D400260B89 /* ThemeControl.swift */; };
 		9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518975222ABC0A0054A381 /* AppDelegate.swift */; };
 		9F518978222ABC0A0054A381 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518977222ABC0A0054A381 /* ViewController.swift */; };
 		9F51897D222ABC0A0054A381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F51897C222ABC0A0054A381 /* Assets.xcassets */; };
@@ -117,6 +118,7 @@
 		9F2603AA223D596300C337F5 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		9F3507FB223E822000260B89 /* BrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserDelegate.swift; sourceTree = "<group>"; };
 		9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9F350820223EB1D400260B89 /* ThemeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeControl.swift; sourceTree = "<group>"; };
 		9F518972222ABC0A0054A381 /* splash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F518975222ABC0A0054A381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F518977222ABC0A0054A381 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 		9F6C462C222C7D1900BD8625 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				9F350820223EB1D400260B89 /* ThemeControl.swift */,
 				9F3507FB223E822000260B89 /* BrowserDelegate.swift */,
 				9FC2D2E1223DA8AC00AAB282 /* ActionView.swift */,
 				9F2603AA223D596300C337F5 /* String+Utils.swift */,
@@ -537,6 +540,7 @@
 				9FBA02DB222BFCE8001D5C4D /* htable.c in Sources */,
 				9F2603A7223C894B00C337F5 /* NSLayoutConstraint+Utils.swift in Sources */,
 				9F6C4633222C843900BD8625 /* EditorViewController.swift in Sources */,
+				9F350821223EB1D400260B89 /* ThemeControl.swift in Sources */,
 				9FBA02DC222BFCE8001D5C4D /* refcnt.c in Sources */,
 				9FC2D2E2223DA8AC00AAB282 /* ActionView.swift in Sources */,
 				9FBA02DA222BFCE8001D5C4D /* list.c in Sources */,
