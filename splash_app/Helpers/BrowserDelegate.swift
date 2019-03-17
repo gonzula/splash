@@ -63,9 +63,16 @@ class BrowserDelegate: NSObject, UIDocumentBrowserViewControllerDelegate {
     func documentBrowser(_ controller: UIDocumentBrowserViewController,
                          failedToImportDocumentAt documentURL: URL,
                          error: Error?) {
-        guard let error = error else {return}
         guard let viewController = controller as? ViewController else {return}
-        viewController.present(UIAlertController(error: error),
+        let alertController: UIAlertController
+        if let error = error {
+            alertController = UIAlertController(error: error)
+        } else {
+            alertController = UIAlertController(title: "Error",
+                                                message: "Unknown error occurred.",
+                                                preferredStyle: .alert)
+        }
+        viewController.present(alertController,
                                animated: true,
                                completion: nil)
     }
