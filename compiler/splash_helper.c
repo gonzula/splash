@@ -62,7 +62,15 @@ void
 append_func_call(Operand *stack, char100 name, Operand parameter) {
     Action *action = NULL;
     if (strcmp(name.value, "AskNumber") == 0) {
-        action = action_create_ask_number(parameter);
+        action = action_create_ask_input(parameter, "Number");
+
+        (*stack).type = op_magic_variable;
+        char name[] = "Ask for Input";
+        strcpy((*stack).name.value, name);
+        strcpy((*stack).uuid, action->uuid);
+        *stack = (*stack);
+    } else if (strcmp(name.value, "AskText") == 0) {
+        action = action_create_ask_input(parameter, "Text");
 
         (*stack).type = op_magic_variable;
         char name[] = "Ask for Input";

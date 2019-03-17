@@ -369,7 +369,7 @@ action_create_comp(Comparison comp) {
 }
 
 Action *
-action_create_ask_number(Operand op) {
+action_create_ask_input(Operand op, char *input_type) {
     Action *action = action_create(WF_ask);
 
     if (op.type == op_string) {
@@ -396,7 +396,7 @@ action_create_ask_number(Operand op) {
     Serializable *s2 = serializable_create_str(empty);
     htable_set(action->parameters, "WFAskActionDefaultAnswer", s2);
 
-    String *number = str_create("Number");
+    String *number = str_create(input_type);
     Serializable *s3 = serializable_create_str(number);
     htable_set(action->parameters, "WFInputType", s3);
 
