@@ -51,7 +51,9 @@ class SettingsViewController: UITableViewController {
                     Link(name: "GitHub Repository",
                          url: URL(string: "https://github.com/gonzula/splash")!),
                     CustomAction(name: "Restore Examples",
-                                 action: {$0.askToRestoreExamples()})
+                                 action: {$0.askToRestoreExamples()}),
+                    CustomAction(name: "Show Welcome Message",
+                                 action: {$0.presentOnboard()})
             ])
     ]
 
@@ -176,6 +178,10 @@ class SettingsViewController: UITableViewController {
         (UIApplication.shared.delegate as? AppDelegate)?.mainViewController.showExamplesInRecents {
             self.dismiss(animated: true, completion: nil)
         }
+    }
+
+    func presentOnboard() {
+        (navigationController ?? self).present(OnboardViewController(), animated: true, completion: nil)
     }
 
     func deselectAllRows(animated: Bool) {
