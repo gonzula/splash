@@ -59,9 +59,18 @@ AskText("What's your name?")
 ```
 
 produces:
-
+![Ask Text action](assets/ask_text.png)
 
 ### Numbers
 
 To input numbers you just type them.
 Here are some examples.
+
+```python
+3.1415  # always use the . character as decimal separator
+2
+-3
+0
+```
+
+![numbers](assets/numbers.png)
