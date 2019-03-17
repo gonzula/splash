@@ -16,8 +16,8 @@ extension OnboardViewController {
 
             title = "Splash is completely open source"
             caption = """
-            So, if you find a bug, have a feature request, want to know how the development is going or want to \
-            contribute to the code you can visit the project page on GitHub.
+            So, if you find a bug, have a feature request, want to know what new features are being developed or want \
+            to contribute to the project you can visit the project page on GitHub.
             """
 
             let githubView = GitHubView()
