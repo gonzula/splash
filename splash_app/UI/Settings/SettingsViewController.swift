@@ -53,7 +53,13 @@ class SettingsViewController: UITableViewController {
                     CustomAction(name: "Restore Examples",
                                  action: {$0.askToRestoreExamples()}),
                     CustomAction(name: "Show Welcome Message",
-                                 action: {$0.presentOnboard()})
+                                 action: {$0.presentOnboard()}),
+                    Link(name: "Repor an issue",
+                         url: URL(string: "https://github.com/gonzula/splash/issues/new")!)
+            ]),
+        Section(title: nil, rows: [
+            CustomAction(name: "App Version: \(Bundle.main.fullVersion)",
+                action: {$0.deselectAllRows(animated: true)})
             ])
     ]
 
