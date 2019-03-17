@@ -90,7 +90,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
     }
 }
 
-void
+int
 operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) {
     DEBUGPRINT("optimizing %s %c %s\n", op1.value.value, operator, op2.value.value);
     Operand new_stack;
@@ -111,11 +111,14 @@ operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) 
         case '*': result = v1 * v2; break;
         case '/': result = v1 / v2; break;
         case '^': result = pow(v1, v2); break;
+        default: return 1;
     }
     DEBUGPRINT("ret = %lf\n", result);
 
     sprintf(new_stack.value.value, "%lf", result);
     (*stack) = new_stack;
+
+    return 0;
 }
 
 int
@@ -133,8 +136,9 @@ operator_is_commutative(char operator) {
 void
 append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     if (op1.type == op_number && op2.type == op_number) { // can optimize
-        operation_optimization(stack, operator, op1, op2);
-        return;
+        if (!operation_optimization(stack, operator, op1, op2)) {
+            return;
+        }
     }
 
     if (operator_is_commutative(operator) && strcmp(current_scope->last_uuid, op2.uuid) == 0) {
