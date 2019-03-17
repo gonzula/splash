@@ -18,10 +18,10 @@ class ViewController: UIDocumentBrowserViewController {
     init() {
         super.init(forOpeningFilesWithContentTypes: ["ninja.gonzo.splash.script"])
         delegate = browserDelegate
-        let button = UIBarButtonItem(title: "Help",
+        let button = UIBarButtonItem(title: "Settings",
                                      style: .plain,
                                      target: self,
-                                     action: #selector(presentInfo(sender:)))
+                                     action: #selector(presentSettings(sender:)))
         additionalLeadingNavigationBarButtonItems.append(button)
     }
 
@@ -94,8 +94,8 @@ class ViewController: UIDocumentBrowserViewController {
 
     // MARK: - User Interaction
 
-    @objc func presentInfo(sender: UIBarButtonItem?) {
-        self.present(HelpNavigationController(), animated: true, completion: nil)
+    @objc func presentSettings(sender: UIBarButtonItem?) {
+        self.present(SettingsNavigationController(), animated: true, completion: nil)
     }
 }
 
