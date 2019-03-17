@@ -62,9 +62,6 @@ class OnboardViewController: PageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewControllers
-            .compactMap {$0 as? GitHubViewController}
-            .forEach {_ = $0.view} // load view to load github page
         observers.append(  // swiftlint:disable:next discarded_notification_center_observer
             NotificationCenter.default.addObserver(forName: .themeChanged,
                                                    object: nil,

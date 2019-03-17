@@ -11,6 +11,9 @@ import WebKit
 
 extension OnboardViewController {
     class GitHubViewController: InsidePageViewController {
+        let githubView = GitHubView()
+        var isFirstViewDidAppear = true
+
         override func loadView() {
             super.loadView()
 
@@ -20,9 +23,18 @@ extension OnboardViewController {
             to contribute to the project you can visit the project page on GitHub.
             """
 
-            let githubView = GitHubView()
             githubView.setupForAutoLayout(in: contentView)
             githubView.pinToSuperview()
+        }
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+
+            guard isFirstViewDidAppear else {return}
+            isFirstViewDidAppear = false
+
+            // https://stackoverflow.com/a/48666542/1186116
+            githubView.webView.evaluateJavaScript("window.scrollTo(0,0)", completionHandler: nil)
         }
     }
 }
