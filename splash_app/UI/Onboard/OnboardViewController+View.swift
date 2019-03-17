@@ -41,9 +41,7 @@ extension OnboardViewController {
             setup()
         }
 
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+        required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
         private func setup() {
             setupBottomView()
@@ -80,9 +78,8 @@ extension OnboardViewController {
                                      action: #selector(OnboardViewController.advance),
                                      for: .touchUpInside)
 
+            continueButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
             continueButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).activate()
-            continueButton.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor,
-                                                 constant: 20).setPriority(999).activate()
             continueButton.bottomAnchor.constraint(equalTo: pageControl.topAnchor, constant: -4).activate()
             continueButton.topAnchor.constraint(equalTo: bottomView.contentView.topAnchor,
                                                 constant: 8).activate()

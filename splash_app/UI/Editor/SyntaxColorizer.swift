@@ -60,7 +60,7 @@ class SyntaxColorizer {
                  .identifier,
                  .number,
                  .regular,
-                 .string: break
+                 .string: attributes[.font] = UIFont(name: "Menlo", size: UIFont.systemFontSize)!
             }
 
             return attributes

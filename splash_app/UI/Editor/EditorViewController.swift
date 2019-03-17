@@ -24,9 +24,7 @@ class EditorNavigationController: UINavigationController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
     func set(_ document: SplashDocument, completion: @escaping () -> Void) {
         guard let editorViewController = viewControllers.first as? EditorViewController else {return}
@@ -56,8 +54,8 @@ class EditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.barStyle = ThemeManager.shared.theme.navigationBarStyle
         setupObservers()
+        setupAppearance()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -68,6 +66,12 @@ class EditorViewController: UIViewController {
 
     deinit {
         observers.forEach(NotificationCenter.default.removeObserver)
+    }
+
+    private func setupAppearance() {
+        let theme = ThemeManager.shared.theme
+        navigationController?.navigationBar.barStyle = theme.navigationBarStyle
+        navigationController?.view.tintColor = theme.tintColor
     }
 
     private func setupNavigationBarItems() {
@@ -93,7 +97,7 @@ class EditorViewController: UIViewController {
                 forName: .themeChanged,
                 object: nil,
                 queue: nil) { [weak self] _ in
-                    self?.navigationController?.navigationBar.barStyle = ThemeManager.shared.theme.navigationBarStyle
+                    self?.setupAppearance()
         })
     }
 

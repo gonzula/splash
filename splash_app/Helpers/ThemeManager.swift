@@ -30,6 +30,13 @@ extension ThemeManager {
             return rawValue.capitalizingFirstLetter()
         }
 
+        var textColor: UIColor {
+            switch self {
+            case .light: return .black
+            case .dark: return .white
+            }
+        }
+
         var backgroundColor: UIColor {
             switch self {
             case .light: return .white
@@ -37,10 +44,31 @@ extension ThemeManager {
             }
         }
 
-        var other: ThemeManager.Theme {
+        var statusBarStyle: UIStatusBarStyle {
             switch self {
-            case .light: return .dark
-            case .dark: return .light
+            case .light: return .default
+            case .dark: return .lightContent
+            }
+        }
+
+        var blurEffect: UIBlurEffect {
+            switch self {
+            case .light: return UIBlurEffect(style: .extraLight)
+            case .dark: return UIBlurEffect(style: .dark)
+            }
+        }
+
+        var pageControlCurrentPageTintColor: UIColor {
+            switch self {
+            case .light: return .black
+            case .dark: return .white
+            }
+        }
+
+        var pageControlTintColor: UIColor {
+            switch self {
+            case .light: return .lightGray
+            case .dark: return .darkGray//UIColor(hex: 0xcccccc)
             }
         }
 
@@ -55,6 +83,27 @@ extension ThemeManager {
             switch self {
             case .light: return .default
             case .dark: return .black
+            }
+        }
+
+        var tintColor: UIColor {
+            switch self {
+            case .light: return UIColor(hex: 0x007aff)
+            case .dark: return UIColor(red: 218/255, green: 102/255, blue: 150/255, alpha: 1.0)
+            }
+        }
+
+        var browserUserInterfaceStyle: UIDocumentBrowserViewController.BrowserUserInterfaceStyle {
+            switch self {
+            case .light: return .white
+            case .dark: return .dark
+            }
+        }
+
+        var other: ThemeManager.Theme {
+            switch self {
+            case .light: return .dark
+            case .dark: return .light
             }
         }
     }

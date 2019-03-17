@@ -9,14 +9,35 @@
 import Foundation
 
 extension UserDefaults.Domain {
-    static let investor = UserDefaults.Domain(name: "splash_app")
+    static let splashApp = UserDefaults.Domain(name: "splash_app")
 }
 
 extension UserDefaults.Key {
-    static let lastUsedTheme = UserDefaults.Key(domain: .investor, keyName: "current theme")
+    static let lastUsedTheme = UserDefaults.Key(domain: .splashApp, keyName: "current theme")
+    static let alreadyShowedOnboard1 = UserDefaults.Key(domain: .splashApp, keyName: "already showed onboard 1")
+    static let alreadyInstalledExamples1 = UserDefaults.Key(domain: .splashApp, keyName: "already installed examples 1")
 }
 
 extension UserDefaults {
+
+    var alreadyInstalledExamples1: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: .alreadyInstalledExamples1)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: .alreadyInstalledExamples1)
+        }
+    }
+
+    var alreadyShowedOnboard1: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: .alreadyShowedOnboard1)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: .alreadyShowedOnboard1)
+        }
+    }
+
     var lastUsedTheme: ThemeManager.Theme {
         get {
             guard let themeName = string(forKey: .lastUsedTheme),

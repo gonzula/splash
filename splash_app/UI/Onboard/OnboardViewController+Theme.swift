@@ -14,7 +14,7 @@ extension OnboardViewController {
             super.loadView()
 
             title = "One more thing…"
-            caption = "Please choose the appearence of the your app (you can change it later)."
+            caption = "Please choose the appearance of the your app (you can change it later)."
 
             let themeView = ThemeView()
             themeView.setupForAutoLayout(in: contentView)
@@ -57,9 +57,7 @@ extension OnboardViewController {
             setup()
         }
 
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+        required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
         private func setup() {
             setupSegmentedControl()

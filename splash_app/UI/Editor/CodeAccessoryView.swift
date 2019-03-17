@@ -154,9 +154,7 @@ class CodeAccessoryView: UIView {
         setup()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
     private func setup() {
         backgroundColor = UIColor(red: 209/255, green: 212/255, blue: 216/255, alpha: 1.0)
@@ -210,9 +208,7 @@ extension CodeAccessoryView {
             setup()
         }
 
-        required init?(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+        required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
         private func setup() {
             let attributedString = NSAttributedString(string: codeButtonKind.buttonTitle, attributes: [
