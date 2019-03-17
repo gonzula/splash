@@ -78,7 +78,7 @@ class OnboardViewController: PageViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        let bottomViewHeight = fixedView.bottomView.frame.height
+        let bottomViewHeight = fixedView.bottomView.frame.height - view.safeAreaInsets.bottom
         let safeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: bottomViewHeight, right: 0)
         viewControllers.forEach {$0.additionalSafeAreaInsets = safeAreaInsets}
     }
