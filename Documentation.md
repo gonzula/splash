@@ -1,1 +1,0 @@
-# Splash Documentation
