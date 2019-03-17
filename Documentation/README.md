@@ -95,3 +95,45 @@ And you can combine them:
 ```
 
 As you can see, operator precedence is respected as usual.
+
+## Ask numbers from the user
+
+To ask a number you can use the `AskNumber()` function
+
+```python
+AskNumber("How old are you?")
+```
+
+produces:
+
+![Ask number action](assets/ask_number.png)
+
+
+### Variables
+
+Variable names must start with a letter or a underscore `_` and can only contain `_`, letters and numbers.
+
+```python
+# Valid variable names
+_foo
+foo
+bar1
+fooBar_123
+foo_bar
+
+# Invalid variable names
+
+1foo
+foo-bar
+```
+
+To assign a value to a variable you can use `:=`
+
+```
+name := AskText("What's your name?")
+age := AskNumber("How old are you?")
+```
+
+produces:
+
+![variable attribution](assets/attribution.png)
