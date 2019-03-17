@@ -58,6 +58,7 @@ class EditorView: UITextView {
         self.colorizeText()
         self.backgroundColor = self.theme.backgroundColor
         self.keyboardAppearance = self.theme.keyboardAppearance
+        self.tintColor = self.theme.tintColor
     }
 
     func colorizeText() {
