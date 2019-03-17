@@ -1,5 +1,7 @@
 # Splash Documentation and Reference
 
+## Getting started
+
 Splash is in an early stage of development, so it support just a few actions.
 
 To give us some luck, let's begin with a classic Hello World.
@@ -14,9 +16,9 @@ ShowResult("Hello World")  # strings can be surrounded by " or '
 
 As you can see, comments are preeceeded with the hash `#` character.
 
-## Data Types
+Now let's dive in to data types
 
-### Strings
+## Strings
 
 Strings are a sequence of characters that represent text. You can insert them in the middle of your code by puting the characters inside single or double quotes.
 
@@ -50,7 +52,7 @@ This will result in the following shortcut
 
 ![Multi line string](assets/multi_line_string.png)
 
-#### Ask text from the user
+### Ask text from the user
 
 To ask from the user you can use the `AskText()` function
 
@@ -61,7 +63,7 @@ AskText("What's your name?")
 produces:
 ![Ask Text action](assets/ask_text.png)
 
-### Numbers
+## Numbers
 
 To input numbers you just type them.
 Here are some examples.
@@ -96,7 +98,7 @@ And you can combine them:
 
 As you can see, operator precedence is respected as usual.
 
-## Ask numbers from the user
+### Ask numbers from the user
 
 To ask a number you can use the `AskNumber()` function
 
@@ -109,7 +111,7 @@ produces:
 ![Ask number action](assets/ask_number.png)
 
 
-### Variables
+## Variables
 
 Variable names must start with a letter or a underscore `_` and can only contain `_`, letters and numbers.
 
@@ -137,3 +139,58 @@ age := AskNumber("How old are you?")
 produces:
 
 ![variable attribution](assets/attribution.png)
+
+
+### Conditionals and flow control
+
+Splash `if else` statements behave like in the most of programming languages.
+
+```
+age := AskNumber("How old are you?")
+
+if age < 12 {
+    ShowResult("Child")
+} else if age < 18 {
+    ShowResult("Teen")
+} else if age < 60 {
+    ShowResult("Adult")
+} else {
+    ShowResult("Elder")
+}
+```
+
+You can also have expressions in the middle of your comparisons
+
+```python
+year := AskNumber("Enter the year")
+
+if year % 4 > 0 {
+    leap := 0
+} else if year % 100 > 0 {
+    leap := 1
+} else if year % 400 > 0 {
+    leap := 0
+} else {
+    leap := 1
+}
+```
+
+To check for equality you use the `==` symbol
+
+```python
+a := AskNumber("a =")
+b := AskNumber("b =")
+c := AskNumber("c =")
+
+delta := b^2 - 4 * a * c
+
+if delta == 0 {
+	ShowResult("Both roots are equal")
+} else if delta < 0 {
+	ShowResult("No real roots")
+} else {
+	ShowResult("Equation have two distinct roots")
+}
+```
+
+At the moment, splash supports `<`, `>` and `==`
