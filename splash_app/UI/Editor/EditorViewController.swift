@@ -24,9 +24,7 @@ class EditorNavigationController: UINavigationController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
     func set(_ document: SplashDocument, completion: @escaping () -> Void) {
         guard let editorViewController = viewControllers.first as? EditorViewController else {return}

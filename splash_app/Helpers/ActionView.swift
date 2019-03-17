@@ -19,9 +19,7 @@ class ActionView: UIView {
         layer.shadowOpacity = 0.2
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
     override var intrinsicContentSize: CGSize {return CGSize(width: 300, height: 335/2)}
 

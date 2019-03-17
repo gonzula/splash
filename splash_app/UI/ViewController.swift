@@ -22,9 +22,7 @@ class ViewController: UIDocumentBrowserViewController {
         additionalLeadingNavigationBarButtonItems.append(button)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
 
     fileprivate func presentEditor(withURL url: URL) {
         let editorViewController = EditorNavigationController()
