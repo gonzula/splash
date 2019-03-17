@@ -7,10 +7,13 @@
 //
 
 import UIKit
-import WebKit
+import SafariServices
 
 extension OnboardViewController {
     class GitHubViewController: InsidePageViewController {
+        let githubView = UIView()
+        let safariVC = SFSafariViewController(url: URL(string: "https://github.com/gonzula/splash")!)
+
         override func loadView() {
             super.loadView()
 
@@ -20,39 +23,37 @@ extension OnboardViewController {
             to contribute to the project you can visit the project page on GitHub.
             """
 
-            let githubView = GitHubView()
             githubView.setupForAutoLayout(in: contentView)
             githubView.pinToSuperview()
-        }
-    }
-}
 
-extension OnboardViewController {
-    class GitHubView: UIView {
-        let webView = WKWebView()
-
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-
-            setup()
+            addChild(safariVC)
+            githubView.addSubview(safariVC.view)
+            safariVC.didMove(toParent: self)
         }
 
-        required init?(coder aDecoder: NSCoder) {fatalError("init(coder:) has not been implemented")}
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
 
-        private func setup() {
-            setupWebView()
+            safariVC.view.frame = githubView.bounds
+            removeView(ofClass: UINavigationBar.self, from: githubView)
+            removeView(ofClass: UIToolbar.self, from: githubView)
         }
 
-        fileprivate func setupWebView() {
-            webView.setupForAutoLayout(in: self)
-            webView.isOpaque = false
-            webView.backgroundColor = UIColor.clear
-            webView.scrollView.backgroundColor = UIColor.clear
+        @discardableResult
+        func removeView<T: UIView>(ofClass `class`: T.Type, from view: UIView) -> Bool {
+            if let view = view as? T {
+                print(view)
+                view.removeFromSuperview()
+                return true
+            }
 
-            let url = URL(string: "https://github.com/gonzula/splash")!
-            webView.load(URLRequest(url: url))
-
-            webView.pinToSuperview()
+            for subview in view.subviews {
+                let found = removeView(ofClass: T.self, from: subview)
+                if found {
+                    return true
+                }
+            }
+            return false
         }
     }
 }
