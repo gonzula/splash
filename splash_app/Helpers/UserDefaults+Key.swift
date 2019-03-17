@@ -22,7 +22,7 @@ public extension UserDefaults {
         public let keyName: String
 
         public var rawValue: String {
-            return "\(domain.name).\(keyName)"
+            return "(\(domain.name)).(\(keyName))"
         }
 
         public init(domain: Domain, keyName: String) {

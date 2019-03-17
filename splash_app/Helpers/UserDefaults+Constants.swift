@@ -6,19 +6,30 @@
 //  Copyright © 2019 Gonzo Fialho. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UserDefaults.Domain {
-    static let splashApp = UserDefaults.Domain(name: "splash_app")
+    static let splashApp = UserDefaults.Domain(name: "splash app")
 }
 
 extension UserDefaults.Key {
-    static let lastUsedTheme = UserDefaults.Key(domain: .splashApp, keyName: "current theme")
+    static let lastUsedTheme = UserDefaults.Key(domain: .splashApp, keyName: "last used theme")
     static let alreadyShowedOnboard1 = UserDefaults.Key(domain: .splashApp, keyName: "already showed onboard 1")
     static let alreadyInstalledExamples1 = UserDefaults.Key(domain: .splashApp, keyName: "already installed examples 1")
+    static let fontSize = UserDefaults.Key(domain: .splashApp, keyName: "font size")
 }
 
 extension UserDefaults {
+
+    var fontSize: CGFloat {
+        get {
+            let fontSize = (UserDefaults.standard.object(forKey: .fontSize) as? CGFloat) ?? UIFont.systemFontSize
+            return fontSize
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: .fontSize)
+        }
+    }
 
     var alreadyInstalledExamples1: Bool {
         get {

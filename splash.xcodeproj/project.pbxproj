@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		9F159E5E2234669C00ECF57C /* NSRange+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F159E5D2234669C00ECF57C /* NSRange+Utils.swift */; };
 		9F159E6022356D7100ECF57C /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F159E5F22356D7100ECF57C /* EditorView.swift */; };
-		9F159E632235AF9A00ECF57C /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F159E622235AF9A00ECF57C /* HelpViewController.swift */; };
-		9F159E652235B08B00ECF57C /* Help.md in Resources */ = {isa = PBXBuildFile; fileRef = 9F159E642235B08B00ECF57C /* Help.md */; };
-		9F159E672235B43200ECF57C /* Help.html in Resources */ = {isa = PBXBuildFile; fileRef = 9F159E662235B43200ECF57C /* Help.html */; };
 		9F159E692235B69800ECF57C /* Bundle+Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F159E682235B69800ECF57C /* Bundle+Resources.swift */; };
 		9F159E6D2235B88700ECF57C /* Leap Year.splash in Resources */ = {isa = PBXBuildFile; fileRef = 9F159E6A2235B88700ECF57C /* Leap Year.splash */; };
 		9F159E6E2235B88700ECF57C /* Quadratic Solver.splash in Resources */ = {isa = PBXBuildFile; fileRef = 9F159E6B2235B88700ECF57C /* Quadratic Solver.splash */; };
@@ -28,6 +25,11 @@
 		9F3363FF222B37C200E9726E /* splash.ym in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88E2222AC54D00220811 /* splash.ym */; };
 		9F336405222B3D6700E9726E /* splash.lm in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD88F9222AC54E00220811 /* splash.lm */; };
 		9F3507FC223E822000260B89 /* BrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3507FB223E822000260B89 /* BrowserDelegate.swift */; };
+		9F3507FE223EA7DC00260B89 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */; };
+		9F35081F223EB0D700260B89 /* SettingsViewController+ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */; };
+		9F350821223EB1D400260B89 /* ThemeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F350820223EB1D400260B89 /* ThemeControl.swift */; };
+		9F350823223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F350822223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift */; };
+		9F350825223EC0F700260B89 /* SettingsViewController+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F350824223EC0F700260B89 /* SettingsViewController+Default.swift */; };
 		9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518975222ABC0A0054A381 /* AppDelegate.swift */; };
 		9F518978222ABC0A0054A381 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F518977222ABC0A0054A381 /* ViewController.swift */; };
 		9F51897D222ABC0A0054A381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F51897C222ABC0A0054A381 /* Assets.xcassets */; };
@@ -104,9 +106,6 @@
 /* Begin PBXFileReference section */
 		9F159E5D2234669C00ECF57C /* NSRange+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRange+Utils.swift"; sourceTree = "<group>"; };
 		9F159E5F22356D7100ECF57C /* EditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorView.swift; sourceTree = "<group>"; };
-		9F159E622235AF9A00ECF57C /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
-		9F159E642235B08B00ECF57C /* Help.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Help.md; sourceTree = "<group>"; };
-		9F159E662235B43200ECF57C /* Help.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Help.html; sourceTree = "<group>"; };
 		9F159E682235B69800ECF57C /* Bundle+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Resources.swift"; sourceTree = "<group>"; };
 		9F159E6A2235B88700ECF57C /* Leap Year.splash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Leap Year.splash"; sourceTree = "<group>"; };
 		9F159E6B2235B88700ECF57C /* Quadratic Solver.splash */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Quadratic Solver.splash"; sourceTree = "<group>"; };
@@ -121,6 +120,11 @@
 		9F2603A8223D558200C337F5 /* OnboardViewController+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardViewController+Theme.swift"; sourceTree = "<group>"; };
 		9F2603AA223D596300C337F5 /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		9F3507FB223E822000260B89 /* BrowserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserDelegate.swift; sourceTree = "<group>"; };
+		9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+ThemeCell.swift"; sourceTree = "<group>"; };
+		9F350820223EB1D400260B89 /* ThemeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeControl.swift; sourceTree = "<group>"; };
+		9F350822223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+FontSizeCell.swift"; sourceTree = "<group>"; };
+		9F350824223EC0F700260B89 /* SettingsViewController+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Default.swift"; sourceTree = "<group>"; };
 		9F518972222ABC0A0054A381 /* splash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F518975222ABC0A0054A381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F518977222ABC0A0054A381 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +227,17 @@
 			path = Onboard;
 			sourceTree = "<group>";
 		};
+		9F3507FF223EA8C900260B89 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9F3507FD223EA7DC00260B89 /* SettingsViewController.swift */,
+				9F35081E223EB0D700260B89 /* SettingsViewController+ThemeCell.swift */,
+				9F350822223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift */,
+				9F350824223EC0F700260B89 /* SettingsViewController+Default.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		9F518969222ABC0A0054A381 = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +293,7 @@
 		9F6C462C222C7D1900BD8625 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				9F350820223EB1D400260B89 /* ThemeControl.swift */,
 				9F3507FB223E822000260B89 /* BrowserDelegate.swift */,
 				9FC2D2E1223DA8AC00AAB282 /* ActionView.swift */,
 				9F2603AA223D596300C337F5 /* String+Utils.swift */,
@@ -286,8 +302,6 @@
 				9F8AC12D223895B7002044CB /* Notification+Constants.swift */,
 				9F8AC12B22389424002044CB /* UserDefaults+Constants.swift */,
 				9F8AC129223893E6002044CB /* UserDefaults+Key.swift */,
-				9F159E642235B08B00ECF57C /* Help.md */,
-				9F159E662235B43200ECF57C /* Help.html */,
 				9F159E5D2234669C00ECF57C /* NSRange+Utils.swift */,
 				9F6C463A222DC9D500BD8625 /* UIColor+Utils.swift */,
 				9F6C4638222DC5AB00BD8625 /* UIScrollView+Utils.swift */,
@@ -322,7 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				9F518977222ABC0A0054A381 /* ViewController.swift */,
-				9F159E622235AF9A00ECF57C /* HelpViewController.swift */,
+				9F3507FF223EA8C900260B89 /* Settings */,
 				9F26039F223B317200C337F5 /* Onboard */,
 				9F159E6122356EAB00ECF57C /* Editor */,
 			);
@@ -483,9 +497,7 @@
 				9F159E6E2235B88700ECF57C /* Quadratic Solver.splash in Resources */,
 				9FCD8906222AC54E00220811 /* splash.lm in Resources */,
 				9F518980222ABC0A0054A381 /* LaunchScreen.storyboard in Resources */,
-				9F159E672235B43200ECF57C /* Help.html in Resources */,
 				9F51897D222ABC0A0054A381 /* Assets.xcassets in Resources */,
-				9F159E652235B08B00ECF57C /* Help.md in Resources */,
 				9F159E6D2235B88700ECF57C /* Leap Year.splash in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -533,12 +545,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F3507FC223E822000260B89 /* BrowserDelegate.swift in Sources */,
+				9F350825223EC0F700260B89 /* SettingsViewController+Default.swift in Sources */,
 				9F2603AB223D596300C337F5 /* String+Utils.swift in Sources */,
 				9FBA02DB222BFCE8001D5C4D /* htable.c in Sources */,
 				9F2603A7223C894B00C337F5 /* NSLayoutConstraint+Utils.swift in Sources */,
 				9F6C4633222C843900BD8625 /* EditorViewController.swift in Sources */,
+				9F350821223EB1D400260B89 /* ThemeControl.swift in Sources */,
 				9FBA02DC222BFCE8001D5C4D /* refcnt.c in Sources */,
-				9F159E632235AF9A00ECF57C /* HelpViewController.swift in Sources */,
 				9FC2D2E2223DA8AC00AAB282 /* ActionView.swift in Sources */,
 				9FBA02DA222BFCE8001D5C4D /* list.c in Sources */,
 				9FBA02DD222BFCE8001D5C4D /* str.c in Sources */,
@@ -566,11 +579,14 @@
 				9F2603A3223B410A00C337F5 /* OnboardViewController+View.swift in Sources */,
 				9FC2D2E0223D621200AAB282 /* OnboardViewController+PageVC.swift in Sources */,
 				9F26039C223B313300C337F5 /* PageViewController.swift in Sources */,
+				9F3507FE223EA7DC00260B89 /* SettingsViewController.swift in Sources */,
 				9F6C463B222DC9D500BD8625 /* UIColor+Utils.swift in Sources */,
 				9F6C462F222C819000BD8625 /* SplashDocument.swift in Sources */,
 				9F336405222B3D6700E9726E /* splash.lm in Sources */,
 				9F518978222ABC0A0054A381 /* ViewController.swift in Sources */,
+				9F350823223EB7EC00260B89 /* SettingsViewController+FontSizeCell.swift in Sources */,
 				9F159E692235B69800ECF57C /* Bundle+Resources.swift in Sources */,
+				9F35081F223EB0D700260B89 /* SettingsViewController+ThemeCell.swift in Sources */,
 				9F518976222ABC0A0054A381 /* AppDelegate.swift in Sources */,
 				9F8AC12822389338002044CB /* ThemeManager.swift in Sources */,
 				9F8AC12C22389424002044CB /* UserDefaults+Constants.swift in Sources */,
