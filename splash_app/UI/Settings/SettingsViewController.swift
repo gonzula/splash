@@ -49,7 +49,9 @@ class SettingsViewController: UITableViewController {
         Section(title: nil,
                 rows: [
                     Link(name: "GitHub Repository",
-                         url: URL(string: "https://github.com/gonzula/splash")!)
+                         url: URL(string: "https://github.com/gonzula/splash")!),
+                    CustomAction(name: "Restore Examples",
+                                 action: {$0.askToRestoreExamples()})
             ])
     ]
 
@@ -150,6 +152,34 @@ class SettingsViewController: UITableViewController {
     @objc
     func doneTouched() {
         dismiss(animated: true)
+    }
+
+    func askToRestoreExamples() {
+        let alertController = UIAlertController(title: nil,
+                                                message: "Are you sure you want to restore and override the examples?",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel",
+                                                style: .cancel,
+                                                handler: {[weak self] _ in self?.deselectAllRows(animated: true)}))
+        alertController.addAction(UIAlertAction(title: "Restore",
+                                                style: .destructive,
+                                                handler: { [weak self] _ in
+                                                    self?.deselectAllRows(animated: true)
+                                                    self?.restoreExamples()
+        }))
+
+        (navigationController ?? self).present(alertController, animated: true)
+    }
+
+    func restoreExamples() {
+        FileManager.createExamplesDirectory()
+        (UIApplication.shared.delegate as? AppDelegate)?.mainViewController.showExamplesInRecents {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    func deselectAllRows(animated: Bool) {
+        tableView.indexPathsForSelectedRows?.forEach {tableView.deselectRow(at: $0, animated: animated)}
     }
 }
 

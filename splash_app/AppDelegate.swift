@@ -13,34 +13,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var mainViewController = ViewController()
+
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        installExamples()
+        if UserDefaults.standard.alreadyInstalledExamples1 == false {
+            FileManager.createExamplesDirectory()
+            UserDefaults.standard.alreadyInstalledExamples1 = true
+        }
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = ViewController()
+        window!.rootViewController = mainViewController
         window!.makeKeyAndVisible()
 
         window!.tintColor = ThemeManager.shared.theme.tintColor
 
         return true
-    }
-
-    func installExamples() {
-        guard UserDefaults.standard.alreadyInstalledExamples1 == false else {return}
-
-        let documentsPath = FileManager.documentsDirectory.path
-        let examplesPath = (documentsPath as NSString).appendingPathComponent("Examples")
-        let examplesURL = URL(fileURLWithPath: examplesPath)
-        try? FileManager.default.createDirectory(atPath: examplesPath,
-                                                 withIntermediateDirectories: true,
-                                                 attributes: nil)
-
-        var resourceValues = URLResourceValues()
-        resourceValues.isExcludedFromBackup = true
-        try? (examplesURL as NSURL).setResourceValue(true, forKey: .isExcludedFromBackupKey)
-
-        UserDefaults.standard.alreadyInstalledExamples1 = true
     }
 }

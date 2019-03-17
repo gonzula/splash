@@ -14,4 +14,17 @@ extension FileManager {
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
+
+    static func createExamplesDirectory() {
+        let documentsPath = FileManager.documentsDirectory.path
+        let examplesPath = (documentsPath as NSString).appendingPathComponent("Examples")
+        let examplesURL = URL(fileURLWithPath: examplesPath)
+        try? FileManager.default.createDirectory(atPath: examplesPath,
+                                                 withIntermediateDirectories: true,
+                                                 attributes: nil)
+
+        var resourceValues = URLResourceValues()
+        resourceValues.isExcludedFromBackup = true
+        try? (examplesURL as NSURL).setResourceValue(true, forKey: .isExcludedFromBackupKey)
+    }
 }
