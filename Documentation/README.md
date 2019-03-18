@@ -142,6 +142,19 @@ produces:
 
 ![variable attribution](assets/attribution.png)
 
+## Interpolated strings
+
+You can put variables inside strings and their content will be embeded in the string.
+
+```python
+age := AskNumber("How old are you?")
+text := "You are {age} years old"
+```
+
+produces:
+
+![interpolated string](assets/interpolated.png)
+
 
 ### Conditionals and flow control
 
@@ -230,3 +243,30 @@ produces:
 
 ### `AskNumber([question])`
 
+You can pass an optional `string` parameter that will be promped to the user.
+
+```python
+AskNumber("How old are you?")
+```
+
+produces:
+
+![Ask number action](assets/ask_number.png)
+
+Or you can pass no parameter
+
+```python
+AskNumber()
+```
+
+produces:
+
+![Ask number without parameter](assets/ask_number_no_parameter.png)
+
+### `ShowResult(result)`
+
+Shows in an alert the content of result
+
+```python
+ShowResult("Hello World")
+```
