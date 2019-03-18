@@ -270,3 +270,7 @@ Shows in an alert the content of result
 ```python
 ShowResult("Hello World")
 ```
+
+produces:
+
+![Show Result action with hello world text](assets/hello_world.png)
