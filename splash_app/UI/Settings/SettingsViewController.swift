@@ -46,7 +46,7 @@ class SettingsViewController: UITableViewController {
                     Theme(),
                     FontSize()
             ]),
-        Section(title: nil,
+        Section(title: "Reference",
                 rows: [
                     Link(name: "GitHub Repository",
                          url: URL(string: "https://github.com/gonzula/splash")!),
@@ -55,13 +55,16 @@ class SettingsViewController: UITableViewController {
                     CustomAction(name: "Show Welcome Message",
                                  action: {$0.presentOnboard()}),
                     Link(name: "Documentation",
-                         url: URL(string: "https://github.com/gonzula/splash/blob/master/Documentation/README.md")!),
-                    Link(name: "Repor an issue",
-                         url: URL(string: "https://github.com/gonzula/splash/issues/new")!)
+                         url: URL(string: "https://github.com/gonzula/splash/blob/master/Documentation/README.md")!)
             ]),
         Section(title: nil, rows: [
+            Link(name: "Repor an issue",
+                 url: URL(string: "https://github.com/gonzula/splash/issues/new")!),
             CustomAction(name: "App Version: \(Bundle.main.fullVersion)",
-                action: {$0.deselectAllRows(animated: true)})
+                action: {
+                    UIPasteboard.general.string = Bundle.main.fullVersion
+                    $0.deselectAllRows(animated: true)
+            })
             ])
     ]
 
