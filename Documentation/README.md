@@ -63,6 +63,7 @@ AskText("What's your name?")
 ```
 
 produces:
+
 ![Ask Text action](assets/ask_text.png)
 
 ## Numbers
