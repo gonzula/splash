@@ -226,7 +226,7 @@ You can pass an optional `string` parameter that will be promped to the user.
 AskText("What's your name?")
 ```
 
-produces: 
+produces:
 
 ![Ask Text action](assets/ask_text.png)
 
