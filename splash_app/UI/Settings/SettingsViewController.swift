@@ -54,6 +54,8 @@ class SettingsViewController: UITableViewController {
                                  action: {$0.askToRestoreExamples()}),
                     CustomAction(name: "Show Welcome Message",
                                  action: {$0.presentOnboard()}),
+                    Link(name: "Documentation",
+                         url: URL(string: "https://github.com/gonzula/splash/blob/master/Documentation/README.md")!),
                     Link(name: "Repor an issue",
                          url: URL(string: "https://github.com/gonzula/splash/issues/new")!)
             ]),
