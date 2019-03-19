@@ -17,6 +17,7 @@ Action *action_create_comp(Comparison comp);
 Action *action_create_ask_input(Operand op, char *input_type);
 Action *action_create_show_result(Operand op);
 Action *action_create_round_number(const char *round_mode, const char *round_type);
+Action *action_create_get_item(void);
 
 List * action_create_cond_control(int value, int control_count);
 

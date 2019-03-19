@@ -102,6 +102,14 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         strcpy((*stack).name.value, "Rounded Number");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
+    } else if (strcmp(name.value, "GetName") == 0) {
+        place_operand(parameter);
+
+        action = action_create_get_item();
+        (*stack).type = op_magic_variable;
+        strcpy((*stack).name.value, "Name");
+        strcpy((*stack).uuid, action->uuid);
+        *stack = (*stack);
     } else {
         DEBUGPRINT("uninplemented function");
     }
