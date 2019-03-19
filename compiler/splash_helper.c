@@ -45,10 +45,10 @@ append_operand(Operand *stack, OpType type, char100 operand) {
     uuid_gen((*stack).uuid);
 
     switch (type) {
-        case op_number:        strcpy((*stack).value.value, operand.value); break;
-        case op_variable:      strcpy((*stack).name.value, operand.value); break;
+        case op_number:         strcpy((*stack).value.value, operand.value); break;
+        case op_variable:       strcpy((*stack).name.value, operand.value); break;
         case op_magic_variable: strcpy((*stack).name.value, operand.value); break;
-        case op_string:        strcpy((*stack).value.value, operand.value); break;
+        case op_string:         strcpy((*stack).value.value, operand.value); break;
         case op_null: break;
     }
 }
@@ -65,21 +65,43 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         action = action_create_ask_input(parameter, "Number");
 
         (*stack).type = op_magic_variable;
-        char name[] = "Ask for Input";
-        strcpy((*stack).name.value, name);
+        strcpy((*stack).name.value, "Ask for Input");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name.value, "AskText") == 0) {
         action = action_create_ask_input(parameter, "Text");
 
         (*stack).type = op_magic_variable;
-        char name[] = "Ask for Input";
-        strcpy((*stack).name.value, name);
+        strcpy((*stack).name.value, "Ask for Input");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name.value, "ShowResult") == 0) {
         append_null_operand(stack);
         action = action_create_show_result(parameter);
+    } else if (strcmp(name.value, "Floor") == 0) {
+        place_operand(parameter);
+
+        action = action_create_round_number("Always Round Down", "Right of Decimal");
+        (*stack).type = op_magic_variable;
+        strcpy((*stack).name.value, "Rounded Number");
+        strcpy((*stack).uuid, action->uuid);
+        *stack = (*stack);
+    } else if (strcmp(name.value, "Ceil") == 0) {
+        place_operand(parameter);
+
+        action = action_create_round_number("Always Round Up", "Right of Decimal");
+        (*stack).type = op_magic_variable;
+        strcpy((*stack).name.value, "Rounded Number");
+        strcpy((*stack).uuid, action->uuid);
+        *stack = (*stack);
+    } else if (strcmp(name.value, "Round") == 0) {
+        place_operand(parameter);
+
+        action = action_create_round_number("Normal", "Right of Decimal");
+        (*stack).type = op_magic_variable;
+        strcpy((*stack).name.value, "Rounded Number");
+        strcpy((*stack).uuid, action->uuid);
+        *stack = (*stack);
     } else {
         DEBUGPRINT("uninplemented function");
     }

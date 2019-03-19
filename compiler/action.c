@@ -432,6 +432,26 @@ action_create_show_result(Operand op) {
     return action;
 }
 
+Action *
+action_create_round_number(const char *round_mode, const char *round_type) {
+    Action *action = action_create(WF_round_number);
+
+    String *round_mode_value = str_create(round_mode);
+    Serializable *s1 = serializable_create_str(round_mode_value);
+    htable_set(action->parameters, "WFRoundMode", s1);
+
+    String *round_type_value = str_create(round_type);
+    Serializable *s2 = serializable_create_str(round_type_value);
+    htable_set(action->parameters, "WFRoundType", s2);
+
+    release(round_mode_value);
+    release(s1);
+    release(round_type_value);
+    release(s2);
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -493,6 +513,7 @@ action_create_close_scope(Action *action) {
         case WF_text:
         case WF_show_result:
         case WF_ask:
+        case WF_round_number:
         case WF_set_variable: return list_init();
     }
 }
@@ -515,6 +536,7 @@ action_output(Action *action, FILE *output) {
 
         case WF_ask: fprintf(output, "ask"); break;
         case WF_show_result: fprintf(output, "showresult"); break;
+        case WF_round_number: fprintf(output, "round"); break;
     }
 
     fprintf(output, "</string>");
