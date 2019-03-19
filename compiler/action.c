@@ -459,7 +459,7 @@ action_create_round_number(const char *round_mode, const char *round_type) {
 }
 
 Action *
-action_create_get_item() {
+action_create_get_item_name() {
     Action *action = action_create(WF_get_item_name);
 
     return action;
