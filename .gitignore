@@ -132,3 +132,5 @@ compiler/splash.tab.h
 splash
 *.shortcut
 !examples/*.shortcut
+*.splash
+!examples/*.splash
