@@ -122,9 +122,11 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         place_operand(parameter);
 
         action = action_create_view_content_graph();
-        (*stack).type = op_null;
-        strcpy((*stack).uuid, action->uuid);
-        *stack = (*stack);
+
+        append_null_operand(stack);
+    } else if (strcmp(name.value, "Wait") == 0) {
+        action = action_create_wait(parameter);
+        append_null_operand(stack);
     } else {
         DEBUGPRINT("uninplemented function");
     }

@@ -479,6 +479,19 @@ action_create_view_content_graph(void) {
     return action;
 }
 
+Action *
+action_create_wait(Operand op) {
+    Action *action = action_create(WF_wait);
+
+    if (op.type == op_number) {
+        Serializable *s = serializable_create_float(atof(op.value.value));
+        htable_set(action->parameters, "WFDelayTime", s);
+        release(s);
+    }
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -545,6 +558,7 @@ action_create_close_scope(Action *action) {
         case WF_get_item_name:
         case WF_get_item_type:
         case WF_view_content_graph:
+        case WF_wait:
         case WF_set_variable: return list_init();
     }
 }
@@ -572,6 +586,7 @@ action_output(Action *action, FILE *output) {
         case WF_get_item_name: fprintf(output, "getitemname"); break;
         case WF_get_item_type: fprintf(output, "getitemtype"); break;
         case WF_view_content_graph: fprintf(output, "viewresult"); break;
+        case WF_wait: fprintf(output, "delay"); break;
     }
 
     fprintf(output, "</string>");
