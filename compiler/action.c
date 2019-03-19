@@ -492,6 +492,13 @@ action_create_wait(Operand op) {
     return action;
 }
 
+Action *
+action_create_exit() {
+    Action *action = action_create(WF_exit);
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -559,6 +566,7 @@ action_create_close_scope(Action *action) {
         case WF_get_item_type:
         case WF_view_content_graph:
         case WF_wait:
+        case WF_exit:
         case WF_set_variable: return list_init();
     }
 }
@@ -587,6 +595,7 @@ action_output(Action *action, FILE *output) {
         case WF_get_item_type: fprintf(output, "getitemtype"); break;
         case WF_view_content_graph: fprintf(output, "viewresult"); break;
         case WF_wait: fprintf(output, "delay"); break;
+        case WF_exit: fprintf(output, "exit"); break;
     }
 
     fprintf(output, "</string>");

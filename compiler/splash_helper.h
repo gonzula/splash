@@ -70,7 +70,8 @@ typedef enum {
     WF_get_item_name,
     WF_get_item_type,
     WF_view_content_graph,
-    WF_wait
+    WF_wait,
+    WF_exit
 } ActionID;
 
 typedef struct {
