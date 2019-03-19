@@ -68,7 +68,8 @@ typedef enum {
     WF_show_result,
     WF_round_number,
     WF_get_item_name,
-    WF_get_item_type
+    WF_get_item_type,
+    WF_view_content_graph
 } ActionID;
 
 typedef struct {
