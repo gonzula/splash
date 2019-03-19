@@ -133,6 +133,13 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
     } else if (strcmp(name.value, "WaitToReturn") == 0) {
         action = action_create_wait_to_return();
         append_null_operand(stack);
+    } else if (strcmp(name.value, "GetBatteryLevel") == 0) {
+        action = action_create_get_battery_level();
+
+        (*stack).type = op_magic_variable;
+        strcpy((*stack).name.value, "Battery Level");
+        strcpy((*stack).uuid, action->uuid);
+        *stack = (*stack);
     } else {
         DEBUGPRINT("uninplemented function");
         append_null_operand(stack);
