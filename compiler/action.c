@@ -465,6 +465,13 @@ action_create_get_item_name() {
     return action;
 }
 
+Action *
+action_create_get_item_type() {
+    Action *action = action_create(WF_get_item_type);
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -529,6 +536,7 @@ action_create_close_scope(Action *action) {
         case WF_ask:
         case WF_round_number:
         case WF_get_item_name:
+        case WF_get_item_type:
         case WF_set_variable: return list_init();
     }
 }
@@ -554,6 +562,7 @@ action_output(Action *action, FILE *output) {
         case WF_show_result: fprintf(output, "showresult"); break;
         case WF_round_number: fprintf(output, "round"); break;
         case WF_get_item_name: fprintf(output, "getitemname"); break;
+        case WF_get_item_type: fprintf(output, "getitemtype"); break;
     }
 
     fprintf(output, "</string>");
