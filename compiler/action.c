@@ -63,6 +63,12 @@ action_create_text(Operand op) {
 }
 
 Action *
+action_create_nothing(void) {
+    Action *action = action_create(WF_nothing);
+    return action;
+}
+
+Action *
 action_create_get_variable(Operand op) {
     Action *action = action_create(WF_get_variable);
     action_set_uuid(action, op.uuid);
@@ -511,6 +517,7 @@ action_create_close_scope(Action *action) {
         case WF_math:
         case WF_number:
         case WF_text:
+        case WF_nothing:
         case WF_show_result:
         case WF_ask:
         case WF_round_number:
@@ -532,6 +539,7 @@ action_output(Action *action, FILE *output) {
         case WF_math: fprintf(output, "math"); break;
         case WF_number: fprintf(output, "number"); break;
         case WF_text: fprintf(output, "gettext"); break;
+        case WF_nothing: fprintf(output, "nothing"); break;
         case WF_set_variable: fprintf(output, "setvariable"); break;
 
         case WF_ask: fprintf(output, "ask"); break;

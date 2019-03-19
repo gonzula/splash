@@ -60,6 +60,7 @@ typedef enum {
     WF_math,
     WF_number,
     WF_text,
+    WF_nothing,
     WF_set_variable,
 
     // functions

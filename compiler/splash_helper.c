@@ -281,7 +281,7 @@ place_operand(Operand op) {
         case op_variable: action = action_create_get_variable(op); break;
         case op_magic_variable: action = action_create_get_magic_variable(op); break;
         case op_string: action = action_create_text(op); break;
-        case op_null: action = NULL; break;
+        case op_null: action = action_create_nothing(); break;
     }
 
     if (action) {
