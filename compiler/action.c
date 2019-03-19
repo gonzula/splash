@@ -499,6 +499,13 @@ action_create_exit() {
     return action;
 }
 
+Action *
+action_create_wait_to_return() {
+    Action *action = action_create(WF_wait_to_return);
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -567,6 +574,7 @@ action_create_close_scope(Action *action) {
         case WF_view_content_graph:
         case WF_wait:
         case WF_exit:
+        case WF_wait_to_return:
         case WF_set_variable: return list_init();
     }
 }
@@ -596,6 +604,7 @@ action_output(Action *action, FILE *output) {
         case WF_view_content_graph: fprintf(output, "viewresult"); break;
         case WF_wait: fprintf(output, "delay"); break;
         case WF_exit: fprintf(output, "exit"); break;
+        case WF_wait_to_return: fprintf(output, "waittoreturn"); break;
     }
 
     fprintf(output, "</string>");
