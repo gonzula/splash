@@ -129,6 +129,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         append_null_operand(stack);
     } else {
         DEBUGPRINT("uninplemented function");
+        append_null_operand(stack);
     }
 
     if (action) {
