@@ -384,7 +384,7 @@ produces:
 
 ### `WaitToReturn()`
 
-Pauses execution until you leave the Shortcuts app and return to it.
+Returns the percentage of battery remaining as a number from 0 to 100.
 
 ```python
 WaitToReturn()
