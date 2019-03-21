@@ -320,7 +320,7 @@ produces:
 GetName("Hello World")
 ```
 
-produces: 
+produces:
 
 ![get name action](assets/get_name.png)
 
@@ -330,7 +330,7 @@ produces:
 GetType("Hello World")
 ```
 
-produces: 
+produces:
 
 ![get name action](assets/get_type.png)
 
@@ -340,7 +340,7 @@ produces:
 ViewContentGraph("Hello World")
 ```
 
-produces: 
+produces:
 
 ![get name action](assets/view_content_graph.png)
 
@@ -366,7 +366,7 @@ Stops execution of current shortcut and dismisses the shortcut on screen.
 Exit()
 ```
 
-produces: 
+produces:
 
 ![get name action](assets/exit.png)
 
@@ -378,7 +378,7 @@ Pauses execution until you leave the Shortcuts app and return to it.
 WaitToReturn()
 ```
 
-produces: 
+produces:
 
 ![get name action](assets/wait_to_return.png)
 
@@ -390,6 +390,6 @@ Pauses execution until you leave the Shortcuts app and return to it.
 WaitToReturn()
 ```
 
-produces: 
+produces:
 
 ![get name action](assets/get_battery_level.png)
