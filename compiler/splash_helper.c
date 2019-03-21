@@ -76,8 +76,8 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name.value, "ShowResult") == 0) {
-        append_null_operand(stack);
         action = action_create_show_result(parameter);
+        append_null_operand(stack);
     } else if (strcmp(name.value, "Floor") == 0) {
         place_operand(parameter);
 

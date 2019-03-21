@@ -7,6 +7,7 @@
 
 typedef struct {
     String *name;
+    char uuid[37];
     int position;
 } StringToken;
 

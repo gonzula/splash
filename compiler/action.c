@@ -378,25 +378,12 @@ Action *
 action_create_ask_input(Operand op, char *input_type) {
     Action *action = action_create(WF_ask);
 
-    if (op.type == op_string) {
-        Interpolated *interpolated = interpolated_create(op.value);
+    Interpolated *interpolated = interpolated_create_from_operand(op);
 
-        Serializable *s1 = interpolated_parameters(interpolated);
-        htable_set(action->parameters, "WFAskActionPrompt", s1);
-
-        release(interpolated);
-        release(s1);
-    } else if (op.type == op_variable) {
-        Interpolated *interpolated = interpolated_create_from_token(op.name.value);
-
-        Serializable *s1 = interpolated_parameters(interpolated);
-        htable_set(action->parameters, "WFAskActionPrompt", s1);
-        release(interpolated);
-        release(s1);
-    } else if (op.type == op_null) {
-    } else {
-        fprintf(stderr, "Invalid parameter in AskNumber()\n");
-    }
+    Serializable *s1 = interpolated_parameters(interpolated);
+    htable_set(action->parameters, "WFAskActionPrompt", s1);
+    release(interpolated);
+    release(s1);
 
     String *empty = str_init();
     Serializable *s2 = serializable_create_str(empty);
@@ -417,23 +404,12 @@ Action *
 action_create_show_result(Operand op) {
     Action *action = action_create(WF_show_result);
 
-    if (op.type == op_string) {
-        Interpolated *interpolated = interpolated_create(op.value);
+    Interpolated *interpolated = interpolated_create_from_operand(op);
 
-        Serializable *s1 = interpolated_parameters(interpolated);
-        htable_set(action->parameters, "Text", s1);
-        release(interpolated);
-        release(s1);
-    } else if (op.type == op_variable) {
-        Interpolated *interpolated = interpolated_create_from_token(op.name.value);
-
-        Serializable *s1 = interpolated_parameters(interpolated);
-        htable_set(action->parameters, "Text", s1);
-        release(interpolated);
-        release(s1);
-    } else {
-        fprintf(stderr, "Invalid parameter in ShowResult()\n");
-    }
+    Serializable *s1 = interpolated_parameters(interpolated);
+    htable_set(action->parameters, "Text", s1);
+    release(interpolated);
+    release(s1);
 
     return action;
 }
