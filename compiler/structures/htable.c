@@ -57,7 +57,7 @@ htable_set(HashTable *t, const char *key, void *obj) {
 }
 
 void *
-htable_retrieve(HashTable *t, const char * key, int remove) {
+htable_retrieve(HashTable *t, const char * key, bool remove) {
     Hash hash = string_hash(key);
     TableBucket **top_bucket = &(t->table[hash & (TABLE_SIZE - 1)]);
     TableBucket *bucket = *top_bucket;
@@ -87,15 +87,12 @@ htable_retrieve(HashTable *t, const char * key, int remove) {
 }
 
 void
-htable_iterate(HashTable *t, void *context, void (*obj_iteration)(Entry *entry, int i, size_t count, int *stop, void *context)) {
-    int stop = 0;
-    for (int i = 0, j = 0; j < t->count && !stop; i++)
-    {
-        if (t->table[i])
-        {
+htable_iterate(HashTable *t, void *context, void (*obj_iteration)(Entry *entry, int i, size_t count, bool *stop, void *context)) {
+    bool stop = 0;
+    for (int i = 0, j = 0; j < t->count && !stop; i++) {
+        if (t->table[i]) {
             TableBucket * bucket = t->table[i];
-            while (bucket && !stop)
-            {
+            while (bucket && !stop) {
                 obj_iteration(bucket->entry, j, t->count, &stop, context);
                 j++;
                 bucket = bucket->next;
@@ -106,13 +103,10 @@ htable_iterate(HashTable *t, void *context, void (*obj_iteration)(Entry *entry, 
 
 void
 htable_release(HashTable *t) {
-    for (int i = 0; t->count; i++)
-    {
-        if (t->table[i])
-        {
+    for (int i = 0; t->count; i++) {
+        if (t->table[i]) {
             TableBucket * bucket = t->table[i];
-            while (bucket)
-            {
+            while (bucket) {
                 TableBucket * bucketToFree = bucket;
                 entry_free(bucket->entry);
                 bucket = bucket->next;

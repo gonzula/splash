@@ -249,7 +249,7 @@ append_conditional(Comparison comp) {
 
     Action *action = action_create_comp(comp);
     scope_add_action(current_scope, action);
-    action->cond_should_close_control = 1;
+    action->cond_should_close_control = true;
 
     action->sub_scope->parent_name = current_scope->name;
     current_scope = action->sub_scope;
@@ -279,7 +279,7 @@ append_else() {
     place_operand(comp.op1);
     Action *action = action_create_comp(comp);
     scope_add_action(current_scope, action);
-    action->cond_should_close_control = 0;
+    action->cond_should_close_control = false;
 
     action->sub_scope->parent_name = current_scope->name;
     current_scope = action->sub_scope;

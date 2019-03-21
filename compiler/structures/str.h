@@ -1,8 +1,7 @@
 #ifndef __str_H_
 #define __str_H_
 
-typedef struct
-{
+typedef struct {
     union {
         char *string;
         unsigned char *ustring;

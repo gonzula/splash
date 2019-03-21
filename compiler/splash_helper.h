@@ -2,6 +2,7 @@
 #define SPLASH_HELPER_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "structures/structures.h"
 
 typedef struct {
@@ -82,7 +83,7 @@ typedef struct {
     char uuid[37];  /* In case of groups, should be the same for all the actions in the group */
     Scope *sub_scope; /* for groups, like if and loop */
     int cond_control_count;
-    int cond_should_close_control;
+    bool cond_should_close_control;
 } Action;
 
 FILE *input_file;

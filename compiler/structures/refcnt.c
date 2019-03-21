@@ -43,8 +43,7 @@ release(void *ptr) {
     cptr -= sizeof(_refcnt_objwrapper);
     ow = (_refcnt_objwrapper *)cptr;
     ow->retainCnt--;
-    if(ow->retainCnt == 0)
-    {
+    if(ow->retainCnt == 0) {
         if (ow->freeFunc)
             ow->freeFunc(ptr);
         free(ow);

@@ -63,7 +63,7 @@ output_footer(FILE *output) {
 }
 
 void
-output_entry(Entry *entry, int i, size_t count, int *stop, void *context) {
+output_entry(Entry *entry, int i, size_t count, bool *stop, void *context) {
     FILE *output = (FILE *)context;
 
     char *key = entry->key;

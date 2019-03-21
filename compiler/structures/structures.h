@@ -8,6 +8,8 @@
 #include "str.h"
 #include "serializable.h"
 
+#include <stdbool.h>
+
 typedef union {
     unsigned char uc;
     char c;

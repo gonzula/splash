@@ -98,10 +98,10 @@ list_dequeue(List *aList) {
 }
 
 void
-list_iterate(List *aList, void (*obj_iteration)(void *obj, int i, int count, int *stop)) {
+list_iterate(List *aList, void (*obj_iteration)(void *obj, int i, int count, bool *stop)) {
     Node *node;
     int i;
-    int stop = 0;
+    bool stop = false;
     for (node = aList->firstNode, i = 0; node && !stop; node = node->next, i++) {
         obj_iteration(node->object, i, aList->count, &stop);
     }

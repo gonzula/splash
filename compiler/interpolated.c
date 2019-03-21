@@ -38,18 +38,18 @@ interpolated_create(char100 source) {
     Interpolated *interpolated = interpolated_init();
     char *s = source.value;
 
-    int is_escaped = 0;
-    int is_inside_interpolation = 0;
+    bool is_escaped = false;
+    bool is_inside_interpolation = false;
     StringToken *current_token = NULL;
     size_t len = strlen(s);
     for (int i = 1; i < len - 1; i++) {
         unsigned char c = s[i];
         if (is_escaped) {
             str_append_char(interpolated->str, _unescape_char(c));
-            is_escaped = 0;
+            is_escaped = false;
             continue;
         } else if (c == '\\') {
-            is_escaped = 1;
+            is_escaped = true;
             continue;
         }
 
@@ -58,7 +58,7 @@ interpolated_create(char100 source) {
                 list_append(interpolated->tokens, current_token);
                 release(current_token);
                 current_token = NULL;
-                is_inside_interpolation = 0;
+                is_inside_interpolation = false;
             } else {
                 str_append_char(current_token->name, c);
             }
@@ -70,7 +70,7 @@ interpolated_create(char100 source) {
             str_append_char(interpolated->str, 0xEF);
             str_append_char(interpolated->str, 0xBF);
             str_append_char(interpolated->str, 0xBC);
-            is_inside_interpolation = 1;
+            is_inside_interpolation = true;
             continue;
         }
 

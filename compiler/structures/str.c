@@ -14,8 +14,7 @@
 void str_free(void *obj);
 
 String *
-str_init()
-{
+str_init() {
     String *str = alloc(sizeof(String), str_free);
     str->string = malloc(sizeof(char) * BUFFER_SIZE);
     str->string[0] = 0;
@@ -26,8 +25,7 @@ str_init()
 
 
 String *
-str_create(const char *original)
-{
+str_create(const char *original) {
     String *str = alloc(sizeof(String), str_free);
     str->len = strlen(original);
     str->bufferSize = ((str->len + 1)/BUFFER_SIZE + 1) * BUFFER_SIZE;
@@ -37,9 +35,9 @@ str_create(const char *original)
     return str;
 }
 
+///   " asd  "
 void
-str_center(String *str, int size) //   " asd  "
-{
+str_center(String *str, int size) {
     int unicodeLen = str_unicode_len(str);
     int space_amnt = size - unicodeLen;
     if (space_amnt <= 0) return;
@@ -49,10 +47,8 @@ str_center(String *str, int size) //   " asd  "
     int firstGap = space_amnt/2;
 
 
-    for (int i = 0; i < space_amnt + str->len; i++)
-    {
-        if (i < firstGap)
-        {
+    for (int i = 0; i < space_amnt + str->len; i++) {
+        if (i < firstGap) {
             newString[i] = ' ';
             continue;
         }
@@ -71,21 +67,17 @@ str_center(String *str, int size) //   " asd  "
 }
 
 int
-str_unicode_len(String *str)
-{
+str_unicode_len(String *str) {
     int unicodeLen = 0;
     int toFinishSequence = 0;
-    for (int i = 0; i < str->len; i++)
-    {
+    for (int i = 0; i < str->len; i++) {
         unsigned char c = str->ustring[i];
-        if (toFinishSequence)
-        {
+        if (toFinishSequence) {
             toFinishSequence--;
             continue;
         }
         unicodeLen++;
-        if (c > 128)
-        {
+        if (c > 128) {
             bin8 b;
             b.uc = c;
             toFinishSequence = (b.b7?1:0) + (b.b6?1:0) + (b.b5?1:0);
@@ -96,20 +88,16 @@ str_unicode_len(String *str)
 }
 
 String *
-str_escape_cstring(char * string)
-{
+str_escape_cstring(char * string) {
     String *esc = str_init();
     unsigned char utfSeq[4];
     utfSeq[3] = 0;
-    int isBuildingSeq = 0;
+    int currentSeqSize = 0;
     int seqSize = 0;
-    for (int i = 0; string[i]; i++)
-    {
+    for (int i = 0; string[i]; i++) {
         unsigned char c = string[i];
-        if (c <= '~')
-        {
-            switch (c)
-            {
+        if (c <= '~') {
+            switch (c) {
                 case '\"': str_append(esc, "\\\""); break;
                 case '\n': str_append(esc, "\\n");  break;
                 case '\r': str_append(esc, "\\r");  break;
@@ -120,11 +108,8 @@ str_escape_cstring(char * string)
                 case '/':  str_append(esc, "\\/");  break;
                 default:   str_append_char(esc, c); break;
             }
-        }
-        else
-        {
-            if (!isBuildingSeq)
-            {
+        } else {
+            if (currentSeqSize == 0) {
                 bin8 b;
                 b.c = c;
                 seqSize = (b.b7?1:0) + (b.b6?1:0) + (b.b5?1:0);
@@ -133,14 +118,12 @@ str_escape_cstring(char * string)
                 utfSeq[2] =
                 utfSeq[3] = 0;
             }
-            utfSeq[isBuildingSeq] = c;
-            isBuildingSeq += 1;
-            if (isBuildingSeq >= seqSize)
-            {
+            utfSeq[currentSeqSize] = c;
+            currentSeqSize += 1;
+            if (currentSeqSize >= seqSize) {
                 bin32 b;
                 b.u = 0;
-                if (seqSize == 1)
-                {
+                if (seqSize == 1) {
                     bin8 c1;
                     c1.uc = utfSeq[0];
                     b.b0 = c1.b0;
@@ -152,8 +135,7 @@ str_escape_cstring(char * string)
                     b.b6 = c1.b6;
                 }
                 else
-                if(seqSize == 2)
-                {
+                if(seqSize == 2) {
                     bin8 c1, c2;
                     c1.uc = utfSeq[0];
                     c2.uc = utfSeq[1];
@@ -171,8 +153,7 @@ str_escape_cstring(char * string)
                     b.b9 = c1.b3;
                     b.b10 = c1.b4;
                 }
-                else if(seqSize == 3)
-                {
+                else if(seqSize == 3) {
                     bin8 c0, c1, c2;
                     c2.uc = utfSeq[0];
                     c1.uc = utfSeq[1];
@@ -199,7 +180,7 @@ str_escape_cstring(char * string)
                 char unicode[20];
                 sprintf(unicode, "\\u%04x", b.u);
                 str_append(esc, unicode);
-                isBuildingSeq = 0;
+                currentSeqSize = 0;
             }
         }
     }
@@ -207,18 +188,15 @@ str_escape_cstring(char * string)
 }
 
 String *
-str_escape(String *str)
-{
+str_escape(String *str) {
     return str_escape_cstring(str->string);
 }
 
 
 void
-str_append(String *str, const char * toAppend)
-{
+str_append(String *str, const char * toAppend) {
     size_t appLen = strlen(toAppend);
-    if (str->len + appLen + 1 > str->bufferSize)
-    {
+    if (str->len + appLen + 1 > str->bufferSize) {
         str->bufferSize = ((str->len + appLen + 1)/ BUFFER_SIZE + 1) * BUFFER_SIZE;
         str->string = realloc(str->string, sizeof(char) * str->bufferSize);
     }
@@ -227,11 +205,9 @@ str_append(String *str, const char * toAppend)
 }
 
 void
-str_append_char(String *str, const unsigned char c)
-{
+str_append_char(String *str, const unsigned char c) {
     size_t appLen = 1;
-    if (str->len + appLen + 1 > str->bufferSize)
-    {
+    if (str->len + appLen + 1 > str->bufferSize) {
         str->bufferSize = ((str->len + appLen + 1)/ BUFFER_SIZE + 1) * BUFFER_SIZE;
         str->string = realloc(str->string, sizeof(char) * str->bufferSize);
     }
@@ -241,8 +217,7 @@ str_append_char(String *str, const unsigned char c)
 }
 
 void
-str_free(void *obj)
-{
+str_free(void *obj) {
     String *str = (String *) obj;
     free(str->string);
 }

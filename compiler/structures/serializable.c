@@ -13,8 +13,7 @@
 void serializable_free(void *sobj);
 
 Serializable *
-serializable_init()
-{
+serializable_init() {
     Serializable *s = (Serializable *)alloc(sizeof(Serializable), serializable_free);
     s->obj = NULL;
     s->type = 0;
@@ -22,12 +21,10 @@ serializable_init()
 }
 
 Serializable *
-serializable_create(void *obj, SerializableType type)
-{
+serializable_create(void *obj, SerializableType type) {
     Serializable *s = (Serializable *)alloc(sizeof(Serializable), serializable_free);
     retain(obj);
-    switch (type)
-    {
+    switch (type) {
         case st_ht:
         case st_list:
         case st_str:
@@ -92,11 +89,9 @@ serializable_create_null() {
 }
 
 void
-serializable_free(void *sobj)
-{
+serializable_free(void *sobj) {
     Serializable *s = (Serializable *)sobj;
-    switch (s->type)
-    {
+    switch (s->type) {
         case st_ht:
         case st_list:
         case st_str:

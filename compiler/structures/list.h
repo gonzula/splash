@@ -2,6 +2,7 @@
 #define structures_list_h
 
 #define LIST_LOOP(_list) for (Node *node = _list->firstNode; node; node = node->next)
+#include <stdbool.h>
 
 typedef struct _node {
     void * object;
@@ -29,7 +30,7 @@ void * list_pop(List *aList);
 // Remove the last
 void * list_dequeue(List *aList);
 
-void list_iterate(List *aList, void (*obj_iteration)(void *obj, int i, int count, int *stop));
+void list_iterate(List *aList, void (*obj_iteration)(void *obj, int i, int count, bool *stop));
 
 
 #endif
