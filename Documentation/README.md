@@ -275,3 +275,61 @@ ShowResult("Hello World")
 produces:
 
 ![Show Result action with hello world text](assets/hello_world.png)
+
+### `Floor(value)`
+
+Rounds the number down
+
+```python
+Floor(3.14)
+```
+
+produces:
+
+![floor action](assets/floor.png)
+
+
+### `Ceil(value)`
+
+Rounds the number up
+
+```python
+Ceil(3.14)
+```
+
+produces:
+
+![floor action](assets/ceil.png)
+
+### `Round(value)`
+
+Round to the closest possible return value; when caught halfway between two positive numbers, round up; when caught between two negative numbers, round down.
+
+```python
+Round(-3.5)
+```
+
+produces:
+
+![floor action](assets/round.png)
+
+
+### `GetName(item)`
+
+```python
+GetName("Hello World")
+```
+
+produces: 
+
+![get name action](assets/get_name.png)
+
+### `GetType(item)`
+
+```python
+GetType("Hello World")
+```
+
+produces: 
+
+![get name action](assets/get_type.png)
