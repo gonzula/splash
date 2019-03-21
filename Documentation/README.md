@@ -333,3 +333,63 @@ GetType("Hello World")
 produces: 
 
 ![get name action](assets/get_type.png)
+
+### `ViewContentGraph(item)`
+
+```python
+ViewContentGraph("Hello World")
+```
+
+produces: 
+
+![get name action](assets/view_content_graph.png)
+
+### `Wait(seconds)`
+
+Waits for the specified number of seconds before continuing. You can pass a fractional value to the function, the Shortcuts UI will show the value rounded down, but it will wait the exact time you passed.
+
+```python
+Wait(3.9)
+```
+
+produces:
+
+Waits for 3.9 seconds but UI shows this:
+
+![get name action](assets/wait.png)
+
+### `Exit()`
+
+Stops execution of current shortcut and dismisses the shortcut on screen.
+
+```python
+Exit()
+```
+
+produces: 
+
+![get name action](assets/exit.png)
+
+### `WaitToReturn()`
+
+Pauses execution until you leave the Shortcuts app and return to it.
+
+```python
+WaitToReturn()
+```
+
+produces: 
+
+![get name action](assets/wait_to_return.png)
+
+### `WaitToReturn()`
+
+Pauses execution until you leave the Shortcuts app and return to it.
+
+```python
+WaitToReturn()
+```
+
+produces: 
+
+![get name action](assets/get_battery_level.png)
