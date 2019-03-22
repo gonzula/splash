@@ -79,7 +79,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         action = action_create_show_result(parameter);
         append_null_operand(stack);
     } else if (strcmp(name.value, "Floor") == 0) {
-        place_operand(parameter);
+        place_operand(parameter, true);
 
         action = action_create_round_number("Always Round Down", "Right of Decimal");
         (*stack).type = op_magic_variable;
@@ -87,7 +87,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name.value, "Ceil") == 0) {
-        place_operand(parameter);
+        place_operand(parameter, true);
 
         action = action_create_round_number("Always Round Up", "Right of Decimal");
         (*stack).type = op_magic_variable;
@@ -95,7 +95,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name.value, "Round") == 0) {
-        place_operand(parameter);
+        place_operand(parameter, true);
 
         action = action_create_round_number("Normal", "Right of Decimal");
         (*stack).type = op_magic_variable;
@@ -103,7 +103,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name.value, "GetName") == 0) {
-        place_operand(parameter);
+        place_operand(parameter, true);
 
         action = action_create_get_item_name();
         (*stack).type = op_magic_variable;
@@ -111,7 +111,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name.value, "GetType") == 0) {
-        place_operand(parameter);
+        place_operand(parameter, true);
 
         action = action_create_get_item_type();
         (*stack).type = op_magic_variable;
@@ -119,7 +119,7 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name.value, "ViewContentGraph") == 0) {
-        place_operand(parameter);
+        place_operand(parameter, true);
 
         action = action_create_view_content_graph();
 
@@ -209,7 +209,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
         op2 = tmp;
     }
 
-    place_operand(op1);
+    place_operand(op1, true);
 
     Action *operation_action = action_create_math_operation(operator, op2);
     scope_add_action(current_scope, operation_action);
@@ -245,7 +245,7 @@ append_cond_control() {
 
 void
 append_conditional(Comparison comp) {
-    place_operand(comp.op1);
+    place_operand(comp.op1, true);
 
     Action *action = action_create_comp(comp);
     scope_add_action(current_scope, action);
@@ -276,7 +276,7 @@ append_else() {
     comp.op1 = op1;
     comp.op2 = op2;
 
-    place_operand(comp.op1);
+    place_operand(comp.op1, true);
     Action *action = action_create_comp(comp);
     scope_add_action(current_scope, action);
     action->cond_should_close_control = false;
@@ -313,14 +313,21 @@ place_set_variable(char100 var_name) {
 }
 
 void
-place_operand(Operand op) {
+place_operand(Operand op, bool force_null) {
     Action *action;
     switch (op.type) {
         case op_number: action = action_create_number(op); break;
         case op_variable: action = action_create_get_variable(op); break;
         case op_magic_variable: action = action_create_get_magic_variable(op); break;
         case op_string: action = action_create_text(op); break;
-        case op_null: action = action_create_nothing(); break;
+        case op_null:
+            if (force_null) {
+                action = action_create_nothing();
+            } else {
+                action = NULL;
+            }
+            break;
+
     }
 
     if (action) {

@@ -91,7 +91,7 @@ comp        : expr_ EQ expr_  { append_comparison(&$$, comp_op_eq, $1, $3); }
             | '(' comp ')'  { $$ = $2; }
             ;
 
-expr        : expr_  { $$ = $1; place_operand($1); }
+expr        : expr_  { $$ = $1; place_operand($1, false); }
             ;
 
 expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left], $[right]);  }
