@@ -382,12 +382,12 @@ produces:
 
 ![get name action](assets/wait_to_return.png)
 
-### `WaitToReturn()`
+### `GetBatteryLevel()`
 
 Returns the percentage of battery remaining as a number from 0 to 100.
 
 ```python
-WaitToReturn()
+GetBatteryLevel()
 ```
 
 produces:
