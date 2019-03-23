@@ -13,6 +13,8 @@ void _action_release(void *obj);
 
 FILE *
 init_parse(const char *in_file_name, const char *out_file_name) {
+    helper_error = 0;
+    error_message = NULL;
     input_file = fopen(in_file_name, "r");
     output_file = fopen(out_file_name, "w");
     output_header(output_file);
@@ -58,7 +60,7 @@ append_null_operand(Operand *stack) {
     (*stack).type = op_null;
 }
 
-void
+int
 append_func_call(Operand *stack, char100 name, Operand parameter) {
     Action *action = NULL;
     if (strcmp(name.value, "AskNumber") == 0) {
@@ -143,12 +145,17 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
     } else {
         DEBUGPRINT("uninplemented function");
         append_null_operand(stack);
+        helper_error = 2;
+        error_message = malloc(sizeof(char) * (strlen(name.value) + 256));
+        sprintf(error_message, "Unknown function \"%s\"\n", name.value);
+        return 1;
     }
 
     if (action) {
         scope_add_action(current_scope, action);
         release(action);
     }
+    return 0;
 }
 
 int

@@ -9,15 +9,15 @@
 import UIKit
 
 class SplashDocument: UIDocument {
-    enum ExecutionError: LocalizedError {
+    enum ExecutionError: LocalizedError, Equatable {
         case saveError
-        case compilationError
+        case compilationError(String)
         case shortcutsNotFound
 
         var errorDescription: String? {
             switch self {
             case .saveError: return "Unknown error when saving file"
-            case .compilationError: return "Compilation error"
+            case .compilationError(let message): return "Compilation error: \(message)"
             case .shortcutsNotFound: return "Shortctus app not found."
             }
         }
@@ -62,9 +62,17 @@ class SplashDocument: UIDocument {
 
                 let tempDirectoryPath = NSTemporaryDirectory()
                 let shortcutPath = (tempDirectoryPath as NSString).appendingPathComponent("temp.shortcut")
-                let parseError = parse(self.fileURL.path, shortcutPath)
+
+                var errorMessage: UnsafeMutablePointer<Int8>?
+
+                let parseError = parse(self.fileURL.path,
+                                       shortcutPath,
+                                       &errorMessage)
                 if parseError != 0 {
-                    completion(.compilationError)
+                    print(errorMessage as Any)
+                    let message = String(cString: errorMessage!)
+                    completion(.compilationError(message))
+                    free(errorMessage!)
                     return
                 }
 

@@ -92,6 +92,8 @@ FILE *output_file;
 Scope *current_scope;
 HashTable *scopes;
 int if_count;
+int helper_error;
+char *error_message;
 
 FILE *init_parse(const char *in_file_name, const char *out_file_name);  /* Must be called before starting parse */
 void end_parse(void);  /* Must be called after ending parse */
@@ -102,7 +104,7 @@ void action_add_subaction(Action *this, Action *other);
 
 void append_operand(Operand *, OpType, char100);
 void append_null_operand(Operand *);
-void append_func_call(Operand *, char100, Operand parameter);
+int append_func_call(Operand *, char100, Operand parameter);
 void append_operation(Operand *, char, Operand, Operand);
 void append_minus_op(Operand *, Operand);
 void set_variable(char100, Operand);
