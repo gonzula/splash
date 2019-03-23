@@ -17,7 +17,7 @@ class SplashDocument: UIDocument {
         var errorDescription: String? {
             switch self {
             case .saveError: return "Unknown error when saving file"
-            case .compilationError: return "Compilatio error"
+            case .compilationError: return "Compilation error"
             case .shortcutsNotFound: return "Shortctus app not found."
             }
         }
