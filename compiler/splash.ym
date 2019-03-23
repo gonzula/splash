@@ -1,10 +1,14 @@
 %{
 #include <ctype.h>
 #include <stdio.h>
+#include <string.h>
 #include "output.h"
 #include "splash_helper.h"
 void yyerror(const char* msg) {
     fprintf(stderr, "%s\n", msg);
+    helper_error = 1;
+    error_message = malloc(sizeof(char) * (strlen(msg) + 1));
+    strcpy(error_message, msg);
 }
 extern FILE *yyin;
 int yylex(void);
@@ -43,7 +47,7 @@ int yylex(void);
 %%
 
 prog        : stat_list { YYACCEPT; }
-            | error new_line { yyerror("Invalid Syntax"); yyerrok; }
+            | error new_line { yyerror("Invalid Syntax"); YYABORT; }
             ;
 
 stat_list   : stat_list stat new_line {}
@@ -104,7 +108,7 @@ expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left]
             | '-' expr_ %prec UMINUS        { append_minus_op(&$$, $2); }
             | NUM                           { append_operand(&$$, op_number, $1); }
             | ID                            { append_operand(&$$, op_variable, $1); }
-            | ID '(' param ')'              { append_func_call(&$$, $1, $3); }
+            | ID '(' param ')'              { if (append_func_call(&$$, $1, $3)) {YYABORT;} }
             | STR                           { append_operand(&$$, op_string, $1); }
             ;
 
@@ -115,15 +119,17 @@ param       : expr_
 %%
 
 int
-parse(const char *in_file_name, const char *out_file_name) {
+parse(const char *in_file_name, const char *out_file_name, char **error) {
     FILE *fp = init_parse(in_file_name, out_file_name);
     if (!fp) {
         return EXIT_FAILURE;
     }
     yyin = fp;
     int ret = yyparse();
-    if (ret == 0) {
+    if (ret == 0 && helper_error == 0) {
         end_parse();
     }
-    return ret;
+
+    *error = error_message;
+    return ret || helper_error;
 }

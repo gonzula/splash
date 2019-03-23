@@ -9,6 +9,6 @@
 #ifndef splash_compiler_h
 #define splash_compiler_h
 
-int parse(const char *in_file_name, const char *out_file_name);
+int parse(const char *in_file_name, const char *out_file_name, char **error);
 
 #endif /* splash_compiler_h */
