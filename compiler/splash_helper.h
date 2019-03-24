@@ -75,7 +75,8 @@ typedef enum {
     WF_wait,
     WF_exit,
     WF_wait_to_return,
-    WF_get_battery_level
+    WF_get_battery_level,
+    WF_date
 } ActionID;
 
 typedef struct {

@@ -489,6 +489,27 @@ action_create_get_battery_level() {
     return action;
 }
 
+Action *
+action_create_date(Operand op) {
+    Action *action = action_create(WF_date);
+
+    if (op.type != op_null) {
+        String *mode = str_create("Specified Date");
+        Serializable *s1 = serializable_create_str(mode);
+        htable_set(action->parameters, "WFDateActionMode", s1);
+        release(s1);
+        release(mode);
+
+        Interpolated *interpolated = interpolated_create_from_operand(op);
+        Serializable *s2 = interpolated_parameters(interpolated);
+        htable_set(action->parameters, "WFDateActionDate", s2);
+        release(s2);
+        release(interpolated);
+    }
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -559,6 +580,7 @@ action_create_close_scope(Action *action) {
         case WF_exit:
         case WF_wait_to_return:
         case WF_get_battery_level:
+        case WF_date:
         case WF_set_variable: return list_init();
     }
 }
@@ -590,6 +612,7 @@ action_output(Action *action, FILE *output) {
         case WF_exit: fprintf(output, "exit"); break;
         case WF_wait_to_return: fprintf(output, "waittoreturn"); break;
         case WF_get_battery_level: fprintf(output, "getbatterylevel"); break;
+        case WF_date: fprintf(output, "date"); break;
     }
 
     fprintf(output, "</string>");
