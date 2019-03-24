@@ -14,11 +14,12 @@ class SyntaxColorizer {
         case comment
         case keyword
         case functionCall
+        case unknownFunction
         case identifier
         case number
         case string
 
-        var lightColor: UIColor {
+        var foregroundLightColor: UIColor {
             switch self {
             case .regular: return UIColor(hex: 0x000000)
             case .comment: return UIColor(hex: 0x536579)
@@ -27,10 +28,11 @@ class SyntaxColorizer {
             case .identifier: return UIColor(hex: 0x000000)
             case .number: return UIColor(hex: 0x1C00CF)
             case .string: return UIColor(hex: 0xC41A16)
+            case .unknownFunction: return UIColor(hex: 0x000000)
             }
         }
 
-        var darkColor: UIColor {
+        var foregroundDarkColor: UIColor {
             switch self {
             case .regular: return UIColor(hex: 0xffffff)
             case .comment: return UIColor(hex: 0x6C7986)
@@ -39,19 +41,29 @@ class SyntaxColorizer {
             case .identifier: return UIColor(hex: 0xffffff)
             case .number: return UIColor(hex: 0x9686F5)
             case .string: return UIColor(hex: 0xFC6A5D)
+            case .unknownFunction: return UIColor(hex: 0xffffff)
             }
         }
 
-        func color(`for` theme: ThemeManager.Theme) -> UIColor {
+        func foregroundColor(`for` theme: ThemeManager.Theme) -> UIColor {
             switch theme {
-            case .light: return lightColor
-            case .dark: return darkColor
+            case .light: return foregroundLightColor
+            case .dark: return foregroundDarkColor
+            }
+        }
+
+        func backgroundColor(`for` theme: ThemeManager.Theme) -> UIColor? {
+            if self == .unknownFunction {
+                return UIColor.red
+            } else {
+                return nil
             }
         }
 
         func attributes(`for` theme: ThemeManager.Theme) -> [NSAttributedString.Key: Any] {
             var attributes = [NSAttributedString.Key: Any]()
-            attributes[.foregroundColor] = self.color(for: theme)
+            attributes[.foregroundColor] = self.foregroundColor(for: theme)
+            attributes[.backgroundColor] = self.backgroundColor(for: theme)
 
             switch self {
             case .comment: attributes[.font] = UIFont(name: "Menlo-Italic", size: UserDefaults.standard.fontSize)!
@@ -60,6 +72,7 @@ class SyntaxColorizer {
                  .identifier,
                  .number,
                  .regular,
+                 .unknownFunction,
                  .string: attributes[.font] = UIFont(name: "Menlo", size: UserDefaults.standard.fontSize)!
             }
 
@@ -67,7 +80,25 @@ class SyntaxColorizer {
         }
     }
 
-    let patterns: [(String, TokenKind)] = [
+    static let shared = SyntaxColorizer()
+
+    lazy var knownFunctions: Set<String> = [
+        "AskNumber",
+        "AskText",
+        "ShowResult",
+        "Floor",
+        "Ceil",
+        "Round",
+        "GetName",
+        "GetType",
+        "ViewContentGraph",
+        "Wait",
+        "Exit",
+        "WaitToReturn",
+        "GetBatteryLevel"
+    ]
+
+    lazy var patterns: [(String, TokenKind)] = [
         ("#.*?(?:$|\\n)", .comment),
         ("[a-zA-Z_][a-zA-Z_0-9]*(?=\\s*\\()", .functionCall),
         ("[a-zA-Z_][a-zA-Z_0-9]*", .identifier),
@@ -90,13 +121,19 @@ class SyntaxColorizer {
             let kind = patterns[result.matchId].1
 
             let attributes: [NSAttributedString.Key: Any]
+            let value = (input as NSString).substring(with: result.range)
+                .trimmingCharacters(in: .whitespacesAndNewlines)
             if kind == .identifier {
-                let value = (input as NSString).substring(with: result.range)
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
                 if isKeyword(identifier: value) {
                     attributes = TokenKind.keyword.attributes(for: theme)
                 } else {
                     attributes = kind.attributes(for: theme)
+                }
+            } else if kind == .functionCall {
+                if knownFunctions.contains(value) {
+                    attributes = kind.attributes(for: theme)
+                } else {
+                    attributes = TokenKind.unknownFunction.attributes(for: theme)
                 }
             } else {
                 attributes = kind.attributes(for: theme)

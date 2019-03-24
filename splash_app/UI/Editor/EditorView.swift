@@ -63,7 +63,7 @@ class EditorView: UITextView {
 
     func colorizeText() {
         keepLocation { () -> Int? in
-            attributedText = SyntaxColorizer().colorize(text, theme: theme)
+            attributedText = SyntaxColorizer.shared.colorize(text, theme: theme)
             return nil
         }
     }
