@@ -14,10 +14,10 @@ class SyntaxColorizer {
         case comment
         case keyword
         case functionCall
-        case unknownFunction
         case identifier
         case number
         case string
+        case error
 
         var foregroundLightColor: UIColor {
             switch self {
@@ -28,7 +28,7 @@ class SyntaxColorizer {
             case .identifier: return UIColor(hex: 0x000000)
             case .number: return UIColor(hex: 0x1C00CF)
             case .string: return UIColor(hex: 0xC41A16)
-            case .unknownFunction: return UIColor(hex: 0x000000)
+            case .error: return UIColor(hex: 0x000000)
             }
         }
 
@@ -41,7 +41,7 @@ class SyntaxColorizer {
             case .identifier: return UIColor(hex: 0xffffff)
             case .number: return UIColor(hex: 0x9686F5)
             case .string: return UIColor(hex: 0xFC6A5D)
-            case .unknownFunction: return UIColor(hex: 0xffffff)
+            case .error: return UIColor(hex: 0xffffff)
             }
         }
 
@@ -53,7 +53,7 @@ class SyntaxColorizer {
         }
 
         func backgroundColor(`for` theme: ThemeManager.Theme) -> UIColor? {
-            if self == .unknownFunction {
+            if self == .error {
                 return UIColor.red
             } else {
                 return nil
@@ -72,7 +72,7 @@ class SyntaxColorizer {
                  .identifier,
                  .number,
                  .regular,
-                 .unknownFunction,
+                 .error,
                  .string: attributes[.font] = UIFont(name: "Menlo", size: UserDefaults.standard.fontSize)!
             }
 
@@ -133,7 +133,7 @@ class SyntaxColorizer {
                 if knownFunctions.contains(value) {
                     attributes = kind.attributes(for: theme)
                 } else {
-                    attributes = TokenKind.unknownFunction.attributes(for: theme)
+                    attributes = TokenKind.error.attributes(for: theme)
                 }
             } else {
                 attributes = kind.attributes(for: theme)
