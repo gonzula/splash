@@ -9,13 +9,13 @@
 import Foundation
 
 public extension StringProtocol {
-    public func capitalizingFirstLetter() -> String {
+    func capitalizingFirstLetter() -> String {
         return prefix(1).uppercased() + dropFirst()
     }
 }
 
 public extension String {
-    public mutating func capitalizeFirstLetter() {
+    mutating func capitalizeFirstLetter() {
         self = self.capitalizingFirstLetter()
     }
 }
