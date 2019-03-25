@@ -25,6 +25,7 @@ Action *action_create_exit(void);
 Action *action_create_wait_to_return(void);
 Action *action_create_get_battery_level(void);
 Action *action_create_date(Operand op);
+Action *action_create_extract_archive(void);
 
 
 List * action_create_cond_control(int value, int control_count);
