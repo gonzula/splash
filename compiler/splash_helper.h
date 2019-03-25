@@ -16,10 +16,6 @@ typedef struct {
     List *tokens;
 } Interpolated;  // Interpolated String
 
-typedef union {
-    char value[100];
-} char100;
-
 typedef enum {
     op_number,
     op_magic_variable,  // referencied by uuid
@@ -30,8 +26,8 @@ typedef enum {
 
 typedef struct {
     OpType type;
-    char100 value;
-    char100 name;
+    String *value;
+    String *name;
     char uuid[37];
 } Operand;
 
@@ -105,13 +101,13 @@ void increment_if_count(void);
 
 void action_add_subaction(Action *this, Action *other);
 
-void append_operand(Operand *, OpType, char100);
+void append_operand(Operand *, OpType, String *);
 void append_null_operand(Operand *);
-int append_func_call(Operand *, char100, Operand parameter);
+int append_func_call(Operand *, String *, Operand parameter);
 void append_operation(Operand *, char, Operand, Operand);
 void append_minus_op(Operand *, Operand);
-void set_variable(char100, Operand);
-void place_set_variable(char100 var_name);
+void set_variable(String *, Operand);
+void place_set_variable(String *var_name);
 void place_operand(Operand op, bool force_null);
 
 void append_comparison(Comparison *, CompOp, Operand, Operand);

@@ -40,7 +40,7 @@ action_create_number(Operand op) {
     Action *action = action_create(WF_number);
     action_set_uuid(action, op.uuid);
 
-    Serializable *s = serializable_create_float(atof(op.value.value));
+    Serializable *s = serializable_create_float(atof(op.value->string));
     htable_set(action->parameters, "WFNumberActionNumber", s);
     release(s);
 
@@ -85,8 +85,7 @@ action_create_get_variable(Operand op) {
     Serializable *s3 = serializable_create_str(var_type);
     htable_set(value, "Type", s3);
 
-    String *var_name = str_create(op.name.value);
-    Serializable *s4 = serializable_create_str(var_name);
+    Serializable *s4 = serializable_create_str(op.name);
     htable_set(value, "VariableName", s4);
 
     String *token_attachment = str_create("WFTextTokenAttachment");
@@ -97,7 +96,6 @@ action_create_get_variable(Operand op) {
     release(variable);
     release(value);
     release(var_type);
-    release(var_name);
 
     release(s1);
     release(s2);
@@ -125,8 +123,7 @@ action_create_get_magic_variable(Operand op) {
     Serializable *s3 = serializable_create_str(var_type);
     htable_set(value, "Type", s3);
 
-    String *var_name = str_create(op.name.value);
-    Serializable *s4 = serializable_create_str(var_name);
+    Serializable *s4 = serializable_create_str(op.name);
     htable_set(value, "OutputName", s4);
 
     String *uuid = str_create(op.uuid);
@@ -143,7 +140,6 @@ action_create_get_magic_variable(Operand op) {
     release(variable);
     release(value);
     release(var_type);
-    release(var_name);
 
     release(s1);
     release(s2);
@@ -160,7 +156,7 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
         case op_null: fprintf(stderr, "Invalid null inside math operation\n"); break;
         case op_string: fprintf(stderr, "Invalid string inside math operation\n"); break;
         case op_number: {
-                         Serializable *s = serializable_create_float(atof(op2.value.value));
+                         Serializable *s = serializable_create_float(atof(op2.value->string));
                          htable_set(action->parameters, key, s);
                          release(s);
                      }
@@ -174,8 +170,7 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                                 Serializable *s2 = serializable_create_ht(h2);
                                 htable_set(h1, "Value", s2);
 
-                                String *output_name = str_create(op2.name.value);
-                                Serializable *s3 = serializable_create_str(output_name);
+                                Serializable *s3 = serializable_create_str(op2.name);
                                 htable_set(h2, "OutputName", s3);
 
                                 String *uuid = str_create(op2.uuid);
@@ -195,7 +190,6 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                                 release(s1);
                                 release(h2);
                                 release(s2);
-                                release(output_name);
                                 release(s3);
                                 release(uuid);
                                 release(s4);
@@ -218,8 +212,7 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                            Serializable *s3 = serializable_create_str(variable);
                            htable_set(h2, "Type", s3);
 
-                           String *variable_name = str_create(op2.name.value);
-                           Serializable *s4 = serializable_create_str(variable_name);
+                           Serializable *s4 = serializable_create_str(op2.name);
                            htable_set(h2, "VariableName", s4);
 
                            String *token_attachment = str_create("WFTextTokenAttachment");
@@ -232,7 +225,6 @@ action_complete_math_operand(Action *action, const char *key, Operand op2) {
                            release(s2);
                            release(variable);
                            release(s3);
-                           release(variable_name);
                            release(s4);
                            release(token_attachment);
                            release(s5);
@@ -270,9 +262,9 @@ action_complete_math_scientific_operation(Action *action, char operator, Operand
 
     String *WF_operation = NULL;
     if (operator == '^') {
-        if (op2.type == op_number && strcmp("2", op2.value.value) == 0) {
+        if (op2.type == op_number && strcmp("2", op2.value->string) == 0) {
             WF_operation = str_create("x^2");
-        } else if (op2.type == op_number && strcmp("3", op2.value.value) == 0) {
+        } else if (op2.type == op_number && strcmp("3", op2.value->string) == 0) {
             WF_operation = str_create("x^3");
         } else {
             WF_operation = str_create("x^y");
@@ -310,17 +302,12 @@ action_create_math_operation(char operator, Operand op2) {
 }
 
 Action *
-action_create_set_variable(char100 name) {
+action_create_set_variable(String *name) {
     Action *action = action_create(WF_set_variable);
 
-    String *variable_name = str_create(name.value);
-    Serializable *s = serializable_create_str(variable_name);
-
+    Serializable *s = serializable_create_str(name);
     htable_set(action->parameters, "WFVariableName", s);
-
-
     release(s);
-    release(variable_name);
 
     return action;
 }
@@ -330,11 +317,9 @@ void
 action_complete_comp_operand(Action *action, CompOp operator, Operand operand) {
     switch (operator) {
         case comp_op_eq: {
-                           String *str = str_create(operand.value.value);
-                           Serializable *s = serializable_create_str(str);
+                           Serializable *s = serializable_create_str(operand.value);
                            htable_set(action->parameters,  "WFConditionalActionString", s);
                            release(s);
-                           release(str);
                        }
                        break;
         case comp_op_lt:
@@ -460,7 +445,7 @@ action_create_wait(Operand op) {
     Action *action = action_create(WF_wait);
 
     if (op.type == op_number) {
-        Serializable *s = serializable_create_float(atof(op.value.value));
+        Serializable *s = serializable_create_float(atof(op.value->string));
         htable_set(action->parameters, "WFDelayTime", s);
         release(s);
     }
@@ -530,19 +515,23 @@ action_create_cond_control(int value, int control_count) {
 
     Operand op;
     op.type = op_number;
-    sprintf(op.value.value, "%d", value);
+    char buff[100];
+    sprintf(buff, "%d", value);
+    str_append(op.value, buff);
     uuid_gen(op.uuid);
 
     Action *number_action = action_create_number(op);
     list_append(actions, number_action);
     release(number_action);
 
-    char100 var_name;
-    sprintf(var_name.value, "$splash_if_%d", control_count);
+    char var_name[100];
+    sprintf(var_name, "$splash_if_%d", control_count);
 
-    Action *set_var_action = action_create_set_variable(var_name);
+    String *var_name_str = str_create(var_name);
+    Action *set_var_action = action_create_set_variable(var_name_str);
     list_append(actions, set_var_action);
     release(set_var_action);
+    release(var_name_str);
 
     return actions;
 }

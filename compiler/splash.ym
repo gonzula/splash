@@ -23,8 +23,8 @@ int yylex(void);
 %type <Operand> param
 %type <Comparison> comp
 
-%token <char100> STR
-%token <char100> NUM
+%token <String *> STR
+%token <String *> NUM
 %token ATT
 %token IF
 %token ELSE
@@ -35,7 +35,7 @@ int yylex(void);
 %token LE
 %token GT
 %token GE
-%token <char100> ID
+%token <String *> ID
 
 %left LT LE EQ
 %right ATT

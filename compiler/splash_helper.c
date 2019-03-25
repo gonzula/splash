@@ -41,16 +41,16 @@ increment_if_count() {
 }
 
 void
-append_operand(Operand *stack, OpType type, char100 operand) {
+append_operand(Operand *stack, OpType type, String *operand) {
     (*stack).type = type;
 
     uuid_gen((*stack).uuid);
 
     switch (type) {
-        case op_number:         strcpy((*stack).value.value, operand.value); break;
-        case op_variable:       strcpy((*stack).name.value, operand.value); break;
-        case op_magic_variable: strcpy((*stack).name.value, operand.value); break;
-        case op_string:         strcpy((*stack).value.value, operand.value); break;
+        case op_number:         str_append((*stack).value, operand->string); break;
+        case op_variable:       str_append((*stack).name, operand->string); break;
+        case op_magic_variable: str_append((*stack).name, operand->string); break;
+        case op_string:         str_append((*stack).value, operand->string); break;
         case op_null: break;
     }
 }
@@ -61,115 +61,115 @@ append_null_operand(Operand *stack) {
 }
 
 int
-append_func_call(Operand *stack, char100 name, Operand parameter) {
+append_func_call(Operand *stack, String *name, Operand parameter) {
     Action *action = NULL;
-    if (strcmp(name.value, "AskNumber") == 0) {
+    if (strcmp(name->string, "AskNumber") == 0) {
         action = action_create_ask_input(parameter, "Number");
 
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Ask for Input");
+        str_append((*stack).name, "Ask for Input");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "AskText") == 0) {
+    } else if (strcmp(name->string, "AskText") == 0) {
         action = action_create_ask_input(parameter, "Text");
 
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Ask for Input");
+        str_append((*stack).name, "Ask for Input");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "ShowResult") == 0) {
+    } else if (strcmp(name->string, "ShowResult") == 0) {
         action = action_create_show_result(parameter);
         append_null_operand(stack);
-    } else if (strcmp(name.value, "Floor") == 0) {
+    } else if (strcmp(name->string, "Floor") == 0) {
         place_operand(parameter, true);
 
         action = action_create_round_number("Always Round Down", "Right of Decimal");
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Rounded Number");
+        str_append((*stack).name, "Rounded Number");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "Ceil") == 0) {
+    } else if (strcmp(name->string, "Ceil") == 0) {
         place_operand(parameter, true);
 
         action = action_create_round_number("Always Round Up", "Right of Decimal");
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Rounded Number");
+        str_append((*stack).name, "Rounded Number");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "Round") == 0) {
+    } else if (strcmp(name->string, "Round") == 0) {
         place_operand(parameter, true);
 
         action = action_create_round_number("Normal", "Right of Decimal");
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Rounded Number");
+        str_append((*stack).name, "Rounded Number");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "GetName") == 0) {
+    } else if (strcmp(name->string, "GetName") == 0) {
         place_operand(parameter, true);
 
         action = action_create_get_item_name();
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Name");
+        str_append((*stack).name, "Name");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "GetType") == 0) {
+    } else if (strcmp(name->string, "GetType") == 0) {
         place_operand(parameter, true);
 
         action = action_create_get_item_type();
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Type");
+        str_append((*stack).name, "Type");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "ViewContentGraph") == 0) {
+    } else if (strcmp(name->string, "ViewContentGraph") == 0) {
         place_operand(parameter, true);
 
         action = action_create_view_content_graph();
 
         append_null_operand(stack);
-    } else if (strcmp(name.value, "Wait") == 0) {
+    } else if (strcmp(name->string, "Wait") == 0) {
         action = action_create_wait(parameter);
         append_null_operand(stack);
-    } else if (strcmp(name.value, "Exit") == 0) {
+    } else if (strcmp(name->string, "Exit") == 0) {
         action = action_create_exit();
         append_null_operand(stack);
-    } else if (strcmp(name.value, "WaitToReturn") == 0) {
+    } else if (strcmp(name->string, "WaitToReturn") == 0) {
         action = action_create_wait_to_return();
         append_null_operand(stack);
-    } else if (strcmp(name.value, "GetBatteryLevel") == 0) {
+    } else if (strcmp(name->string, "GetBatteryLevel") == 0) {
         action = action_create_get_battery_level();
 
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Battery Level");
+        str_append((*stack).name, "Battery Level");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "Date") == 0) {
+    } else if (strcmp(name->string, "Date") == 0) {
         action = action_create_date(parameter);
 
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Date");
+        str_append((*stack).name, "Date");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "ExtractArchive") == 0) {
+    } else if (strcmp(name->string, "ExtractArchive") == 0) {
         place_operand(parameter, true);
         action = action_create_extract_archive();
 
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Files");
+        str_append((*stack).name, "Files");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
-    } else if (strcmp(name.value, "GetCurrentLocation") == 0) {
+    } else if (strcmp(name->string, "GetCurrentLocation") == 0) {
         action = action_create_get_current_location();
 
         (*stack).type = op_magic_variable;
-        strcpy((*stack).name.value, "Current Location");
+        str_append((*stack).name, "Current Location");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else {
         DEBUGPRINT("uninplemented function");
         append_null_operand(stack);
         helper_error = 2;
-        error_message = malloc(sizeof(char) * (strlen(name.value) + 256));
-        sprintf(error_message, "Unknown function \"%s\"\n", name.value);
+        error_message = malloc(sizeof(char) * (name->len + 256));
+        sprintf(error_message, "Unknown function \"%s\"\n", name->string);
         return 1;
     }
 
@@ -182,14 +182,14 @@ append_func_call(Operand *stack, char100 name, Operand parameter) {
 
 int
 operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) {
-    DEBUGPRINT("optimizing %s %c %s\n", op1.value.value, operator, op2.value.value);
+    DEBUGPRINT("optimizing %s %c %s\n", op1.value->string, operator, op2.value->string);
     Operand new_stack;
     new_stack.type = op_number;
 
     uuid_gen(new_stack.uuid);
 
-    double v1 = atof(op1.value.value);
-    double v2 = atof(op2.value.value);
+    double v1 = atof(op1.value->string);
+    double v2 = atof(op2.value->string);
     double result = 0;
 
     DEBUGPRINT("v1 = %lf\n", v1);
@@ -205,7 +205,9 @@ operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) 
     }
     DEBUGPRINT("ret = %lf\n", result);
 
-    sprintf(new_stack.value.value, "%lf", result);
+    char buff[100];
+    sprintf(buff, "%lf", result);
+    str_append(new_stack.name, buff);
     (*stack) = new_stack;
 
     return 0;
@@ -246,8 +248,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     Operand new_stack;
     new_stack.type = op_magic_variable;
 
-    char name[] = "Calculation Result";
-    strcpy(new_stack.name.value, name);
+    str_append(new_stack.name, "Calculation Result");
     strcpy(new_stack.uuid, operation_action->uuid);
 
     *stack = new_stack;
@@ -259,8 +260,7 @@ append_minus_op(Operand *stack, Operand op) {
     Operand temp;
     temp.type = op_number;
     uuid_gen(temp.uuid);
-    char minus_one[] = "-1";
-    strcpy(temp.value.value, minus_one);
+    str_append(temp.value, "-1");
 
     append_operation(stack, '*', temp, op);
 }
@@ -296,11 +296,13 @@ append_else() {
     op1.type = op_variable;
 
     uuid_gen(op1.uuid);
-    sprintf(op1.name.value, "$splash_if_%d", if_count);
+    char buff[100];
+    sprintf(buff, "$splash_if_%d", if_count);
+    str_append(op1.name, buff);
 
     Operand op2;
     op2.type = op_number;
-    strcpy(op2.value.value, "0");
+    str_append(op2.value, "0");
 
     comp.op1 = op1;
     comp.op2 = op2;
@@ -334,7 +336,7 @@ append_comparison(Comparison *stack, CompOp operator, Operand op1, Operand op2) 
 }
 
 void
-place_set_variable(char100 var_name) {
+place_set_variable(String *var_name) {
     Action *action = action_create_set_variable(var_name);
 
     scope_add_action(current_scope, action);

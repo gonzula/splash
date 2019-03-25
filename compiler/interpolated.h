@@ -6,7 +6,7 @@
 Interpolated *interpolated_init(void);
 StringToken *token_init(void);
 
-Interpolated *interpolated_create(char100 source);
+Interpolated *interpolated_create(String *source);
 Interpolated *interpolated_create_from_operand(Operand op);
 
 Serializable *interpolated_parameters(Interpolated *interpolated);

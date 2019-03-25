@@ -35,9 +35,9 @@ _unescape_char(char c) {
 }
 
 Interpolated *
-interpolated_create(char100 source) {
+interpolated_create(String *source) {
     Interpolated *interpolated = interpolated_init();
-    char *s = source.value;
+    char *s = source->string;
 
     bool is_escaped = false;
     bool is_inside_interpolation = false;
@@ -88,19 +88,21 @@ interpolated_create(char100 source) {
 
 Interpolated *
 interpolated_create_from_null() {
-    char100 null;
-    *(null.value) = 0;
+    String *null_string = str_init();
 
-    Interpolated *interpolated = interpolated_create(null);
+    Interpolated *interpolated = interpolated_create(null_string);
+    release(null_string);
     return interpolated;
 }
 
 Interpolated *
 interpolated_create_from_variable(Operand op) {
-    char100 text;
-    sprintf(text.value, "\"{%s}\"", op.name.value);
+    char text[100];
+    sprintf(text, "\"{%s}\"", op.name->string);
+    String *string = str_create(text);
 
-    Interpolated *interpolated = interpolated_create(text);
+    Interpolated *interpolated = interpolated_create(string);
+    release(string);
     return interpolated;
 }
 
@@ -109,7 +111,7 @@ interpolated_create_from_magic_variable(Operand op) {
     Interpolated *interpolated = interpolated_init();
 
     StringToken *token = token_init();
-    str_append(token->name, op.name.value);
+    str_append(token->name, op.name->string);
     strcpy(token->uuid, op.uuid);
 
     token->position = str_unicode_len(interpolated->str);
