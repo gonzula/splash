@@ -517,6 +517,13 @@ action_create_extract_archive() {
     return action;
 }
 
+Action *
+action_create_get_current_location() {
+    Action *action = action_create(WF_get_current_location);
+
+    return action;
+}
+
 List *
 action_create_cond_control(int value, int control_count) {
     List * actions = list_init();
@@ -589,6 +596,7 @@ action_create_close_scope(Action *action) {
         case WF_get_battery_level:
         case WF_date:
         case WF_extract_archive:
+        case WF_get_current_location:
         case WF_set_variable: return list_init();
     }
 }
@@ -622,6 +630,7 @@ action_output(Action *action, FILE *output) {
         case WF_get_battery_level: fprintf(output, "getbatterylevel"); break;
         case WF_date: fprintf(output, "date"); break;
         case WF_extract_archive: fprintf(output, "unzip"); break;
+        case WF_get_current_location: fprintf(output, "getcurrentlocation"); break;
     }
 
     fprintf(output, "</string>");

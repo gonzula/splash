@@ -97,7 +97,8 @@ class SyntaxColorizer {
         "WaitToReturn",
         "GetBatteryLevel",
         "Date",
-        "ExtractArchive"
+        "ExtractArchive",
+        "GetCurrentLocation"
     ]
 
     lazy var patterns: [(String, TokenKind)] = [

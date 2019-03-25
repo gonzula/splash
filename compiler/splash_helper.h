@@ -77,7 +77,8 @@ typedef enum {
     WF_wait_to_return,
     WF_get_battery_level,
     WF_date,
-    WF_extract_archive
+    WF_extract_archive,
+    WF_get_current_location
 } ActionID;
 
 typedef struct {
