@@ -47,10 +47,10 @@ append_operand(Operand *stack, OpType type, String *operand) {
     uuid_gen((*stack).uuid);
 
     switch (type) {
-        case op_number:         str_append((*stack).value, operand->string); break;
-        case op_variable:       str_append((*stack).name, operand->string); break;
-        case op_magic_variable: str_append((*stack).name, operand->string); break;
-        case op_string:         str_append((*stack).value, operand->string); break;
+        case op_number:         (*stack).value = str_create(operand->string); break;
+        case op_variable:       (*stack).name = str_create(operand->string); break;
+        case op_magic_variable: (*stack).name = str_create(operand->string); break;
+        case op_string:         (*stack).value = str_create(operand->string); break;
         case op_null: break;
     }
 }
