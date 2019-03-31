@@ -18,8 +18,8 @@ typedef struct {
 
 typedef enum {
     op_number,
-    op_magic_variable,  // referencied by uuid
-    op_variable, // referencied by name
+    op_magic_variable,  // referenced by uuid
+    op_variable, // referenced by name
     op_string,
     op_null
 } OpType;
