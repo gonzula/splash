@@ -67,14 +67,14 @@ append_func_call(Operand *stack, String *name, Operand parameter) {
         action = action_create_ask_input(parameter, "Number");
 
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Ask for Input");
+        (*stack).name = str_create("Ask for Input");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "AskText") == 0) {
         action = action_create_ask_input(parameter, "Text");
 
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Ask for Input");
+        (*stack).name = str_create("Ask for Input");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "ShowResult") == 0) {
@@ -85,7 +85,7 @@ append_func_call(Operand *stack, String *name, Operand parameter) {
 
         action = action_create_round_number("Always Round Down", "Right of Decimal");
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Rounded Number");
+        (*stack).name = str_create("Rounded Number");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "Ceil") == 0) {
@@ -93,7 +93,7 @@ append_func_call(Operand *stack, String *name, Operand parameter) {
 
         action = action_create_round_number("Always Round Up", "Right of Decimal");
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Rounded Number");
+        (*stack).name = str_create("Rounded Number");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "Round") == 0) {
@@ -101,7 +101,7 @@ append_func_call(Operand *stack, String *name, Operand parameter) {
 
         action = action_create_round_number("Normal", "Right of Decimal");
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Rounded Number");
+        (*stack).name = str_create("Rounded Number");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "GetName") == 0) {
@@ -109,7 +109,7 @@ append_func_call(Operand *stack, String *name, Operand parameter) {
 
         action = action_create_get_item_name();
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Name");
+        (*stack).name = str_create("Name");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "GetType") == 0) {
@@ -117,7 +117,7 @@ append_func_call(Operand *stack, String *name, Operand parameter) {
 
         action = action_create_get_item_type();
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Type");
+        (*stack).name = str_create("Type");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "ViewContentGraph") == 0) {
@@ -139,14 +139,14 @@ append_func_call(Operand *stack, String *name, Operand parameter) {
         action = action_create_get_battery_level();
 
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Battery Level");
+        (*stack).name = str_create("Battery Level");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "Date") == 0) {
         action = action_create_date(parameter);
 
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Date");
+        (*stack).name = str_create("Date");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "ExtractArchive") == 0) {
@@ -154,14 +154,14 @@ append_func_call(Operand *stack, String *name, Operand parameter) {
         action = action_create_extract_archive();
 
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Files");
+        (*stack).name = str_create("Files");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else if (strcmp(name->string, "GetCurrentLocation") == 0) {
         action = action_create_get_current_location();
 
         (*stack).type = op_magic_variable;
-        str_append((*stack).name, "Current Location");
+        (*stack).name = str_create("Current Location");
         strcpy((*stack).uuid, action->uuid);
         *stack = (*stack);
     } else {
@@ -207,7 +207,7 @@ operation_optimization(Operand *stack, char operator, Operand op1, Operand op2) 
 
     char buff[100];
     sprintf(buff, "%lf", result);
-    str_append(new_stack.name, buff);
+    new_stack.name = str_create(buff);
     (*stack) = new_stack;
 
     return 0;
@@ -248,7 +248,7 @@ append_operation(Operand *stack, char operator, Operand op1, Operand op2) {
     Operand new_stack;
     new_stack.type = op_magic_variable;
 
-    str_append(new_stack.name, "Calculation Result");
+    new_stack.name = str_create("Calculation Result");
     strcpy(new_stack.uuid, operation_action->uuid);
 
     *stack = new_stack;
@@ -260,7 +260,7 @@ append_minus_op(Operand *stack, Operand op) {
     Operand temp;
     temp.type = op_number;
     uuid_gen(temp.uuid);
-    str_append(temp.value, "-1");
+    temp.value = str_create("-1");
 
     append_operation(stack, '*', temp, op);
 }
@@ -298,7 +298,7 @@ append_else() {
     uuid_gen(op1.uuid);
     char buff[100];
     sprintf(buff, "$splash_if_%d", if_count);
-    str_append(op1.name, buff);
+    op1.name = str_create(buff);
 
     Operand op2;
     op2.type = op_number;
