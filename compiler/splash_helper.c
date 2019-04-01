@@ -302,7 +302,7 @@ append_else() {
 
     Operand op2;
     op2.type = op_number;
-    str_append(op2.value, "0");
+    op2.value = str_create("0");
 
     comp.op1 = op1;
     comp.op2 = op2;

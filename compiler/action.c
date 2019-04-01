@@ -517,7 +517,7 @@ action_create_cond_control(int value, int control_count) {
     op.type = op_number;
     char buff[100];
     sprintf(buff, "%d", value);
-    str_append(op.value, buff);
+    op.value = str_create(buff);
     uuid_gen(op.uuid);
 
     Action *number_action = action_create_number(op);
