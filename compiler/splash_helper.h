@@ -116,5 +116,7 @@ void append_conditional(Comparison);
 void append_else(void);
 void close_scope(void);
 
+void operand_release(Operand op);
+
 
 #endif  /* SPLASH_HELPER_H */

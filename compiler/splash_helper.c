@@ -366,3 +366,13 @@ place_operand(Operand op, bool force_null) {
         release(action);
     }
 }
+
+void
+operand_release(Operand op) {
+    if (op.name) {
+        release(op.name);
+    }
+    if (op.value) {
+        release(op.type);
+    }
+}
