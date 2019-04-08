@@ -98,14 +98,14 @@ comp        : expr_ EQ expr_  { append_comparison(&$$, comp_op_eq, $1, $3); }
 expr        : expr_  { $$ = $1; place_operand($1, false); }
             ;
 
-expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left], $[right]); }
-            | expr_[left] '-' expr_[right]  { append_operation(&$$, '-', $[left], $[right]); }
-            | expr_[left] '*' expr_[right]  { append_operation(&$$, '*', $[left], $[right]); }
-            | expr_[left] '/' expr_[right]  { append_operation(&$$, '/', $[left], $[right]); }
-            | expr_[left] '%' expr_[right]  { append_operation(&$$, '%', $[left], $[right]); }
-            | expr_[left] '^' expr_[right]  { append_operation(&$$, '^', $[left], $[right]); }
+expr_       : expr_[left] '+' expr_[right]  { append_operation(&$$, '+', $[left], $[right]); operand_release($[left]); operand_release($[right]); }
+            | expr_[left] '-' expr_[right]  { append_operation(&$$, '-', $[left], $[right]); operand_release($[left]); operand_release($[right]); }
+            | expr_[left] '*' expr_[right]  { append_operation(&$$, '*', $[left], $[right]); operand_release($[left]); operand_release($[right]); }
+            | expr_[left] '/' expr_[right]  { append_operation(&$$, '/', $[left], $[right]); operand_release($[left]); operand_release($[right]); }
+            | expr_[left] '%' expr_[right]  { append_operation(&$$, '%', $[left], $[right]); operand_release($[left]); operand_release($[right]); }
+            | expr_[left] '^' expr_[right]  { append_operation(&$$, '^', $[left], $[right]); operand_release($[left]); operand_release($[right]); }
             | '(' expr_ ')'                 { $$ = $2; }
-            | '-' expr_ %prec UMINUS        { append_minus_op(&$$, $2); }
+            | '-' expr_ %prec UMINUS        { append_minus_op(&$$, $2); operand_release($2); }
             | NUM                           { append_operand(&$$, op_number, $1); }
             | ID                            { append_operand(&$$, op_variable, $1); }
             | ID '(' param ')'              { if (append_func_call(&$$, $1, $3)) {YYABORT;} }
