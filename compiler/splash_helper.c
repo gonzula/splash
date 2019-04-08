@@ -373,6 +373,6 @@ operand_release(Operand op) {
         release(op.name);
     }
     if (op.value) {
-        release(op.type);
+        release(op.value);
     }
 }
