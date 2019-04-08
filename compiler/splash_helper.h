@@ -99,8 +99,6 @@ void end_parse(void);  /* Must be called after ending parse */
 
 void increment_if_count(void);
 
-void action_add_subaction(Action *this, Action *other);
-
 void append_operand(Operand *, OpType, String *);
 void append_null_operand(Operand *);
 int append_func_call(Operand *, String *, Operand parameter);
