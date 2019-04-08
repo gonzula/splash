@@ -321,7 +321,7 @@ append_else() {
 
 void
 close_scope() {
-    current_scope = htable_retrieve(scopes, current_scope->parent_name->string, 0);
+    current_scope = htable_retrieve(scopes, current_scope->parent_name->string, false);
     scope_clear_last_uuid(current_scope);
 }
 
