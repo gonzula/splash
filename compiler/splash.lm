@@ -19,26 +19,26 @@
 #.*?\n              {}  /* comment */
 
 \"([^\"\\]|\\.)*\"|\'([^\'\\]|\\.)*\' { yylval.STR = str_create(yytext); return STR; }
-[0-9]+(\.[0-9]+)? { yylval.NUM = str_create(yytext); return NUM; }
-\:\=            { return ATT; }
+[0-9]+(\.[0-9]+)?        { yylval.NUM = str_create(yytext); return NUM; }
+\:\=                     { return ATT;  }
 
-if             { return IF;   }
-otherwise|else { return ELSE; }
+if                       { return IF;   }
+otherwise|else           { return ELSE; }
 
-and|&&          { return AND; }
-or|\|\|         { return OR;  }
+and|&&                   { return AND;  }
+or|\|\|                  { return OR;   }
 
-equals|==       { return EQ;  }
-less_than|<     { return LT;  }
-less_or_equal_than|<=  { return LE; }
-greater_than|>         { return GT; }
-greater_or_equal_than|>=  { return GE; }
+equals|==                { return EQ;   }
+less_than|<              { return LT;   }
+less_or_equal_than|<=    { return LE;   }
+greater_than|>           { return GT;   }
+greater_or_equal_than|>= { return GE;   }
 
-[a-zA-Z_][a-zA-Z_0-9]*  { yylval.ID = str_create(yytext); return ID; }
+[a-zA-Z_][a-zA-Z_0-9]*   { yylval.ID = str_create(yytext); return ID; }
 
-\n|\r|.                 { return yytext[0]; }
+\n|\r|.                  { return yytext[0]; }
 
-<<EOF>>              { static int once = 0; return once++ ? 0 : '\n'; } /*https://stackoverflow.com/a/1779949*/
+<<EOF>>                  { static int once = 0; return once++ ? 0 : '\n'; } /*https://stackoverflow.com/a/1779949*/
 
 %%
 
