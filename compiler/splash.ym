@@ -12,7 +12,6 @@ void yyerror(const char* msg) {
 }
 extern FILE *yyin;
 int yylex(void);
-//void yyerror(void);
 %}
 
 %define api.value.type union
