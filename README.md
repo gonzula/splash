@@ -1,5 +1,9 @@
 # SPLASH : Simple Programming LAnguage for SHortcuts
 
+## Project being archived
+
+Unfortunately, apple made some modifications to the Shortcuts app that make it very difficult to develop new features in this project. The fact that it is no longer possible to directly import .shortcut files unbearably delays the tests needed to add functionality to this language. Therefore I'm stopping my activities in this repo.
+
 ![splash icon](https://raw.githubusercontent.com/gonzula/splash/master/imgs/RoundedIcon.png)
 [![AppStore badge](https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2019-03-11&kind=iossoftware&bubble=ios_apps)](https://itunes.apple.com/us/app/splash-programming-language/id1455793030?mt=8)
 ##### The first real programming language that compiles to Apple's `Shortcuts.app`
